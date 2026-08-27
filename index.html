@@ -656,392 +656,830 @@
     </div>
   </div>
 
-  <!-- G. STUDIO ADMIN DASHBOARD & MEDIA UPLOAD MODAL -->
+  <!-- G. STUDIO ADMIN EXECUTIVE SUITE (DESKTOP-FIRST DASHBOARD) -->
   <div class="modal admin-modal" id="admin-dashboard-modal">
     <div class="modal-backdrop"></div>
-    <div class="modal-container">
-      <!-- Admin Modal Top Bar -->
-      <div class="admin-modal-header">
-        <div class="admin-header-titles">
-          <div style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">
-            <h3 class="admin-modal-title">Studio Production Manager</h3>
-            <span class="admin-title-badge">HQ Operations Suite</span>
+    <div class="modal-container admin-desktop-shell">
+      
+      <!-- 1. AUTHENTICATION LOCK SCREEN VIEW -->
+      <div id="admin-auth-view" style="width: 100%; display: flex; align-items: center; justify-content: center; padding: 2rem;">
+        <div class="admin-auth-container" style="max-width: 440px; width: 100%;">
+          <div class="admin-auth-icon">
+            <i data-lucide="shield-check" style="width: 32px; height: 32px;"></i>
           </div>
-          <span class="admin-modal-subtitle">
-            <span>Yazh Photography Media & Operations Hub</span>
-            <span>·</span>
-            <span class="admin-status-indicator"><span class="admin-status-dot"></span> Studio Online · Pattiveeranpatti</span>
-          </span>
-        </div>
-        <div class="admin-header-actions-group">
-          <button type="button" class="btn-admin-quick-upload" id="btn-admin-top-quick-upload" style="display: none;">
-            <i data-lucide="upload-cloud" style="width: 14px; height: 14px;"></i> Quick Upload
-          </button>
-          <button type="button" class="btn-admin-logout" id="admin-logout-btn" style="display: none;">
-            <i data-lucide="lock" style="width: 13px; height: 13px;"></i> Lock & Exit
-          </button>
-          <button type="button" class="modal-close">&times;</button>
-        </div>
-      </div>
+          <h3 class="admin-auth-title">Studio Admin Authentication</h3>
+          <p class="admin-auth-desc">
+            Enter your official studio email and password to access the executive photography dashboard and operations hub.
+          </p>
 
-      <!-- Admin Tabs Navigation (Visible Only When Authenticated) -->
-      <div class="admin-tabs-nav" id="admin-tabs-nav" style="display: none;">
-        <button type="button" class="admin-tab-btn active" data-tab="overview">
-          <i data-lucide="layout-dashboard" style="width: 15px; height: 15px;"></i>
-          <span>Overview</span>
-        </button>
-        <button type="button" class="admin-tab-btn" data-tab="media">
-          <i data-lucide="image" style="width: 15px; height: 15px;"></i>
-          <span>Photo Upload & Library</span>
-        </button>
-        <button type="button" class="admin-tab-btn" data-tab="bookings">
-          <i data-lucide="calendar-check" style="width: 15px; height: 15px;"></i>
-          <span>Booking Inquiries</span>
-        </button>
-        <button type="button" class="admin-tab-btn" data-tab="services">
-          <i data-lucide="tag" style="width: 15px; height: 15px;"></i>
-          <span>Custom Package Pricing</span>
-        </button>
-        <button type="button" class="admin-tab-btn" data-tab="reviews">
-          <i data-lucide="star" style="width: 15px; height: 15px;"></i>
-          <span>Client Reviews</span>
-        </button>
-      </div>
-
-      <div class="modal-body">
-        <!-- 1. AUTHENTICATION LOCK SCREEN -->
-        <div id="admin-auth-view">
-          <div class="admin-auth-container">
-            <div class="admin-auth-icon">
-              <i data-lucide="shield-check" style="width: 32px; height: 32px;"></i>
+          <form id="admin-auth-form">
+            <div class="form-group" style="text-align: left; margin-bottom: 0.85rem;">
+              <label class="form-label" for="admin-auth-email">Studio Email *</label>
+              <input type="email" id="admin-auth-email" class="form-input" value="YazhPhotographypvp@gmail.com" placeholder="YazhPhotographypvp@gmail.com" required autocomplete="username" />
             </div>
-            <h3 class="admin-auth-title">Studio Admin Authentication</h3>
-            <p class="admin-auth-desc">
-              Please enter your official studio email and password to access media uploads, client inquiries, and studio operations.
-            </p>
 
-            <form id="admin-auth-form">
-              <div class="form-group" style="text-align: left; margin-bottom: 0.85rem;">
-                <label class="form-label" for="admin-auth-email">Studio Email *</label>
-                <input type="email" id="admin-auth-email" class="form-input" value="YazhPhotographypvp@gmail.com" placeholder="YazhPhotographypvp@gmail.com" required autocomplete="username" />
+            <div class="form-group" style="text-align: left; margin-bottom: 1.25rem;">
+              <label class="form-label" for="admin-auth-passcode">Admin Password *</label>
+              <div class="admin-password-group" style="margin-bottom: 0;">
+                <input type="password" id="admin-auth-passcode" class="admin-password-input" placeholder="Enter Password" required autocomplete="current-password" />
+                <button type="button" class="btn-toggle-pwd" id="admin-toggle-pwd-visibility" title="Show/Hide Password">
+                  <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
+                </button>
               </div>
+            </div>
 
-              <div class="form-group" style="text-align: left; margin-bottom: 1.25rem;">
-                <label class="form-label" for="admin-auth-passcode">Admin Password *</label>
-                <div class="admin-password-group" style="margin-bottom: 0;">
-                  <input type="password" id="admin-auth-passcode" class="admin-password-input" placeholder="Enter Password" required autocomplete="current-password" />
-                  <button type="button" class="btn-toggle-pwd" id="admin-toggle-pwd-visibility" title="Show/Hide Password">
-                    <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
-                  </button>
+            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+              Authenticate & Unlock Studio
+            </button>
+          </form>
+
+          <p class="admin-default-hint">
+            <i data-lucide="lock" style="width: 12px; height: 12px; vertical-align: middle;"></i> Confidential Studio Administration Portal
+          </p>
+        </div>
+      </div>
+
+      <!-- 2. AUTHENTICATED EXECUTIVE DASHBOARD (SIDEBAR + CANVAS) -->
+      <div id="admin-dashboard-view" class="hidden" style="width: 100%; height: 100%; display: flex;">
+        
+        <!-- LEFT SIDEBAR -->
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar-top">
+            <!-- Brand Header -->
+            <div class="admin-brand-header">
+              <div class="admin-brand-logo">📸</div>
+              <div class="admin-brand-text">
+                <h2 class="admin-brand-title">YAZH STUDIO</h2>
+                <span class="admin-brand-sub">Executive Suite</span>
+              </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="admin-sidebar-nav" id="admin-sidebar-nav">
+              <button type="button" class="admin-nav-item active" data-tab="overview">
+                <div class="admin-nav-item-left">
+                  <i data-lucide="layout-dashboard"></i>
+                  <span>Overview</span>
                 </div>
-              </div>
-
-              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
-                Authenticate & Unlock Studio
               </button>
-            </form>
 
-            <p class="admin-default-hint">
-              <i data-lucide="lock" style="width: 12px; height: 12px; vertical-align: middle;"></i> Confidential Studio Administration Portal
-            </p>
-          </div>
-        </div>
+              <button type="button" class="admin-nav-item" data-tab="media">
+                <div class="admin-nav-item-left">
+                  <i data-lucide="image"></i>
+                  <span>Photo Library</span>
+                </div>
+                <span class="admin-nav-count-badge" id="admin-nav-photo-count">0</span>
+              </button>
 
-        <!-- 2. AUTHENTICATED DASHBOARD CONTENT -->
-        <div id="admin-dashboard-view" class="hidden">
-          <!-- TAB 1: OVERVIEW -->
-          <div class="admin-tab-panel active" id="admin-tab-overview">
-            <!-- 4 Financial & Operational Metric Cards -->
-            <div class="admin-metrics-grid">
-              <div class="admin-metric-card">
-                <div class="admin-metric-header">
-                  <span class="admin-metric-label">Pipeline Value</span>
-                  <div class="admin-metric-icon">₹</div>
+              <button type="button" class="admin-nav-item" data-tab="bookings">
+                <div class="admin-nav-item-left">
+                  <i data-lucide="calendar-check"></i>
+                  <span>Booking Inquiries</span>
                 </div>
-                <strong class="admin-metric-val" id="admin-total-revenue">₹1,35,000</strong>
-                <span class="admin-metric-trend">↑ Active Wedding Season</span>
-              </div>
-              <div class="admin-metric-card">
-                <div class="admin-metric-header">
-                  <span class="admin-metric-label">Booking Inquiries</span>
-                  <div class="admin-metric-icon">📅</div>
-                </div>
-                <strong class="admin-metric-val" id="admin-bookings-count">1</strong>
-                <span class="admin-metric-trend">Received Inquiries</span>
-              </div>
-              <div class="admin-metric-card">
-                <div class="admin-metric-header">
-                  <span class="admin-metric-label">Advance Collected</span>
-                  <div class="admin-metric-icon">✓</div>
-                </div>
-                <strong class="admin-metric-val" id="admin-advance-revenue" style="color: var(--color-success);">₹10,000</strong>
-                <span class="admin-metric-trend">Confirmed Tokens</span>
-              </div>
-              <div class="admin-metric-card">
-                <div class="admin-metric-header">
-                  <span class="admin-metric-label">Balance Due</span>
-                  <div class="admin-metric-icon">⏳</div>
-                </div>
-                <strong class="admin-metric-val" id="admin-remaining-revenue" style="color: var(--accent-gold);">₹1,25,000</strong>
-                <span class="admin-metric-trend">To Collect On Event</span>
-              </div>
-            </div>
+                <span class="admin-nav-count-badge" id="admin-nav-booking-count">0</span>
+              </button>
 
-            <!-- Action Shortcut Cards Grid -->
-            <div class="admin-action-cards-grid">
-              <div class="admin-action-box">
-                <div>
-                  <h4 class="admin-action-box-title">
-                    <i data-lucide="image-plus" style="width: 18px; height: 18px; color: var(--accent-gold);"></i>
-                    Upload New Photographs
-                  </h4>
-                  <p class="admin-action-box-desc">
-                    Drag and drop photos directly from your computer into the public portfolio gallery.
-                  </p>
+              <button type="button" class="admin-nav-item" data-tab="packages">
+                <div class="admin-nav-item-left">
+                  <i data-lucide="tags"></i>
+                  <span>Package & Pricing</span>
                 </div>
-                <button type="button" class="btn btn-primary btn-sm" onclick="document.querySelector('.admin-tab-btn[data-tab=\'media\']').click();">
-                  Launch Uploader →
-                </button>
-              </div>
+                <span class="admin-nav-count-badge" id="admin-nav-pkg-count">0</span>
+              </button>
 
-              <div class="admin-action-box">
-                <div>
-                  <h4 class="admin-action-box-title">
-                    <i data-lucide="calendar" style="width: 18px; height: 18px; color: var(--accent-gold);"></i>
-                    Process Booking Leads
-                  </h4>
-                  <p class="admin-action-box-desc">
-                    Review client package requests, phone numbers, and calculate payment balances.
-                  </p>
+              <button type="button" class="admin-nav-item" data-tab="reviews">
+                <div class="admin-nav-item-left">
+                  <i data-lucide="star"></i>
+                  <span>Client Reviews</span>
                 </div>
-                <button type="button" class="btn btn-secondary btn-sm" onclick="document.querySelector('.admin-tab-btn[data-tab=\'bookings\']').click();">
-                  View Inquiries Table →
-                </button>
-              </div>
-
-              <div class="admin-action-box">
-                <div>
-                  <h4 class="admin-action-box-title">
-                    <i data-lucide="sliders" style="width: 18px; height: 18px; color: var(--accent-gold);"></i>
-                    Studio Settings & Password
-                  </h4>
-                  <p class="admin-action-box-desc">
-                    Manage photography categories or update your admin master password anytime.
-                  </p>
-                </div>
-                <button type="button" class="btn btn-secondary btn-sm" id="btn-change-admin-pwd">
-                  Update Password
-                </button>
-              </div>
-            </div>
+                <span class="admin-nav-count-badge" id="admin-nav-review-count">0</span>
+              </button>
+            </nav>
           </div>
 
-          <!-- TAB 2: PHOTO UPLOAD & MEDIA LIBRARY -->
-          <div class="admin-tab-panel" id="admin-tab-media">
-            <div class="upload-manager-layout">
-              <!-- Left: Dropzone & Live Preview -->
-              <div>
-                <div class="upload-dropzone-box" id="admin-photo-dropzone">
-                  <i data-lucide="image-plus" class="upload-dropzone-icon"></i>
-                  <h4 class="upload-dropzone-title">Drag & Drop Image or Click to Browse</h4>
-                  <p class="upload-dropzone-hint">Supports high-resolution JPG, PNG, WEBP from your local storage</p>
-                  <input type="file" id="admin-photo-file-input" class="hidden-file-input" accept="image/*" />
+          <!-- Sidebar Footer -->
+          <div class="admin-sidebar-footer">
+            <div class="admin-profile-card">
+              <div class="admin-profile-avatar">YP</div>
+              <div class="admin-profile-info">
+                <span class="admin-profile-name" id="admin-sidebar-email">Studio Admin</span>
+                <span class="admin-profile-status">
+                  <span class="admin-profile-dot"></span> Cloud CDN Live
+                </span>
+              </div>
+            </div>
+            <button type="button" class="btn-admin-logout-sidebar" id="admin-logout-btn">
+              <i data-lucide="log-out" style="width: 14px; height: 14px;"></i> Lock & Logout
+            </button>
+          </div>
+        </aside>
+
+        <!-- MAIN CONTENT CANVAS -->
+        <main class="admin-main-canvas">
+          <!-- Top Header Bar -->
+          <header class="admin-top-header">
+            <div class="admin-header-left">
+              <div class="admin-breadcrumbs">
+                <span class="admin-breadcrumb-root">Admin</span>
+                <span class="admin-breadcrumb-sep">/</span>
+                <span class="admin-breadcrumb-active" id="admin-breadcrumb-title">Overview</span>
+              </div>
+              <span class="admin-clock-badge" id="admin-clock-badge">LIVE</span>
+            </div>
+
+            <div class="admin-header-right">
+              <button type="button" class="btn-header-action btn-header-primary" id="btn-admin-top-upload">
+                <i data-lucide="cloud-upload" style="width: 15px; height: 15px;"></i> Upload Photo
+              </button>
+              <a href="#portfolio" class="btn-header-action btn-header-ghost modal-close" title="Preview Live Public Website">
+                <i data-lucide="external-link" style="width: 14px; height: 14px;"></i> Preview Site
+              </a>
+              <button type="button" class="btn-header-close modal-close" title="Close Dashboard">&times;</button>
+            </div>
+          </header>
+
+          <!-- Content Viewport -->
+          <div class="admin-content-viewport">
+            
+            <!-- ==========================================
+                 SECTION 1: OVERVIEW DASHBOARD
+                 ========================================== -->
+            <section class="admin-section-view active" id="admin-view-overview">
+              <div class="admin-overview-header">
+                <h3 class="admin-section-title">Studio Business Overview</h3>
+                <p class="admin-section-subtitle">Real-time financial pipeline, booking leads, and active photography assets.</p>
+              </div>
+
+              <!-- 4 Real Dynamic KPI Metric Cards -->
+              <div class="admin-kpi-grid">
+                <div class="admin-kpi-card">
+                  <div class="admin-kpi-top">
+                    <span class="admin-kpi-label">Pipeline Value</span>
+                    <div class="admin-kpi-icon">₹</div>
+                  </div>
+                  <strong class="admin-kpi-value" id="admin-kpi-pipeline">₹0</strong>
+                  <span class="admin-kpi-note">Calculated from stored inquiries</span>
                 </div>
 
-                <!-- Preview Card -->
-                <div class="upload-preview-card" id="admin-photo-preview-card">
-                  <img src="" id="admin-photo-preview-img" alt="Selected Preview" class="upload-preview-img" />
+                <div class="admin-kpi-card kpi-info">
+                  <div class="admin-kpi-top">
+                    <span class="admin-kpi-label">Booking Inquiries</span>
+                    <div class="admin-kpi-icon"><i data-lucide="calendar" style="width: 16px; height: 16px;"></i></div>
+                  </div>
+                  <strong class="admin-kpi-value" id="admin-kpi-bookings">0</strong>
+                  <span class="admin-kpi-note">Client leads on record</span>
+                </div>
+
+                <div class="admin-kpi-card kpi-success">
+                  <div class="admin-kpi-top">
+                    <span class="admin-kpi-label">Advance Collected</span>
+                    <div class="admin-kpi-icon"><i data-lucide="check-circle" style="width: 16px; height: 16px;"></i></div>
+                  </div>
+                  <strong class="admin-kpi-value" id="admin-kpi-advance" style="color: #10b981;">₹0</strong>
+                  <span class="admin-kpi-note">Token payments received</span>
+                </div>
+
+                <div class="admin-kpi-card kpi-warning">
+                  <div class="admin-kpi-top">
+                    <span class="admin-kpi-label">Balance Due</span>
+                    <div class="admin-kpi-icon"><i data-lucide="clock" style="width: 16px; height: 16px;"></i></div>
+                  </div>
+                  <strong class="admin-kpi-value" id="admin-kpi-due" style="color: #c5a059;">₹0</strong>
+                  <span class="admin-kpi-note">To collect upon delivery</span>
                 </div>
               </div>
 
-              <!-- Right: Photo Details & Division Form -->
-              <div class="upload-form-panel">
-                <h4 class="upload-panel-header">
-                  <i data-lucide="sliders" style="width: 18px; height: 18px; color: var(--accent-gold);"></i>
-                  Photo Metadata & Publishing
-                </h4>
-
-                <form id="admin-photo-upload-form">
-                  <div class="form-group">
-                    <label class="form-label" for="admin-photo-title">Photo Title / Caption *</label>
-                    <input type="text" id="admin-photo-title" class="form-input" placeholder="e.g. Traditional Muhurtham Garland Exchange" required />
+              <!-- Quick Actions Grid -->
+              <div class="admin-quick-actions-grid">
+                <div class="admin-quick-action-card" id="btn-quick-upload-card">
+                  <div class="admin-action-icon-box"><i data-lucide="image-plus"></i></div>
+                  <div class="admin-action-info">
+                    <h4 class="admin-action-title">Upload Photo</h4>
+                    <p class="admin-action-desc">Add image to Cloud CDN</p>
                   </div>
+                </div>
 
-                  <div class="form-group">
-                    <div class="category-manager-header-bar">
-                      <label class="form-label" for="admin-photo-category" style="margin-bottom: 0;">Category *</label>
-                      <button type="button" class="btn-manage-categories-link" id="btn-toggle-category-manager">
-                        ⚙️ Edit Categories Directory
-                      </button>
-                    </div>
-                    <select id="admin-photo-category" class="form-select" required></select>
+                <div class="admin-quick-action-card" id="btn-quick-inquiries-card">
+                  <div class="admin-action-icon-box"><i data-lucide="calendar"></i></div>
+                  <div class="admin-action-info">
+                    <h4 class="admin-action-title">Booking Leads</h4>
+                    <p class="admin-action-desc">Review & update client leads</p>
                   </div>
+                </div>
 
-                  <div class="form-group" id="custom-cat-input-group" style="display: none; background: var(--accent-subtle); padding: 0.85rem; border-radius: var(--radius-sm); margin-bottom: 1rem;">
-                    <label class="form-label" for="admin-custom-category-name">Enter Custom Category Name *</label>
-                    <input type="text" id="admin-custom-category-name" class="form-input" placeholder="e.g. Haldi Ceremony, Fashion Portfolio" />
+                <div class="admin-quick-action-card" id="btn-quick-packages-card">
+                  <div class="admin-action-icon-box"><i data-lucide="tags"></i></div>
+                  <div class="admin-action-info">
+                    <h4 class="admin-action-title">Manage Pricing</h4>
+                    <p class="admin-action-desc">Update packages & services</p>
                   </div>
+                </div>
 
-                  <div class="form-group">
-                    <label class="form-label" for="admin-photo-desc">Description / Backstory (Optional)</label>
-                    <input type="text" id="admin-photo-desc" class="form-input" placeholder="Brief backstory or location details..." />
+                <div class="admin-quick-action-card" id="btn-quick-password-card">
+                  <div class="admin-action-icon-box"><i data-lucide="key"></i></div>
+                  <div class="admin-action-info">
+                    <h4 class="admin-action-title">Security Key</h4>
+                    <p class="admin-action-desc">Update Admin master password</p>
                   </div>
+                </div>
+              </div>
 
-                  <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 0.5rem;">
-                    <i data-lucide="upload" style="width: 16px; height: 16px;"></i> Publish to Public Portfolio
+              <!-- Recent Inquiries Preview Table -->
+              <div class="admin-card-section">
+                <div class="admin-card-header">
+                  <h4 class="admin-card-title">
+                    <i data-lucide="clock" style="width: 18px; height: 18px; color: #c5a059;"></i>
+                    Recent Booking Inquiries
+                  </h4>
+                  <button type="button" class="btn-tbl-action" id="btn-overview-view-all-inquiries">View All →</button>
+                </div>
+                <div class="admin-table-container">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Inquiry ID</th>
+                        <th>Client Information</th>
+                        <th>Package</th>
+                        <th>Event Date & Venue</th>
+                        <th>Payment</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="overview-recent-inquiries-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- ==========================================
+                 SECTION 2: PHOTO LIBRARY
+                 ========================================== -->
+            <section class="admin-section-view" id="admin-view-media">
+              <div class="admin-overview-header">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                  <div>
+                    <h3 class="admin-section-title">Photo Library & Cloud Asset Manager</h3>
+                    <p class="admin-section-subtitle">Manage high-resolution showcase imagery with permanent Cloud CDN hosting and instant replacement.</p>
+                  </div>
+                  <button type="button" class="btn btn-secondary btn-sm" id="btn-toggle-category-manager-top">
+                    ⚙️ Manage Categories Directory
                   </button>
-                </form>
+                </div>
               </div>
-            </div>
 
-            <!-- Uploaded Media Library Explorer Bar -->
-            <div class="media-explorer-header-bar">
-              <div style="display: flex; align-items: center; gap: 0.75rem;">
-                <h4 class="media-explorer-title">Uploaded Photo Library</h4>
-                <span class="admin-title-badge" id="admin-library-photo-count">0 Photos</span>
-              </div>
-              <div class="media-explorer-controls">
-                <input type="text" id="admin-media-search" class="media-search-input" placeholder="Search photos..." />
-              </div>
-            </div>
-            <div class="photo-manager-grid" id="admin-photo-library-grid"></div>
-          </div>
+              <!-- Professional Cloud Uploader Card -->
+              <div class="admin-upload-card" id="admin-upload-main-card">
+                <div class="admin-upload-card-header">
+                  <h4 class="admin-upload-card-title">
+                    <i data-lucide="cloud-upload" style="width: 18px; height: 18px; color: #c5a059;"></i>
+                    Upload New Photograph to Cloud CDN
+                  </h4>
+                  <span class="admin-upload-card-subtitle">Permanent high-speed Cloudflare-backed storage</span>
+                </div>
 
-          <!-- TAB 3: BOOKINGS -->
-          <div class="admin-tab-panel" id="admin-tab-bookings">
-            <div class="media-explorer-header-bar" style="border-top: none; padding-top: 0;">
-              <h4 class="media-explorer-title">Client Booking Inquiries & Leads</h4>
-            </div>
-            <div class="admin-table-wrap">
-              <table class="admin-table">
-                <thead>
-                  <tr>
-                    <th>Inquiry ID</th>
-                    <th>Client Information</th>
-                    <th>Package Category</th>
-                    <th>Date & Location</th>
-                    <th>Payment Breakdown</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="admin-bookings-table-body"></tbody>
-              </table>
-            </div>
-          </div>
+                <div class="admin-upload-grid">
+                  <!-- Left: Dropzone & Selected File Info -->
+                  <div class="admin-upload-dropzone-col">
+                    <div class="admin-dropzone-box" id="admin-photo-dropzone">
+                      <div class="dropzone-idle-state" id="dropzone-idle-state">
+                        <div class="admin-dropzone-icon-wrap">
+                          <i data-lucide="image-plus" class="admin-dropzone-icon"></i>
+                        </div>
+                        <h4 class="admin-dropzone-title">Drag & Drop Image or <span style="color: #c5a059; text-decoration: underline;">Browse</span></h4>
+                        <p class="admin-dropzone-hint">Supports JPG, JPEG, PNG, WEBP (Max 15MB)</p>
+                      </div>
 
-          <!-- TAB 4: CUSTOM PACKAGE PRICING & SERVICES -->
-          <div class="admin-tab-panel" id="admin-tab-services">
-            <div class="media-explorer-header-bar" style="border-top: none; padding-top: 0;">
-              <div>
-                <h4 class="media-explorer-title">Custom Package Services & Pricing Manager</h4>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">
-                  Edit service names and base prices. Changes update the client-facing Custom Package Builder instantly.
-                </p>
-              </div>
-            </div>
+                      <div class="dropzone-selected-state" id="dropzone-selected-state" style="display: none;">
+                        <div class="upload-preview-thumb-wrap">
+                          <img src="" id="admin-photo-preview-img" alt="Preview" class="upload-preview-img" />
+                        </div>
+                        <div class="upload-file-details">
+                          <strong class="upload-file-name" id="admin-photo-file-name">filename.jpg</strong>
+                          <span class="upload-file-size" id="admin-photo-file-size">0.0 MB</span>
+                          <button type="button" class="btn-remove-selected-file" id="btn-remove-selected-file" title="Remove selected image">
+                            ✕ Remove / Change Image
+                          </button>
+                        </div>
+                      </div>
 
-            <!-- Existing Services Table -->
-            <div class="admin-table-wrap" style="margin-bottom: 2rem;">
-              <table class="admin-table">
-                <thead>
-                  <tr>
-                    <th>Service Name</th>
-                    <th>Category</th>
-                    <th>Price (₹)</th>
-                    <th>Unit / Duration</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="admin-services-table-body"></tbody>
-              </table>
-            </div>
-
-            <!-- Add New Service Box -->
-            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.5rem;">
-              <h4 style="font-size: 1rem; color: var(--text-primary); margin-bottom: 1rem;">➕ Add New Custom Service</h4>
-              <form id="admin-add-service-form">
-                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 0.85rem; margin-bottom: 0.85rem;">
-                  <div>
-                    <label class="form-label">Service Title *</label>
-                    <input type="text" id="admin-new-srv-name" class="form-input" placeholder="e.g. Sangeet Choreography Video" required />
+                      <input type="file" id="admin-photo-file-input" class="hidden-file-input" accept="image/jpeg,image/jpg,image/png,image/webp" />
+                      <input type="file" id="admin-photo-replace-input" class="hidden-file-input" accept="image/jpeg,image/jpg,image/png,image/webp" />
+                    </div>
                   </div>
-                  <div>
-                    <label class="form-label">Category</label>
-                    <input type="text" id="admin-new-srv-cat" class="form-input" placeholder="e.g. Cinematography" />
-                  </div>
-                  <div>
-                    <label class="form-label">Price (₹) *</label>
-                    <input type="number" id="admin-new-srv-price" class="form-input" placeholder="5000" required />
-                  </div>
-                  <div>
-                    <label class="form-label">Unit / Timing</label>
-                    <input type="text" id="admin-new-srv-unit" class="form-input" placeholder="per day" />
+
+                  <!-- Right: Photo Metadata Form -->
+                  <div class="admin-upload-form-col">
+                    <form id="admin-photo-upload-form">
+                      <div class="form-group">
+                        <label class="form-label" for="admin-photo-title">Photo Title / Caption *</label>
+                        <input type="text" id="admin-photo-title" class="form-input" placeholder="e.g. Traditional Muhurtham Garland Exchange" required />
+                      </div>
+
+                      <div class="form-group">
+                        <div class="category-manager-header-bar">
+                          <label class="form-label" for="admin-photo-category" style="margin-bottom: 0;">Portfolio Category *</label>
+                          <button type="button" class="btn-manage-categories-link" id="btn-toggle-category-manager">
+                            ⚙️ Manage Categories
+                          </button>
+                        </div>
+                        <select id="admin-photo-category" class="form-select" required></select>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-label" for="admin-photo-desc">Backstory / Description (Optional)</label>
+                        <input type="text" id="admin-photo-desc" class="form-input" placeholder="Location, couple, or moment details..." />
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-label">Publish Visibility *</label>
+                        <div class="admin-radio-group">
+                          <label class="admin-radio-label">
+                            <input type="radio" name="admin-upload-publish-status" value="published" checked />
+                            <span><strong>Published</strong> (Visible on public portfolio)</span>
+                          </label>
+                          <label class="admin-radio-label">
+                            <input type="radio" name="admin-upload-publish-status" value="draft" />
+                            <span><strong>Draft</strong> (Saved in admin only)</span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <!-- Cloud Upload Progress Bar -->
+                      <div id="admin-upload-progress-container" class="admin-upload-progress-box" style="display: none;">
+                        <div class="upload-progress-header">
+                          <span id="admin-upload-status-text">Uploading to Cloud CDN...</span>
+                          <span id="admin-upload-status-percent">0%</span>
+                        </div>
+                        <div class="upload-progress-track">
+                          <div id="admin-upload-progress-bar" class="upload-progress-fill" style="width: 0%;"></div>
+                        </div>
+                      </div>
+
+                      <!-- Action Button Row -->
+                      <div class="admin-form-btn-row">
+                        <button type="submit" id="btn-admin-submit-upload" class="btn btn-primary btn-lg" style="flex: 2;">
+                          <i data-lucide="cloud-upload" style="width: 16px; height: 16px;"></i> Publish to Public Portfolio
+                        </button>
+                        <button type="button" id="btn-admin-clear-upload" class="btn btn-secondary btn-lg" style="flex: 1;">
+                          Clear
+                        </button>
+                      </div>
+                    </form>
                   </div>
                 </div>
-                <div class="form-group">
-                  <label class="form-label">Service Description</label>
-                  <input type="text" id="admin-new-srv-desc" class="form-input" placeholder="Brief details about the service deliverable..." />
+              </div>
+
+              <!-- Toolbar & Filter Bar -->
+              <div class="admin-toolbar-row">
+                <div class="admin-filter-group">
+                  <div class="admin-search-input-wrap">
+                    <i data-lucide="search" class="admin-search-icon"></i>
+                    <input type="text" id="admin-photo-search-input" class="admin-input-search" placeholder="Search photos by title..." />
+                    <button type="button" id="btn-clear-photo-search" class="btn-clear-search" style="display: none;">&times;</button>
+                  </div>
+                  <select id="admin-photo-category-filter" class="admin-select-filter">
+                    <option value="all">All Categories</option>
+                  </select>
+                  <select id="admin-photo-status-filter" class="admin-select-filter">
+                    <option value="all">All Statuses</option>
+                    <option value="published">Published Only</option>
+                    <option value="draft">Drafts Only</option>
+                  </select>
                 </div>
-                <button type="submit" class="btn btn-primary btn-sm">
-                  Add Service to Custom Builder
-                </button>
-              </form>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span class="admin-title-badge" id="admin-library-count-badge">0 Photos Stored</span>
+                </div>
+              </div>
+
+              <!-- Photo Gallery Grid Container -->
+              <div class="admin-photo-grid" id="admin-photo-grid-container"></div>
+            </section>
+
+            <!-- ==========================================
+                 SECTION 3: BOOKING INQUIRIES
+                 ========================================== -->
+            <section class="admin-section-view" id="admin-view-bookings">
+              <div class="admin-overview-header">
+                <h3 class="admin-section-title">Client Booking Inquiries & Leads</h3>
+                <p class="admin-section-subtitle">Real-time incoming client leads from website booking calculators. All changes persist permanently.</p>
+              </div>
+
+              <!-- Toolbar & Filter -->
+              <div class="admin-toolbar-row">
+                <div class="admin-filter-group">
+                  <input type="text" id="admin-booking-search-input" class="admin-input-search" placeholder="Search by name, phone, or ID..." />
+                  <select id="admin-booking-status-filter" class="admin-select-filter">
+                    <option value="all">All Statuses</option>
+                    <option value="New">New</option>
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Cancelled">Cancelled</option>
+                  </select>
+                </div>
+                <span class="admin-title-badge" id="admin-inquiries-count-badge">0 Inquiries</span>
+              </div>
+
+              <!-- Inquiries Table -->
+              <div class="admin-card-section">
+                <div class="admin-table-container">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Inquiry ID</th>
+                        <th>Client Information</th>
+                        <th>Package Details</th>
+                        <th>Event Date & Venue</th>
+                        <th>Financials</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="admin-bookings-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- ==========================================
+                 SECTION 4: PACKAGE & PRICING
+                 ========================================== -->
+            <section class="admin-section-view" id="admin-view-packages">
+              <div class="admin-overview-header">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                  <div>
+                    <h3 class="admin-section-title">Packages & Pricing Manager</h3>
+                    <p class="admin-section-subtitle">Manage studio packages and custom services. Changes update the public booking calculator instantly.</p>
+                  </div>
+                  <button type="button" class="btn btn-primary btn-sm" id="btn-open-add-package-modal">
+                    ➕ Add New Package / Service
+                  </button>
+                </div>
+              </div>
+
+              <!-- Packages Table -->
+              <div class="admin-card-section">
+                <div class="admin-table-container">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Package / Service Name</th>
+                        <th>Category</th>
+                        <th>Price (₹)</th>
+                        <th>Unit / Duration</th>
+                        <th>Deliverables / Description</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="admin-packages-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <!-- ==========================================
+                 SECTION 5: CLIENT REVIEWS
+                 ========================================== -->
+            <section class="admin-section-view" id="admin-view-reviews">
+              <div class="admin-overview-header">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                  <div>
+                    <h3 class="admin-section-title">Client Reviews & Testimonials Moderation</h3>
+                    <p class="admin-section-subtitle">Moderate feedback and testimonials. Only published reviews appear on the client website.</p>
+                  </div>
+                  <button type="button" class="btn btn-primary btn-sm" id="btn-open-add-review-modal">
+                    ✍️ Add Client Review
+                  </button>
+                </div>
+              </div>
+
+              <!-- Reviews Table -->
+              <div class="admin-card-section">
+                <div class="admin-table-container">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Client Info</th>
+                        <th>Rating</th>
+                        <th>Event Category</th>
+                        <th>Review Headline & Comment</th>
+                        <th>Visibility</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="admin-reviews-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+          </div>
+        </main>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SUB-MODAL 1: ADD / EDIT PACKAGE & SERVICE -->
+  <div class="admin-sub-modal" id="admin-package-modal">
+    <div class="admin-sub-modal-box">
+      <div class="admin-sub-modal-header">
+        <h4 class="admin-sub-modal-title" id="admin-pkg-modal-title">Add Photography Package</h4>
+        <button type="button" class="btn-header-close close-sub-modal">&times;</button>
+      </div>
+      <div class="admin-sub-modal-body">
+        <form id="admin-package-form">
+          <input type="hidden" id="admin-pkg-id" />
+          <div class="form-group">
+            <label class="form-label">Package / Service Name *</label>
+            <input type="text" id="admin-pkg-name" class="form-input" placeholder="e.g. Royal Wedding Package" required />
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+            <div class="form-group">
+              <label class="form-label">Category *</label>
+              <input type="text" id="admin-pkg-category" class="form-input" placeholder="Wedding / Candid" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Price in INR (₹) *</label>
+              <input type="number" id="admin-pkg-price" class="form-input" placeholder="60000" required />
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+            <div class="form-group">
+              <label class="form-label">Unit / Timing</label>
+              <input type="text" id="admin-pkg-unit" class="form-input" placeholder="Full Event / per day" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Duration</label>
+              <input type="text" id="admin-pkg-duration" class="form-input" placeholder="1-2 Days" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Deliverables / Description (separate with · or comma)</label>
+            <textarea id="admin-pkg-desc" class="form-input" rows="3" placeholder="Traditional Photo + Video · 36x12 Luxury Album · 4K Drone Aerials"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">
+            Save Package
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUB-MODAL 2: ADD / EDIT CLIENT REVIEW -->
+  <div class="admin-sub-modal" id="admin-review-modal">
+    <div class="admin-sub-modal-box">
+      <div class="admin-sub-modal-header">
+        <h4 class="admin-sub-modal-title" id="admin-rev-modal-title">Add Client Review</h4>
+        <button type="button" class="btn-header-close close-sub-modal">&times;</button>
+      </div>
+      <div class="admin-sub-modal-body">
+        <form id="admin-review-form">
+          <input type="hidden" id="admin-rev-id" />
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+            <div class="form-group">
+              <label class="form-label">Client Name *</label>
+              <input type="text" id="admin-rev-name" class="form-input" placeholder="e.g. Vignesh & Divya" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">City / Location</label>
+              <input type="text" id="admin-rev-location" class="form-input" placeholder="e.g. Madurai, Tamil Nadu" />
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+            <div class="form-group">
+              <label class="form-label">Rating (1 to 5 Stars) *</label>
+              <select id="admin-rev-rating" class="form-select" required>
+                <option value="5">★★★★★ (5 Stars)</option>
+                <option value="4">★★★★☆ (4 Stars)</option>
+                <option value="3">★★★☆☆ (3 Stars)</option>
+                <option value="2">★★☆☆☆ (2 Stars)</option>
+                <option value="1">★☆☆☆☆ (1 Star)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Event Category</label>
+              <input type="text" id="admin-rev-event" class="form-input" placeholder="e.g. Traditional Wedding" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Review Headline *</label>
+            <input type="text" id="admin-rev-title" class="form-input" placeholder="e.g. Captivating wedding photographs!" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Feedback / Testimonial Comment *</label>
+            <textarea id="admin-rev-comment" class="form-input" rows="3" placeholder="Client words about Yazh Photography..." required></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select id="admin-rev-status" class="form-select">
+              <option value="published">Published (Visible on Website)</option>
+              <option value="draft">Draft / Unpublished</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">
+            Save Client Review
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUB-MODAL 3: EDIT PHOTO METADATA -->
+  <div class="admin-sub-modal" id="admin-edit-photo-modal">
+    <div class="admin-sub-modal-box">
+      <div class="admin-sub-modal-header">
+        <h4 class="admin-sub-modal-title">Edit Photograph Metadata</h4>
+        <button type="button" class="btn-header-close close-sub-modal">&times;</button>
+      </div>
+      <div class="admin-sub-modal-body">
+        <form id="admin-edit-photo-form">
+          <input type="hidden" id="admin-edit-photo-id" />
+          
+          <div class="edit-photo-preview-box" style="margin-bottom: 1.25rem; display: flex; align-items: center; gap: 1rem; background: rgba(255, 255, 255, 0.03); padding: 0.85rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.06);">
+            <img src="" id="admin-edit-photo-preview-thumb" alt="Photo" style="width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid rgba(197, 160, 89, 0.3);" />
+            <div>
+              <span style="font-size: 0.75rem; color: #9ca3af; text-transform: uppercase; font-weight: 700;">Asset ID:</span>
+              <strong id="admin-edit-photo-id-display" style="display: block; font-size: 0.82rem; color: #c5a059; font-family: monospace;">photo-id</strong>
+              <span id="admin-edit-photo-date-display" style="font-size: 0.72rem; color: #6b7280;">Uploaded on record</span>
             </div>
           </div>
 
-          <!-- TAB 5: REVIEWS MODERATION -->
-          <div class="admin-tab-panel" id="admin-tab-reviews">
-            <div class="media-explorer-header-bar" style="border-top: none; padding-top: 0;">
-              <h4 class="media-explorer-title">Client Reviews & Testimonials Moderation</h4>
+          <div class="form-group">
+            <label class="form-label" for="admin-edit-photo-title">Photo Title / Caption *</label>
+            <input type="text" id="admin-edit-photo-title" class="form-input" required />
+          </div>
+
+          <div class="form-group">
+            <div class="category-manager-header-bar">
+              <label class="form-label" for="admin-edit-photo-cat-select" style="margin-bottom: 0;">Category *</label>
+              <button type="button" class="btn-manage-categories-link" id="btn-edit-modal-manage-cat">
+                ⚙️ Manage Categories
+              </button>
             </div>
-            <div class="admin-table-wrap">
-              <table class="admin-table">
-                <thead>
-                  <tr>
-                    <th>Client Name</th>
-                    <th>Rating</th>
-                    <th>Event Category</th>
-                    <th>Review Feedback</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="admin-reviews-table-body"></tbody>
-              </table>
+            <select id="admin-edit-photo-cat-select" class="form-select" required></select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="admin-edit-photo-desc">Description / Backstory</label>
+            <textarea id="admin-edit-photo-desc" class="form-input" rows="2" placeholder="Backstory, couple, or event details..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Publish Visibility *</label>
+            <div class="admin-radio-group">
+              <label class="admin-radio-label">
+                <input type="radio" name="admin-edit-publish-status" id="admin-edit-status-pub" value="published" />
+                <span><strong>Published</strong> (Visible on public website)</span>
+              </label>
+              <label class="admin-radio-label">
+                <input type="radio" name="admin-edit-publish-status" id="admin-edit-status-draft" value="draft" />
+                <span><strong>Draft</strong> (Hidden from public)</span>
+              </label>
             </div>
           </div>
+
+          <div class="admin-form-btn-row" style="margin-top: 1.25rem;">
+            <button type="button" class="btn btn-secondary close-sub-modal" style="flex: 1;">Cancel</button>
+            <button type="submit" id="btn-save-edit-photo" class="btn btn-primary" style="flex: 2;">
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUB-MODAL 3B: CUSTOM DELETE CONFIRMATION MODAL -->
+  <div class="admin-sub-modal" id="admin-delete-confirm-modal">
+    <div class="admin-sub-modal-box" style="max-width: 460px;">
+      <div class="admin-sub-modal-header" style="border-bottom-color: rgba(239, 68, 68, 0.2);">
+        <div style="display: flex; align-items: center; gap: 0.65rem;">
+          <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(239, 68, 68, 0.15); display: flex; align-items: center; justify-content: center; color: #ef4444;">
+            <i data-lucide="alert-triangle" style="width: 18px; height: 18px;"></i>
+          </div>
+          <h4 class="admin-sub-modal-title" style="color: #f87171;">Delete Photograph?</h4>
+        </div>
+        <button type="button" class="btn-header-close close-sub-modal">&times;</button>
+      </div>
+      <div class="admin-sub-modal-body" style="padding: 1.75rem 1.5rem;">
+        <p style="font-size: 0.9rem; color: #d1d5db; line-height: 1.5; margin-bottom: 1.25rem;">
+          Are you sure you want to permanently delete <strong id="admin-delete-photo-title" style="color: #ffffff;">this photo</strong>?
+        </p>
+        <div style="background: rgba(239, 68, 68, 0.08); border-left: 3px solid #ef4444; padding: 0.75rem 1rem; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem;">
+          <p style="font-size: 0.78rem; color: #fca5a5; margin: 0;">
+            This action cannot be undone. The photograph will be immediately and permanently removed from cloud storage and the public website portfolio.
+          </p>
+        </div>
+        <input type="hidden" id="admin-delete-photo-id" />
+        <div class="admin-form-btn-row">
+          <button type="button" class="btn btn-secondary close-sub-modal" style="flex: 1;">
+            Cancel
+          </button>
+          <button type="button" id="btn-confirm-delete-photo" class="btn btn-danger" style="flex: 1.4; background: #dc2626; color: #ffffff; border: none; font-weight: 700;">
+            <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i> Delete Photograph
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- H. CATEGORY MANAGER MODAL -->
-  <div class="modal category-manager-modal" id="category-manager-modal">
-    <div class="modal-backdrop"></div>
-    <div class="modal-container">
-      <div class="modal-header">
-        <div>
-          <h3 class="modal-title">Edit & Manage Categories</h3>
-          <span style="font-size: 0.78rem; color: var(--accent-gold);">Yazh Photography Category Directory</span>
-        </div>
-        <button type="button" class="modal-close">&times;</button>
+  <!-- SUB-MODAL 4: CHANGE INQUIRY STATUS -->
+  <div class="admin-sub-modal" id="admin-status-modal">
+    <div class="admin-sub-modal-box">
+      <div class="admin-sub-modal-header">
+        <h4 class="admin-sub-modal-title">Update Lead Status</h4>
+        <button type="button" class="btn-header-close close-sub-modal">&times;</button>
       </div>
-      <div class="modal-body">
-        <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1rem;">
-          Edit category titles or delete unwanted categories. Changes will update the uploader and live website filter bar instantly.
-        </p>
+      <div class="admin-sub-modal-body">
+        <form id="admin-change-status-form">
+          <input type="hidden" id="admin-status-inquiry-id" />
+          <p id="admin-status-inquiry-desc" style="font-size: 0.85rem; color: #d1d5db; margin-bottom: 1rem;"></p>
+          <div class="form-group">
+            <label class="form-label">Select Booking Status *</label>
+            <select id="admin-new-status-select" class="form-select">
+              <option value="New">New Lead</option>
+              <option value="Confirmed">Confirmed Booking</option>
+              <option value="In Progress">In Progress (Shooting / Editing)</option>
+              <option value="Completed">Completed & Delivered</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">
+            Update Status
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUB-MODAL 5: CHANGE PASSWORD -->
+  <div class="admin-sub-modal" id="admin-password-modal">
+    <div class="admin-sub-modal-box">
+      <div class="admin-sub-modal-header">
+        <h4 class="admin-sub-modal-title">Update Admin Password</h4>
+        <button type="button" class="btn-header-close close-sub-modal">&times;</button>
+      </div>
+      <div class="admin-sub-modal-body">
+        <form id="admin-password-form">
+          <div class="form-group">
+            <label class="form-label">Current Master Password *</label>
+            <input type="password" id="admin-current-pwd-input" class="form-input" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">New Password (min 4 characters) *</label>
+            <input type="password" id="admin-new-pwd-input" class="form-input" required minlength="4" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirm New Password *</label>
+            <input type="password" id="admin-confirm-pwd-input" class="form-input" required minlength="4" />
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">
+            Update Password Key
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- H. CATEGORY MANAGER MODAL -->
+  <div class="admin-sub-modal category-manager-modal" id="category-manager-modal">
+    <div class="admin-sub-modal-box" style="max-width: 540px;">
+      <div class="admin-sub-modal-header">
+        <div>
+          <h4 class="admin-sub-modal-title">Manage Photography Categories</h4>
+          <span style="font-size: 0.76rem; color: #c5a059;">Live sync with uploader & public filter bar</span>
+        </div>
+        <button type="button" class="btn-header-close close-category-modal">&times;</button>
+      </div>
+      <div class="admin-sub-modal-body">
+        <!-- Add New Category Form -->
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 1.15rem; margin-bottom: 1.5rem;">
+          <h4 style="font-size: 0.85rem; margin-bottom: 0.65rem; color: #ffffff; display: flex; align-items: center; gap: 0.4rem;">
+            <i data-lucide="plus-circle" style="width: 15px; height: 15px; color: #c5a059;"></i> Add New Category
+          </h4>
+          <form id="admin-add-category-form" style="display: flex; gap: 0.5rem;">
+            <input type="text" id="admin-new-cat-name" class="form-input" placeholder="e.g. Sangeet, Haldi, Maternity" required style="flex: 1;" />
+            <button type="submit" id="btn-submit-add-cat" class="btn btn-primary btn-sm" style="white-space: nowrap;">
+              Add Category
+            </button>
+          </form>
+        </div>
+
+        <h4 style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; color: #9ca3af; margin-bottom: 0.75rem;">
+          Existing Categories
+        </h4>
 
         <!-- Category List with Edit & Delete actions -->
         <div class="categories-list-box" id="admin-categories-list-container"></div>
 
-        <!-- Add New Category Form -->
-        <div class="add-category-box">
-          <h4 style="font-size: 0.88rem; margin-bottom: 0.65rem; color: var(--text-primary);">➕ Add New Category</h4>
-          <form id="admin-add-category-form" style="display: flex; gap: 0.5rem;">
-            <input type="text" id="admin-new-cat-name" class="form-input" placeholder="e.g. Sangeet & Mehndi / Housewarming" required style="flex: 1;" />
-            <button type="submit" class="btn btn-primary btn-sm">
-              Add Category
-            </button>
-          </form>
+        <div style="margin-top: 1.5rem; text-align: right;">
+          <button type="button" class="btn btn-secondary btn-sm close-category-modal">
+            Close
+          </button>
         </div>
       </div>
     </div>

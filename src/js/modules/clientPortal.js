@@ -1,5 +1,5 @@
 import { CLIENT_DEMO_GALLERIES } from '../data/clientDemos.js';
-import { photoDB } from '../utils/dbStorage.js';
+import { cloudStorage } from '../utils/cloudStorage.js';
 import { sound } from '../utils/sound.js';
 import { toast } from '../utils/toast.js';
 
@@ -61,7 +61,7 @@ export class ClientPortalManager {
     const client = CLIENT_DEMO_GALLERIES[pin];
 
     // Check if there are private uploaded photos for this PIN
-    const privateUploads = await photoDB.getPrivatePhotosByPin(pin);
+    const privateUploads = await cloudStorage.getPrivatePhotosByPin(pin);
 
     if (!client && privateUploads.length === 0) {
       toast.show({
@@ -83,7 +83,7 @@ export class ClientPortalManager {
         title: `${privateUploads[0]?.clientName || 'Private Event'} Gallery`,
         names: privateUploads[0]?.clientName || 'Private Client',
         date: 'Wedding & Event Proofs',
-        coverImage: privateUploads[0]?.image || '',
+        coverImage: privateUploads[0]?.image || privateUploads[0]?.url || '',
         photos: privateUploads
       };
     }
@@ -98,7 +98,7 @@ export class ClientPortalManager {
 
   async loadGalleryForPin(pin) {
     const client = CLIENT_DEMO_GALLERIES[pin];
-    const privateUploads = await photoDB.getPrivatePhotosByPin(pin);
+    const privateUploads = await cloudStorage.getPrivatePhotosByPin(pin);
 
     if (client) {
       this.currentClient = { ...client, photos: [...privateUploads, ...client.photos] };
@@ -149,10 +149,11 @@ export class ClientPortalManager {
 
     grid.innerHTML = photosToRender.map(photo => {
       const isFav = this.favorites.has(photo.id);
+      const imgUrl = photo.thumbnail || photo.image || photo.url;
 
       return `
         <div class="client-photo-card ${isFav ? 'selected' : ''}" data-id="${photo.id}">
-          <img src="${photo.thumbnail || photo.image}" alt="${photo.title || photo.code || 'Proof Photo'}" loading="lazy" class="client-proof-img" />
+          <img src="${imgUrl}" alt="${photo.title || photo.code || 'Proof Photo'}" loading="lazy" class="client-proof-img" />
           <div class="watermark-overlay">YAZH PROOF</div>
           <button type="button" class="btn-client-heart ${isFav ? 'active' : ''}" data-id="${photo.id}" title="Select for Album">
             ♥

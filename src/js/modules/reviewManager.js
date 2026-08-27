@@ -1,43 +1,35 @@
+import { dataStore } from '../utils/dataStore.js';
 import { toast } from '../utils/toast.js';
 import { sound } from '../utils/sound.js';
 import confetti from 'canvas-confetti';
 
 export class ReviewManager {
   constructor() {
-    this.reviews = this.loadReviews();
+    this.reviews = [];
     this.selectedRating = 5;
     this.init();
   }
 
-  init() {
+  async init() {
+    await this.loadReviews();
     this.renderOverallRating();
     this.renderReviewsGrid();
     this.setupReviewModal();
-    this.bindEvents();
+
+    document.addEventListener('reviewsUpdated', async () => {
+      await this.loadReviews();
+      this.renderOverallRating();
+      this.renderReviewsGrid();
+    });
   }
 
-  loadReviews() {
-    const saved = localStorage.getItem('yazh_client_reviews');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        // Filter out any previous dummy seed items (rev-01 to rev-04)
-        const realReviews = parsed.filter(r => !['rev-01', 'rev-02', 'rev-03', 'rev-04'].includes(r.id));
-        localStorage.setItem('yazh_client_reviews', JSON.stringify(realReviews));
-        return realReviews;
-      } catch (e) {
-        // fallback
-      }
+  async loadReviews() {
+    try {
+      this.reviews = await dataStore.getPublishedReviews();
+    } catch (e) {
+      console.warn('Failed to load reviews from dataStore:', e);
+      this.reviews = [];
     }
-    return [];
-  }
-
-  saveReviews(reviews) {
-    this.reviews = reviews;
-    localStorage.setItem('yazh_client_reviews', JSON.stringify(reviews));
-    this.renderOverallRating();
-    this.renderReviewsGrid();
-    document.dispatchEvent(new CustomEvent('reviewsUpdated', { detail: reviews }));
   }
 
   renderOverallRating() {
@@ -84,23 +76,23 @@ export class ReviewManager {
     }
 
     grid.innerHTML = this.reviews.map(rev => {
-      const stars = '★'.repeat(rev.rating) + '☆'.repeat(5 - rev.rating);
-      const dateFormatted = new Date(rev.date).toLocaleDateString('en-IN', {
+      const stars = '★'.repeat(rev.rating || 5) + '☆'.repeat(5 - (rev.rating || 5));
+      const dateFormatted = rev.date ? new Date(rev.date).toLocaleDateString('en-IN', {
         year: 'numeric',
         month: 'short',
         day: 'numeric'
-      });
+      }) : 'Recent';
 
       return `
         <div class="review-card" data-id="${rev.id}">
           <div class="review-card-top">
             <div class="review-user-info">
               <div class="review-avatar-wrap">
-                <div class="review-avatar-placeholder">${rev.name.charAt(0)}</div>
+                <div class="review-avatar-placeholder">${(rev.name || 'A').charAt(0)}</div>
               </div>
               <div class="review-user-meta">
                 <strong class="review-user-name">${rev.name}</strong>
-                <span class="review-event-badge">${rev.eventType} · ${rev.location || 'Tamil Nadu'}</span>
+                <span class="review-event-badge">${rev.eventType || 'Wedding'} · ${rev.location || 'Tamil Nadu'}</span>
               </div>
             </div>
             <div class="review-stars-badge" title="${rev.rating} out of 5 stars">
@@ -162,9 +154,9 @@ export class ReviewManager {
     });
 
     // Form Submit
-    form?.addEventListener('submit', (e) => {
+    form?.addEventListener('submit', async (e) => {
       e.preventDefault();
-      this.handleReviewSubmit();
+      await this.handleReviewSubmit();
     });
   }
 
@@ -195,7 +187,7 @@ export class ReviewManager {
     });
   }
 
-  handleReviewSubmit() {
+  async handleReviewSubmit() {
     const nameInput = document.getElementById('review-client-name');
     const eventTypeInput = document.getElementById('review-event-type');
     const locationInput = document.getElementById('review-location');
@@ -223,11 +215,12 @@ export class ReviewManager {
       date: new Date().toISOString().split('T')[0],
       verified: true,
       title,
-      comment
+      comment,
+      status: 'published'
     };
 
-    const updated = [newReview, ...this.reviews];
-    this.saveReviews(updated);
+    // Save to persistent cloud dataStore
+    await dataStore.addReview(newReview);
 
     sound.playSuccessChime();
     confetti({
@@ -244,9 +237,9 @@ export class ReviewManager {
     this.updateStarRatingUI(5);
     modal?.classList.remove('active');
     document.body.style.overflow = '';
-  }
 
-  bindEvents() {
-    // Optional events
+    await this.loadReviews();
+    this.renderOverallRating();
+    this.renderReviewsGrid();
   }
 }

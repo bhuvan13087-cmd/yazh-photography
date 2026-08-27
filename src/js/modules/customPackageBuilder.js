@@ -1,18 +1,19 @@
-import { DEFAULT_CUSTOM_SERVICES } from '../data/customServices.js';
+import { dataStore } from '../utils/dataStore.js';
 import { currency } from './currency.js';
 import { toast } from '../utils/toast.js';
 import { sound } from '../utils/sound.js';
 
 export class CustomPackageBuilder {
   constructor() {
-    this.services = this.loadServices();
+    this.services = [];
     this.selectedServiceIds = new Set(['srv-trad-photo', 'srv-candid-photo', 'srv-trad-video', 'srv-album-3612']);
     this.activeView = 'curated'; // 'curated' | 'custom'
     this.init();
   }
 
-  init() {
+  async init() {
     this.setupViewSwitcher();
+    await this.loadServices();
     this.renderServicesGrid();
     this.renderSummary();
     this.bindEvents();
@@ -22,25 +23,20 @@ export class CustomPackageBuilder {
       this.renderSummary();
     });
 
-    document.addEventListener('servicesUpdated', (e) => {
-      this.services = e.detail || this.loadServices();
+    document.addEventListener('servicesUpdated', async () => {
+      await this.loadServices();
       this.renderServicesGrid();
       this.renderSummary();
     });
   }
 
-  loadServices() {
-    const saved = localStorage.getItem('yazh_custom_services');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-      } catch (e) {
-        // fallback
-      }
+  async loadServices() {
+    try {
+      this.services = await dataStore.getCustomServices();
+    } catch (e) {
+      console.warn('Failed to load custom services from dataStore:', e);
+      this.services = [];
     }
-    localStorage.setItem('yazh_custom_services', JSON.stringify(DEFAULT_CUSTOM_SERVICES));
-    return [...DEFAULT_CUSTOM_SERVICES];
   }
 
   setupViewSwitcher() {
@@ -86,7 +82,7 @@ export class CustomPackageBuilder {
               </div>
             </div>
             <h4 class="custom-service-title">${srv.name}</h4>
-            <p class="custom-service-desc">${srv.description}</p>
+            <p class="custom-service-desc">${srv.description || ''}</p>
           </div>
           <div class="custom-service-footer">
             <span class="custom-service-price">${priceFormatted}</span>
@@ -169,12 +165,11 @@ export class CustomPackageBuilder {
       const servicesSummary = selectedList.map(s => `• ${s.name} (${currency.format(s.priceINR)})`).join('\n');
 
       // Transfer to booking inquiry form
-      const packageSelect = document.getElementById('inquiry-package-select');
-      const advanceInput = document.getElementById('inquiry-advance-amount');
+      const packageSelect = document.getElementById('booking-package-select');
+      const advanceInput = document.getElementById('booking-advance-amount');
       const notesInput = document.getElementById('booking-notes');
 
       if (packageSelect) {
-        // Ensure "custom" option exists or add it
         let customOpt = Array.from(packageSelect.options).find(o => o.value.includes('Custom'));
         if (!customOpt) {
           customOpt = new Option(`Custom Package (${currency.format(totalINR)})`, `Custom Package - ${currency.format(totalINR)}`);

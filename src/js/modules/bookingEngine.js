@@ -1,4 +1,5 @@
 import { PHOTOGRAPHY_PACKAGES, STUDIO_INFO } from '../data/packages.js';
+import { dataStore } from '../utils/dataStore.js';
 import { currency } from './currency.js';
 import { toast } from '../utils/toast.js';
 import { sound } from '../utils/sound.js';
@@ -7,12 +8,13 @@ import confetti from 'canvas-confetti';
 export class BookingEngine {
   constructor() {
     this.packages = PHOTOGRAPHY_PACKAGES;
-    this.selectedPackage = this.packages[1]; // Default Standard package (₹60,000)
-    this.advanceAmount = 5000; // Default token advance in INR
+    this.selectedPackage = this.packages[1] || this.packages[0];
+    this.advanceAmount = 5000;
     this.init();
   }
 
-  init() {
+  async init() {
+    await this.loadPackages();
     this.renderPackages();
     this.populatePackageDropdown();
     this.bindEvents();
@@ -23,6 +25,32 @@ export class BookingEngine {
       this.populatePackageDropdown();
       this.updateCalculation();
     });
+
+    document.addEventListener('packagesUpdated', async () => {
+      await this.loadPackages();
+      this.renderPackages();
+      this.populatePackageDropdown();
+      this.updateCalculation();
+    });
+  }
+
+  async loadPackages() {
+    try {
+      const activePkgs = await dataStore.getActivePackages();
+      if (activePkgs && activePkgs.length > 0) {
+        this.packages = activePkgs.map(p => ({
+          id: p.id,
+          title: p.name || p.title,
+          priceINR: p.priceINR,
+          deliverables: p.deliverables || (p.description ? p.description.split('·').map(s => s.trim()) : [])
+        }));
+        if (!this.selectedPackage || !this.packages.some(p => p.id === this.selectedPackage.id)) {
+          this.selectedPackage = this.packages[0];
+        }
+      }
+    } catch (e) {
+      console.warn('Could not load packages from dataStore:', e);
+    }
   }
 
   renderPackages() {
@@ -31,7 +59,7 @@ export class BookingEngine {
 
     container.innerHTML = this.packages.map(pkg => {
       const priceFormatted = currency.format(pkg.priceINR);
-      const isSelected = pkg.id === this.selectedPackage.id;
+      const isSelected = this.selectedPackage && pkg.id === this.selectedPackage.id;
 
       return `
         <div class="package-card ${isSelected ? 'selected' : ''}" data-id="${pkg.id}">
@@ -44,7 +72,7 @@ export class BookingEngine {
 
           <div class="package-inclusions">
             <ul class="inclusions-list">
-              ${pkg.deliverables.map(item => `<li><i data-lucide="check"></i> <span>${item}</span></li>`).join('')}
+              ${(pkg.deliverables || []).map(item => `<li><i data-lucide="check"></i> <span>${item}</span></li>`).join('')}
             </ul>
           </div>
 
@@ -65,7 +93,8 @@ export class BookingEngine {
     if (!select) return;
 
     select.innerHTML = this.packages.map(pkg => {
-      return `<option value="${pkg.id}" ${pkg.id === this.selectedPackage.id ? 'selected' : ''}>
+      const isSelected = this.selectedPackage && pkg.id === this.selectedPackage.id;
+      return `<option value="${pkg.id}" ${isSelected ? 'selected' : ''}>
         ${pkg.title} (${currency.format(pkg.priceINR)})
       </option>`;
     }).join('');
@@ -140,12 +169,13 @@ export class BookingEngine {
 
   syncDropdown() {
     const select = document.getElementById('booking-package-select');
-    if (select) {
+    if (select && this.selectedPackage) {
       select.value = this.selectedPackage.id;
     }
   }
 
   updateCalculation() {
+    if (!this.selectedPackage) return;
     const totalINR = this.selectedPackage.priceINR;
     const advanceINR = Math.min(this.advanceAmount, totalINR);
     const remainingINR = Math.max(0, totalINR - advanceINR);
@@ -161,7 +191,7 @@ export class BookingEngine {
     if (remainingBalanceEl) remainingBalanceEl.textContent = currency.format(remainingINR);
   }
 
-  handleBookingSubmit() {
+  async handleBookingSubmit() {
     const nameInput = document.getElementById('booking-client-name');
     const emailInput = document.getElementById('booking-client-email');
     const phoneInput = document.getElementById('booking-client-phone');
@@ -180,22 +210,22 @@ export class BookingEngine {
 
     const bookingRecord = {
       id: `YZ-${Date.now().toString().slice(-6)}`,
-      dateCreated: new Date().toISOString(),
-      clientName: nameInput.value,
-      clientEmail: emailInput?.value || STUDIO_INFO.email,
-      clientPhone: phoneInput.value,
+      createdAt: new Date().toISOString(),
+      clientName: nameInput.value.trim(),
+      clientEmail: emailInput?.value.trim() || STUDIO_INFO.email,
+      clientPhone: phoneInput.value.trim(),
       eventDate: dateInput.value,
-      location: locationInput?.value || 'Venue TBD',
+      location: locationInput?.value.trim() || 'Venue TBD',
       packageName: this.selectedPackage.title,
       totalINR: totalINR,
       advanceINR: advanceINR,
       remainingINR: remainingINR,
-      status: 'Booking Inquiry Received'
+      status: 'New',
+      notes: notesInput?.value.trim() || ''
     };
 
-    const existingBookings = JSON.parse(localStorage.getItem('yazh_bookings') || '[]');
-    existingBookings.unshift(bookingRecord);
-    localStorage.setItem('yazh_bookings', JSON.stringify(existingBookings));
+    // Save to persistent cloud dataStore
+    await dataStore.addBooking(bookingRecord);
 
     sound.playSuccessChime();
     confetti({

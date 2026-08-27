@@ -1,5 +1,5 @@
 import { PORTFOLIO_ITEMS, PORTFOLIO_CATEGORIES } from '../data/portfolio.js';
-import { photoDB } from '../utils/dbStorage.js';
+import { dataStore } from '../utils/dataStore.js';
 import { sound } from '../utils/sound.js';
 import { toast } from '../utils/toast.js';
 
@@ -25,6 +25,10 @@ export class PortfolioViewer {
       await this.loadAllPhotos();
     });
 
+    document.addEventListener('photoReplaced', async () => {
+      await this.loadAllPhotos();
+    });
+
     document.addEventListener('categoriesUpdated', async () => {
       await this.loadAllPhotos();
     });
@@ -32,15 +36,27 @@ export class PortfolioViewer {
 
   async loadAllPhotos() {
     try {
-      const publicUploads = await photoDB.getPublicPhotos();
-      this.items = [...publicUploads, ...this.builtInItems];
+      const publishedPhotos = await dataStore.getPublishedPhotos();
+      const storedCategories = await dataStore.getCategories();
 
-      // Dynamically build category pills from all available photos
+      // Format published photos from unified dataStore
+      this.items = publishedPhotos.map(photo => ({
+        id: photo.id,
+        title: photo.title || 'Studio Photograph',
+        category: photo.category || 'traditional',
+        categoryName: photo.categoryName || photo.category || 'Wedding',
+        image: photo.image || photo.url,
+        thumbnail: photo.thumbnail || photo.image || photo.url,
+        aspect: photo.aspect || 'tall',
+        description: photo.description || 'Master wedding photograph by Yazh Photography.'
+      }));
+
+      // Dynamically build category pills from available photos and categories
       const dynamicCategories = new Map();
       dynamicCategories.set('all', 'All Works');
 
-      // Seed with base categories
-      PORTFOLIO_CATEGORIES.forEach(c => dynamicCategories.set(c.id, c.name));
+      // Seed with stored categories
+      storedCategories.forEach(c => dynamicCategories.set(c.id, c.name));
 
       // Add any custom categories from uploads
       this.items.forEach(item => {
@@ -51,6 +67,7 @@ export class PortfolioViewer {
 
       this.categories = Array.from(dynamicCategories.entries()).map(([id, name]) => ({ id, name }));
     } catch (e) {
+      console.warn('Failed to load photos from cloud storage:', e);
       this.items = [...this.builtInItems];
       this.categories = [...PORTFOLIO_CATEGORIES];
     }
@@ -215,15 +232,17 @@ export class PortfolioViewer {
 
     const img = document.getElementById('lightbox-main-img');
     const title = document.getElementById('lightbox-title');
-    const location = document.getElementById('lightbox-location');
-    const story = document.getElementById('lightbox-story');
+    const cat = document.getElementById('lightbox-category');
+    const desc = document.getElementById('lightbox-desc');
+    const count = document.getElementById('lightbox-counter');
 
     if (img) {
       img.src = item.image;
       img.alt = item.title;
     }
     if (title) title.textContent = item.title;
-    if (location) location.textContent = item.categoryName || 'Wedding Showcase';
-    if (story) story.textContent = item.description || 'Captured by Yazh Photography. "Save your memory in every click."';
+    if (cat) cat.textContent = item.categoryName || item.category;
+    if (desc) desc.textContent = item.description || '';
+    if (count) count.textContent = `${this.currentIndex + 1} / ${this.items.length}`;
   }
 }
