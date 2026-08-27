@@ -1,0 +1,322 @@
+/* Packages & Booking Inquiry Section - Precision Alignment */
+
+.packages-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+  align-items: stretch;
+}
+
+.package-card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: all var(--transition-normal);
+}
+
+.package-card:hover {
+  border-color: var(--border-glass);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.package-card.selected {
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 1.5px var(--accent-gold), var(--shadow-md);
+}
+
+.package-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.package-title {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+
+.package-price-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.package-price-amount {
+  font-family: var(--font-serif);
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.package-inclusions {
+  flex-grow: 1;
+  margin-bottom: 1.75rem;
+}
+
+.inclusions-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.inclusions-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.inclusions-list li i {
+  width: 16px;
+  height: 16px;
+  color: var(--accent-gold);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.package-footer {
+  margin-top: auto;
+}
+
+.package-footer .btn {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Date Booking Inquiry & Calculator Panel */
+.booking-calculator-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-md);
+}
+
+.booking-calculator-layout {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.booking-section-subtitle {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.booking-form-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Advance Preset Chips */
+.advance-presets-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.btn-advance-preset {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-advance-preset:hover {
+  border-color: var(--border-glass);
+  color: var(--text-primary);
+}
+
+.btn-advance-preset.active {
+  background: var(--accent-subtle);
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+
+/* Summary Column */
+.booking-summary-col {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+}
+
+.summary-header h3 {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.summary-line-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.summary-row-label {
+  color: var(--text-muted);
+}
+
+.summary-row-val {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Remaining Balance Highlight Box */
+.remaining-balance-box {
+  background: rgba(197, 160, 89, 0.1);
+  border: 1px solid var(--accent-gold);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.remaining-balance-header {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-gold);
+  font-weight: 700;
+}
+
+.remaining-balance-amount {
+  font-family: var(--font-serif);
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.remaining-balance-hint {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+}
+
+@media (max-width: 1100px) {
+  .packages-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .booking-calculator-layout {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+}
+
+@media (max-width: 650px) {
+  .packages-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-bottom: 2.25rem;
+  }
+
+  .package-card {
+    padding: 1.5rem 1.15rem;
+  }
+
+  .package-header {
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+  }
+
+  .package-title {
+    font-size: 1.3rem;
+  }
+
+  .package-price-amount {
+    font-size: 1.65rem;
+  }
+
+  .inclusions-list {
+    gap: 0.65rem;
+  }
+
+  .inclusions-list li {
+    font-size: 0.82rem;
+  }
+
+  .booking-calculator-panel {
+    padding: 1.25rem 1rem;
+    border-radius: var(--radius-md);
+  }
+
+  .booking-section-subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.65rem;
+  }
+
+  .booking-form-fields {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .advance-presets-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.45rem;
+  }
+
+  .btn-advance-preset {
+    padding: 0.5rem 0.25rem;
+    text-align: center;
+    font-size: 0.78rem;
+  }
+
+  .btn-submit-booking {
+    padding: 0.95rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .booking-summary-col {
+    padding: 1.25rem 1rem;
+  }
+
+  .remaining-balance-amount {
+    font-size: 1.45rem;
+  }
+}

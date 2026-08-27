@@ -1,0 +1,117 @@
+/* Minimalist Design Tokens & Formal Professional Palette */
+:root, [data-theme="dark"] {
+  /* Studio Dark Theme */
+  --bg-primary: #0d0e12;
+  --bg-secondary: #14161d;
+  --bg-tertiary: #1b1e28;
+  --bg-card: rgba(20, 22, 29, 0.7);
+  --bg-card-hover: rgba(27, 30, 40, 0.9);
+  --bg-glass: rgba(13, 14, 18, 0.75);
+  --bg-glass-heavy: rgba(13, 14, 18, 0.92);
+
+  /* Minimal Accents */
+  --accent-primary: #ffffff;
+  --accent-gold: #c5a059;
+  --accent-gold-light: #e6c887;
+  --accent-subtle: rgba(255, 255, 255, 0.08);
+
+  /* Typography Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #c9cdd4;
+  --text-muted: #848a97;
+  --text-dim: #525866;
+  --text-gold: #c5a059;
+
+  /* Borders - 1px Hairlines */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-glass: rgba(255, 255, 255, 0.12);
+  --border-gold: rgba(197, 160, 89, 0.35);
+  --border-gold-hover: rgba(197, 160, 89, 0.8);
+
+  /* Status Colors */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+
+  /* Button Themes */
+  --btn-primary-bg: #ffffff;
+  --btn-primary-text: #000000;
+  --btn-primary-hover-bg: #e6e6e6;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
+  --shadow-gold: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-gold-hover: 0 8px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* Gallery Light Theme */
+[data-theme="light"] {
+  --bg-primary: #fbfbfd;
+  --bg-secondary: #f3f3f6;
+  --bg-tertiary: #e9e9ee;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-hover: #ffffff;
+  --bg-glass: rgba(251, 251, 253, 0.85);
+  --bg-glass-heavy: rgba(251, 251, 253, 0.95);
+
+  --accent-primary: #0c0d10;
+  --accent-gold: #9e7b3b;
+  --accent-gold-light: #b89130;
+  --accent-subtle: rgba(0, 0, 0, 0.05);
+
+  --text-primary: #0c0d10;
+  --text-secondary: #333842;
+  --text-muted: #646c7c;
+  --text-dim: #949ca9;
+  --text-gold: #9e7b3b;
+
+  --border-subtle: rgba(0, 0, 0, 0.07);
+  --border-glass: rgba(0, 0, 0, 0.1);
+  --border-gold: rgba(158, 123, 59, 0.4);
+  --border-gold-hover: rgba(158, 123, 59, 0.9);
+
+  --btn-primary-bg: #0c0d10;
+  --btn-primary-text: #ffffff;
+  --btn-primary-hover-bg: #22242a;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.08);
+  --shadow-gold: 0 4px 20px rgba(0, 0, 0, 0.05);
+  --shadow-gold-hover: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+:root {
+  /* Formal, Clean Typography */
+  --font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-display: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3.5rem;
+  --spacing-3xl: 6rem;
+  --spacing-4xl: 8.5rem;
+
+  /* Radius */
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout */
+  --container-max: 1280px;
+  --header-height: 76px;
+}

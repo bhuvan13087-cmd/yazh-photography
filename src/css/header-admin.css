@@ -1,0 +1,21 @@
+/* Header Admin Access Chip */
+.btn-admin-header-chip {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  padding: 0.42rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-admin-header-chip:hover {
+  color: var(--text-primary);
+  border-color: var(--accent-gold);
+  background: var(--accent-subtle);
+}

@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- SEO & Professional Metadata -->
+  <title>Yazh Photography — Save Your Memory in Every Click | Wedding & Event Photography</title>
+  <meta name="description" content="Yazh Photography — Save your memory in every click. Wedding photography, traditional & candid videography, 4K drone, 36x12 albums, custom frames, and pre/post wedding shoots." />
+  <meta name="keywords" content="Yazh Photography, wedding photography, candid photography, wedding albums, traditional photography, videography" />
+  <meta property="og:title" content="Yazh Photography — Save Your Memory in Every Click" />
+  <meta property="og:description" content="Official photography packages, albums, frames, and booking inquiry portal." />
+
+  <!-- Formal Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="./src/css/variables.css" />
+  <link rel="stylesheet" href="./src/css/base.css" />
+  <link rel="stylesheet" href="./src/css/components.css" />
+  <link rel="stylesheet" href="./src/css/header-footer.css" />
+  <link rel="stylesheet" href="./src/css/hero.css" />
+  <link rel="stylesheet" href="./src/css/portfolio.css" />
+  <link rel="stylesheet" href="./src/css/store.css" />
+  <link rel="stylesheet" href="./src/css/presets.css" />
+  <link rel="stylesheet" href="./src/css/booking.css" />
+  <link rel="stylesheet" href="./src/css/client-portal.css" />
+  <link rel="stylesheet" href="./src/css/cart-checkout.css" />
+  <link rel="stylesheet" href="./src/css/admin.css" />
+  <link rel="stylesheet" href="./src/css/reviews.css" />
+  <link rel="stylesheet" href="./src/css/custom-package.css" />
+  <link rel="stylesheet" href="./src/css/animations.css" />
+</head>
+<body>
+
+  <!-- ===================================================
+       1. FORMAL NAVIGATION HEADER
+       =================================================== -->
+  <header class="main-header" id="main-header">
+    <div class="container header-container">
+      <a href="#" class="brand-logo" id="header-brand-logo">
+        <span class="logo-main">YAZH PHOTOGRAPHY</span>
+        <span class="logo-sub">Save your memory in every click</span>
+      </a>
+
+      <nav class="nav-desktop">
+        <ul class="nav-links-desktop">
+          <li><a href="#booking-section" class="nav-link">Packages</a></li>
+          <li><a href="#portfolio-section" class="nav-link">Portfolio</a></li>
+          <li><a href="#reviews-section" class="nav-link">Reviews</a></li>
+          <li><a href="#contact-section" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <!-- Booking Inquiry Action CTA Button -->
+        <a href="#session-booking-form" class="btn-header-booking-cta" title="Submit Wedding / Event Booking Inquiry">
+          <i data-lucide="calendar-check" style="width: 14px; height: 14px;"></i>
+          <span>Booking Inquiry</span>
+        </a>
+
+        <!-- Light/Dark Mode Switcher -->
+        <button type="button" class="btn-theme-toggle" id="theme-toggle-btn" title="Toggle Light/Dark Theme">
+          <i data-lucide="sun" style="width: 16px; height: 16px;"></i>
+        </button>
+
+        <!-- Currency Switcher -->
+        <div class="currency-selector-wrapper">
+          <button type="button" class="currency-btn" id="currency-selector-btn" title="Select Currency">
+            <span id="current-currency-label">INR</span>
+            <i data-lucide="chevron-down" style="width: 11px; height: 11px;"></i>
+          </button>
+          <div class="currency-dropdown" id="currency-dropdown-menu">
+            <button class="currency-item" data-currency="INR"><span>INR (₹)</span></button>
+            <button class="currency-item" data-currency="USD"><span>USD ($)</span></button>
+            <button class="currency-item" data-currency="EUR"><span>EUR (€)</span></button>
+            <button class="currency-item" data-currency="GBP"><span>GBP (£)</span></button>
+          </div>
+        </div>
+
+        <!-- Shutter Sound Toggle -->
+        <button type="button" class="btn-sound-toggle" id="sound-toggle-btn" title="Camera Shutter Sound">
+          <i data-lucide="volume-2" style="width: 15px; height: 15px;"></i>
+        </button>
+
+        <!-- Studio Admin Portal Trigger -->
+        <button type="button" class="btn-open-admin btn-admin-header-chip" title="Open Studio Admin & Photo Uploader">
+          <i data-lucide="shield" style="width: 13px; height: 13px;"></i>
+          <span>Admin</span>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button type="button" class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Open Menu">
+          <i data-lucide="menu" style="width: 22px; height: 22px;"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <aside class="mobile-nav-drawer" id="mobile-nav-drawer">
+    <div>
+      <div class="mobile-nav-header">
+        <div class="brand-logo">
+          <span class="logo-main">YAZH PHOTOGRAPHY</span>
+          <span class="logo-sub">Save your memory in every click</span>
+        </div>
+        <button type="button" class="mobile-menu-btn" id="mobile-nav-close" aria-label="Close Menu">
+          <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+        </button>
+      </div>
+
+      <!-- Quick Action Buttons Inside Mobile Drawer -->
+      <div class="mobile-drawer-cta-box">
+        <a href="tel:8148274100" class="btn-drawer-action btn-drawer-call">
+          <i data-lucide="phone-call" style="width: 14px; height: 14px; color: var(--accent-gold);"></i>
+          <span>Call Studio</span>
+        </a>
+        <a href="https://wa.me/918148274100?text=Hi%20Yazh%20Photography%2C%20I%20would%20like%20to%20inquire%20about%20wedding%20packages" target="_blank" rel="noopener" class="btn-drawer-action btn-drawer-whatsapp">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          </svg>
+          <span>WhatsApp</span>
+        </a>
+      </div>
+
+      <ul class="mobile-nav-links">
+        <li>
+          <a href="#session-booking-form" class="mobile-nav-link" style="color: var(--accent-gold); font-weight: 600;">
+            <span>📅 Booking Inquiry</span>
+            <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>
+          </a>
+        </li>
+        <li>
+          <a href="#booking-section" class="mobile-nav-link">
+            <span>💎 Wedding Packages</span>
+            <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>
+          </a>
+        </li>
+        <li>
+          <a href="#booking-section" class="mobile-nav-link" id="mobile-link-custom-builder">
+            <span>🛠️ Custom Package Builder</span>
+            <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>
+          </a>
+        </li>
+        <li>
+          <a href="#portfolio-section" class="mobile-nav-link">
+            <span>📸 Photography Portfolio</span>
+            <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>
+          </a>
+        </li>
+        <li>
+          <a href="#reviews-section" class="mobile-nav-link">
+            <span>★ Client Testimonials</span>
+            <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>
+          </a>
+        </li>
+        <li>
+          <a href="#contact-section" class="mobile-nav-link">
+            <span>📍 Studio & Contact</span>
+            <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Mobile Drawer Footer Tools -->
+    <div class="mobile-drawer-bottom-card">
+      <button type="button" class="btn-open-admin" style="background: var(--bg-card); border: 1px solid var(--border-subtle); padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); font-size: 0.85rem; color: var(--text-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%;">
+        <i data-lucide="shield" style="width: 15px; height: 15px; color: var(--accent-gold);"></i>
+        <span>Studio Admin Portal</span>
+      </button>
+      <div style="font-size: 0.72rem; color: var(--text-dim); text-align: center;">
+        Yazh Photography · Pattiveeranpatti
+      </div>
+    </div>
+  </aside>
+  <div class="mobile-nav-backdrop" id="mobile-nav-backdrop"></div>
+
+  <main>
+    <!-- ===================================================
+         2. OFFICIAL HERO ENTRANCE (PERFECT ALIGNMENT)
+         =================================================== -->
+    <section class="hero-section" id="hero-section">
+      <div class="hero-banner-wrapper">
+        <div class="hero-banner-aspect">
+          <img src="./assets/yazh-banner.jpg" alt="Yazh Photography Studio Entrance Banner" class="hero-banner-img" />
+        </div>
+      </div>
+
+      <!-- Quick Action Glass Bar Directly Below -->
+      <div class="hero-action-bar-wrap container">
+        <div class="hero-action-bar-glass reveal-on-scroll">
+          <div class="hero-contact-direct">
+            <div class="hero-contact-chip">
+              <i data-lucide="phone-call" style="width: 17px; height: 17px; color: var(--accent-gold);"></i>
+              <span>Contact: <a href="tel:8148274100"><strong>81482 74100</strong></a> / <a href="tel:8838333828"><strong>88383 33828</strong></a></span>
+            </div>
+            <div class="hero-contact-chip">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e1306c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+              <a href="https://instagram.com/yazhphotography_pvp" target="_blank" rel="noopener"><strong>@yazhphotography_pvp</strong></a>
+            </div>
+            <div class="hero-contact-chip">
+              <i data-lucide="mail" style="width: 17px; height: 17px; color: var(--accent-gold);"></i>
+              <a href="mailto:yazhphotographypvp@gmail.com">yazhphotographypvp@gmail.com</a>
+            </div>
+          </div>
+
+          <div class="hero-cta-group">
+            <a href="#booking-section" class="btn btn-primary">
+              View Packages (from ₹45,000)
+            </a>
+            <a href="tel:8148274100" class="btn btn-outline">
+              <i data-lucide="phone" style="width: 14px; height: 14px;"></i> Call Studio
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Studio Information Bar -->
+    <section class="hero-stats-bar">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item reveal-on-scroll">
+            <span class="stat-num">36×12"</span>
+            <span class="stat-label">Deluxe Printed Albums</span>
+          </div>
+          <div class="stat-item reveal-on-scroll">
+            <span class="stat-num">4K UHD</span>
+            <span class="stat-label">Drone & Candid Cinema</span>
+          </div>
+          <div class="stat-item reveal-on-scroll">
+            <span class="stat-num">12×18" & 20×30"</span>
+            <span class="stat-label">Laminated Wall Frames</span>
+          </div>
+          <div class="stat-item reveal-on-scroll">
+            <span class="stat-num">Pre & Post</span>
+            <span class="stat-label">Wedding Shoots Included</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         3. OFFICIAL WEDDING PACKAGES (FROM FLYER)
+         =================================================== -->
+    <section class="section-padding" id="booking-section">
+      <div class="container">
+        <div class="section-header reveal-on-scroll">
+          <span class="section-tag">Official Pricing & Customization</span>
+          <h2 class="section-title">Wedding Photography Packages</h2>
+          <p class="section-subtitle">
+            Choose from all-inclusive curated packages or pick & choose custom photography services tailored to your budget.
+          </p>
+        </div>
+
+        <!-- Package View Switcher: Curated Tiers vs. Build Custom Package -->
+        <div class="package-view-switcher reveal-on-scroll">
+          <button type="button" class="package-view-btn active" id="view-curated-packages-btn">
+            <i data-lucide="layers" style="width: 16px; height: 16px;"></i>
+            <span>Curated Studio Packages</span>
+          </button>
+          <button type="button" class="package-view-btn" id="view-custom-builder-btn">
+            <i data-lucide="sliders" style="width: 16px; height: 16px;"></i>
+            <span>🛠️ Build Custom Package</span>
+          </button>
+        </div>
+
+        <!-- 4 Curated Package Cards Stage -->
+        <div class="packages-grid reveal-on-scroll" id="curated-packages-stage">
+          <div class="packages-grid-inner" id="booking-packages-grid" style="display: contents;"></div>
+        </div>
+
+        <!-- Custom Package Builder Stage -->
+        <div class="custom-package-builder-stage" id="custom-package-builder-stage">
+          <div class="custom-package-layout">
+            <!-- Left: Selectable Custom Services Grid -->
+            <div>
+              <div style="margin-bottom: 1.25rem;">
+                <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--text-primary); margin-bottom: 0.25rem;">Pick & Choose Your Services</h3>
+                <p style="font-size: 0.84rem; color: var(--text-muted);">Select the exact photography, cinematography, drone, and album coverage required for your event.</p>
+              </div>
+              <div class="custom-services-grid" id="custom-services-selection-grid"></div>
+            </div>
+
+            <!-- Right: Sticky Live Summary & Pricing Sidebar -->
+            <aside class="custom-package-summary-sidebar">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                  <h4 class="custom-summary-title">Custom Selection</h4>
+                  <span class="admin-title-badge" id="custom-selected-count-badge">4 Selected</span>
+                </div>
+                <div class="custom-summary-selected-list" id="custom-summary-selected-items"></div>
+              </div>
+
+              <div class="custom-summary-totals-box">
+                <div class="custom-total-row">
+                  <span class="custom-total-label">Total Estimate:</span>
+                  <span class="custom-total-value" id="custom-summary-grand-total">₹0</span>
+                </div>
+                <div class="custom-advance-row">
+                  <span>Initial Advance Token:</span>
+                  <strong id="custom-summary-advance-val">₹0</strong>
+                </div>
+                <div class="custom-balance-row">
+                  <span>Remaining Due on Event:</span>
+                  <strong id="custom-summary-balance-val">₹0</strong>
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-primary btn-lg" id="btn-book-custom-package" style="width: 100%; justify-content: center;">
+                <i data-lucide="calendar-check" style="width: 16px; height: 16px;"></i>
+                <span>Book This Custom Package</span>
+              </button>
+            </aside>
+          </div>
+        </div>
+
+        <!-- Booking Reservation Form -->
+        <div class="booking-calculator-panel reveal-on-scroll">
+          <div class="booking-calculator-layout">
+            <div class="booking-form-col">
+              <h3 class="booking-section-subtitle">
+                <i data-lucide="calendar-check" style="width: 22px; height: 22px; color: var(--accent-gold);"></i>
+                Booking Inquiry
+              </h3>
+
+              <form id="session-booking-form">
+                <!-- Package Selection Category -->
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                  <label class="form-label" for="booking-package-select">Selected Package Category *</label>
+                  <select id="booking-package-select" class="form-select" required></select>
+                </div>
+
+                <div class="booking-form-fields">
+                  <div class="form-group">
+                    <label class="form-label" for="booking-client-name">Full Name *</label>
+                    <input type="text" id="booking-client-name" class="form-input" placeholder="Your Name" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="booking-client-email">Email Address</label>
+                    <input type="email" id="booking-client-email" class="form-input" placeholder="YazhPhotographypvp@gmail.com" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="booking-client-phone">Phone / WhatsApp *</label>
+                    <input type="tel" id="booking-client-phone" class="form-input" placeholder="+91 81482 74100" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="booking-event-date">Wedding / Event Date *</label>
+                    <input type="date" id="booking-event-date" class="form-input" required />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="booking-location">Event Venue & Location</label>
+                  <input type="text" id="booking-location" class="form-input" placeholder="Hall name, City (e.g. Pattiveeranpatti, Dindigul, Madurai)" />
+                </div>
+
+                <!-- Initial Advance / Token Amount -->
+                <div class="form-group" style="background: var(--bg-secondary); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); margin-bottom: 1.25rem;">
+                  <label class="form-label" for="booking-advance-amount" style="display: flex; justify-content: space-between;">
+                    <span>Initial Booking Token / Advance (₹)</span>
+                    <span style="font-size: 0.75rem; color: var(--accent-gold);">Customizable</span>
+                  </label>
+                  <input type="number" id="booking-advance-amount" class="form-input" value="5000" min="500" step="500" placeholder="e.g. 1000, 5000" />
+                  <div class="advance-presets-row">
+                    <button type="button" class="btn-advance-preset" data-amount="1000">₹1,000 (Token)</button>
+                    <button type="button" class="btn-advance-preset active" data-amount="5000">₹5,000 (Advance)</button>
+                    <button type="button" class="btn-advance-preset" data-amount="10000">₹10,000</button>
+                    <button type="button" class="btn-advance-preset" data-amount="20000">₹20,000</button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="booking-notes">Special Requests / Notes</label>
+                  <textarea id="booking-notes" class="form-textarea" placeholder="Tell us about the ceremony timings, drone preference, or custom album requests..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg btn-submit-booking" style="width: 100%;">
+                  Submit Booking Inquiry
+                </button>
+              </form>
+            </div>
+
+            <!-- Booking Investment Summary -->
+            <div class="booking-summary-col">
+              <div class="summary-header">
+                <h3>Investment & Payment Breakdown</h3>
+              </div>
+              <div class="summary-line-items">
+                <div class="summary-row">
+                  <span class="summary-row-label">Package Category:</span>
+                  <strong class="summary-row-val" id="summary-selected-pkg">Standard package</strong>
+                </div>
+                <div class="summary-row">
+                  <span class="summary-row-label">Total Package Cost:</span>
+                  <strong class="summary-row-val" id="summary-total-pkg-cost">₹60,000</strong>
+                </div>
+                <div class="summary-row" style="color: var(--color-success);">
+                  <span class="summary-row-label">Initial Token / Advance:</span>
+                  <strong class="summary-row-val" id="summary-advance-paid">-₹5,000</strong>
+                </div>
+
+                <!-- Remaining Balance Due -->
+                <div class="remaining-balance-box">
+                  <span class="remaining-balance-header">Remaining Balance Due:</span>
+                  <span class="remaining-balance-amount" id="summary-remaining-balance">₹55,000</span>
+                  <span class="remaining-balance-hint">Payable on the event day / delivery of 36×12" album.</span>
+                </div>
+              </div>
+
+              <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.7; border-top: 1px solid var(--border-subtle); padding-top: 1.25rem;">
+                <p>✦ Traditional & Candid Photography Teams</p>
+                <p>✦ 36×12" Deluxe Printed Album</p>
+                <p>✦ Laminated Wall Frames & Pendrive</p>
+                <p>✦ Direct Studio Hotline: <strong>81482 74100 / 88383 33828</strong></p>
+                <p>✦ Official Email: <strong>YazhPhotographypvp@gmail.com</strong></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         4. PORTFOLIO
+         =================================================== -->
+    <section class="section-padding" id="portfolio-section" style="background: var(--bg-secondary);">
+      <div class="container">
+        <div class="section-header reveal-on-scroll">
+          <span class="section-tag">Visual Works</span>
+          <h2 class="section-title">Selected Photography Portfolio</h2>
+          <p class="section-subtitle">
+            "Save your memory in every click." Traditional rituals, candid captures, and outdoor couple sessions.
+          </p>
+        </div>
+
+        <div class="portfolio-category-nav reveal-on-scroll" id="portfolio-category-tabs"></div>
+        <div class="portfolio-grid reveal-on-scroll" id="portfolio-masonry-grid"></div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         5. CLIENT TESTIMONIALS & REVIEWS
+         =================================================== -->
+    <section class="section-padding reviews-section" id="reviews-section">
+      <div class="container">
+        <div class="section-header reveal-on-scroll">
+          <span class="section-tag">Client Testimonials</span>
+          <h2 class="section-title">Stories & Reviews from Our Couples</h2>
+          <p class="section-subtitle">
+            Read heartfelt experiences from couples and families who entrusted their most sacred moments to Yazh Photography.
+          </p>
+        </div>
+
+        <!-- Overall Rating Banner -->
+        <div class="reviews-rating-banner reveal-on-scroll">
+          <div class="rating-banner-score-box">
+            <div class="rating-huge-number" id="reviews-avg-score">5.0</div>
+            <div class="rating-stars-stacked">
+              <div class="stars-visual-gold" id="reviews-stars-visual">★★★★★</div>
+              <span class="rating-verified-count" id="reviews-total-count">180+ Verified Reviews</span>
+            </div>
+          </div>
+
+          <div class="rating-banner-actions">
+            <button type="button" class="btn btn-primary" id="btn-open-review-modal">
+              <i data-lucide="edit-3" style="width: 16px; height: 16px;"></i> Write a Client Review
+            </button>
+          </div>
+        </div>
+
+        <!-- Reviews Grid -->
+        <div class="reviews-grid reveal-on-scroll" id="reviews-cards-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================================================
+       8. FORMAL FOOTER & STUDIO CONTACTS
+       =================================================== -->
+  <footer class="main-footer" id="contact-section">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Column 1: Studio Brand & Direct Contacts -->
+        <div class="footer-brand-col">
+          <a href="#" class="brand-logo">
+            <span class="logo-main">YAZH PHOTOGRAPHY</span>
+            <span class="logo-sub">Save your memory in every click</span>
+          </a>
+          <p class="footer-brand-desc">
+            Complete wedding, traditional, candid, 4K drone cinematography, and 36×12" deluxe printed albums.
+          </p>
+          <div class="footer-contacts-list">
+            <a href="mailto:YazhPhotographypvp@gmail.com" class="footer-contact-item">
+              <i data-lucide="mail" class="footer-contact-icon"></i>
+              <span>YazhPhotographypvp@gmail.com</span>
+            </a>
+            <a href="https://instagram.com/yazhphotography_pvp" target="_blank" rel="noopener" class="footer-contact-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e1306c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="footer-contact-icon">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+              <span>@yazhphotography_pvp</span>
+            </a>
+            <a href="tel:+918148274100" class="footer-contact-item">
+              <i data-lucide="phone-call" class="footer-contact-icon"></i>
+              <span>81482 74100 / 88383 33828</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Column 2: Official Packages -->
+        <div>
+          <h4 class="footer-col-title">Wedding Packages</h4>
+          <ul class="footer-links">
+            <li><a href="#booking-section"><span>✦</span> Basic package (₹45,000)</a></li>
+            <li><a href="#booking-section"><span>✦</span> Standard package (₹60,000)</a></li>
+            <li><a href="#booking-section"><span>✦</span> Premium package (₹75,000)</a></li>
+            <li><a href="#booking-section"><span>✦</span> Platinum package (₹1,35,000)</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Studio Location -->
+        <div>
+          <h4 class="footer-col-title">Studio Location</h4>
+          <div class="footer-location-card">
+            <div style="display: flex; gap: 0.4rem;">
+              <i data-lucide="map-pin" style="width: 18px; height: 18px; color: var(--accent-gold); flex-shrink: 0; margin-top: 0.15rem;"></i>
+              <div>
+                <p class="footer-location-tamil">
+                  SNS அரவிந் காம்ப்ளக்ஸ், முதல் மாடி, சாவடி பஜார், பட்டிவீரன்பட்டி.
+                </p>
+                <p class="footer-location-english">
+                  SNS Aravind Complex, 1st Floor, Chavadi Bazaar, Pattiveeranpatti, Dindigul Dist.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 4: Quick Contact & Inquiries -->
+        <div>
+          <h4 class="footer-col-title">Booking & Hotline</h4>
+          <div class="footer-contact-box">
+            <p class="footer-contact-box-desc">
+              Have an upcoming wedding or event? Submit your inquiry to check date availability.
+            </p>
+            <a href="#session-booking-form" class="btn btn-primary btn-sm" style="width: 100%; text-align: center; justify-content: center;">
+              <i data-lucide="calendar-check" style="width: 14px; height: 14px;"></i>
+              <span>Book Date Now</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Bottom Bar -->
+      <div class="footer-bottom">
+        <span>&copy; 2026 Yazh Photography. "Save your memory in every click." All Rights Reserved.</span>
+        <div class="footer-bottom-links">
+          <button type="button" class="btn-open-admin" title="Studio Admin Portal">
+            <i data-lucide="shield" style="width: 13px; height: 13px;"></i> Studio Admin
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================
+       10. MODALS
+       =================================================== -->
+
+  <!-- A. LIGHTBOX MODAL -->
+  <div class="lightbox-modal" id="portfolio-lightbox-modal">
+    <div class="lightbox-inner">
+      <button type="button" class="lightbox-nav-btn lightbox-prev" id="lightbox-prev-btn" aria-label="Previous Photo">
+        <i data-lucide="chevron-left" style="width: 18px; height: 18px;"></i>
+      </button>
+
+      <div class="lightbox-view-area">
+        <img src="" id="lightbox-main-img" alt="Lightbox Photo" class="lightbox-main-img" />
+      </div>
+
+      <button type="button" class="lightbox-nav-btn lightbox-next" id="lightbox-next-btn" aria-label="Next Photo">
+        <i data-lucide="chevron-right" style="width: 18px; height: 18px;"></i>
+      </button>
+
+      <aside class="lightbox-sidebar">
+        <div>
+          <div class="lightbox-sidebar-header">
+            <button type="button" class="modal-close" style="float: right;">&times;</button>
+            <h3 class="lightbox-title" id="lightbox-title">Title</h3>
+            <div class="lightbox-location" id="lightbox-location">Category</div>
+          </div>
+
+          <p class="lightbox-story-text" id="lightbox-story"></p>
+        </div>
+
+        <button type="button" class="btn btn-primary" id="lightbox-order-print-btn" style="width: 100%;">
+          Inquire About Wedding Packages
+        </button>
+      </aside>
+    </div>
+  </div>
+
+  <!-- B. BOOKING CONFIRMATION MODAL -->
+  <div class="modal" id="booking-confirmation-modal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-container" style="max-width: 520px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Booking Inquiry Received</h3>
+        <button type="button" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <div style="font-size: 2.2rem; margin-bottom: 0.75rem;">📷</div>
+        <h3 style="font-size: 1.45rem; margin-bottom: 0.35rem;">Inquiry Confirmed!</h3>
+        <p style="color: var(--text-muted); margin-bottom: 1.25rem; font-size: 0.88rem;">
+          Inquiry ID: <strong id="conf-booking-id" style="color: var(--text-primary);"></strong> for <strong id="conf-client-name" style="color: var(--text-primary);"></strong>.
+        </p>
+
+        <div style="background: var(--accent-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 1.15rem; text-align: left; margin-bottom: 1.5rem; font-size: 0.85rem; display: flex; flex-direction: column; gap: 0.5rem;">
+          <div><strong>Package Category:</strong> <span id="conf-package-title"></span></div>
+          <div><strong>Event Date:</strong> <span id="conf-event-date"></span></div>
+          <div><strong>Venue:</strong> <span id="conf-location"></span></div>
+          <div style="border-top: 1px solid var(--border-subtle); padding-top: 0.5rem; display: flex; justify-content: space-between;">
+            <span>Total Package Cost:</span>
+            <strong id="conf-total-value"></strong>
+          </div>
+          <div style="color: var(--color-success); display: flex; justify-content: space-between;">
+            <span>Initial Advance / Token:</span>
+            <strong id="conf-advance-paid"></strong>
+          </div>
+          <div style="background: rgba(197, 160, 89, 0.15); border: 1px solid var(--accent-gold); border-radius: 4px; padding: 0.5rem 0.75rem; margin-top: 0.35rem; display: flex; justify-content: space-between; font-weight: bold; color: var(--text-primary);">
+            <span>Remaining Balance Due:</span>
+            <span id="conf-remaining-balance" style="color: var(--accent-gold);"></span>
+          </div>
+        </div>
+
+        <p style="font-size: 0.78rem; color: var(--text-dim); margin-bottom: 1.75rem;">
+          Our studio team will reach out via WhatsApp/Phone (<strong>81482 74100 / 88383 33828</strong>) and email (<strong>YazhPhotographypvp@gmail.com</strong>) to confirm the schedule.
+        </p>
+
+        <button type="button" class="btn btn-primary modal-close" style="width: 100%;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- G. STUDIO ADMIN DASHBOARD & MEDIA UPLOAD MODAL -->
+  <div class="modal admin-modal" id="admin-dashboard-modal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-container">
+      <!-- Admin Modal Top Bar -->
+      <div class="admin-modal-header">
+        <div class="admin-header-titles">
+          <div style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">
+            <h3 class="admin-modal-title">Studio Production Manager</h3>
+            <span class="admin-title-badge">HQ Operations Suite</span>
+          </div>
+          <span class="admin-modal-subtitle">
+            <span>Yazh Photography Media & Operations Hub</span>
+            <span>·</span>
+            <span class="admin-status-indicator"><span class="admin-status-dot"></span> Studio Online · Pattiveeranpatti</span>
+          </span>
+        </div>
+        <div class="admin-header-actions-group">
+          <button type="button" class="btn-admin-quick-upload" id="btn-admin-top-quick-upload" style="display: none;">
+            <i data-lucide="upload-cloud" style="width: 14px; height: 14px;"></i> Quick Upload
+          </button>
+          <button type="button" class="btn-admin-logout" id="admin-logout-btn" style="display: none;">
+            <i data-lucide="lock" style="width: 13px; height: 13px;"></i> Lock & Exit
+          </button>
+          <button type="button" class="modal-close">&times;</button>
+        </div>
+      </div>
+
+      <!-- Admin Tabs Navigation (Visible Only When Authenticated) -->
+      <div class="admin-tabs-nav" id="admin-tabs-nav" style="display: none;">
+        <button type="button" class="admin-tab-btn active" data-tab="overview">
+          <i data-lucide="layout-dashboard" style="width: 15px; height: 15px;"></i>
+          <span>Overview</span>
+        </button>
+        <button type="button" class="admin-tab-btn" data-tab="media">
+          <i data-lucide="image" style="width: 15px; height: 15px;"></i>
+          <span>Photo Upload & Library</span>
+        </button>
+        <button type="button" class="admin-tab-btn" data-tab="bookings">
+          <i data-lucide="calendar-check" style="width: 15px; height: 15px;"></i>
+          <span>Booking Inquiries</span>
+        </button>
+        <button type="button" class="admin-tab-btn" data-tab="services">
+          <i data-lucide="tag" style="width: 15px; height: 15px;"></i>
+          <span>Custom Package Pricing</span>
+        </button>
+        <button type="button" class="admin-tab-btn" data-tab="reviews">
+          <i data-lucide="star" style="width: 15px; height: 15px;"></i>
+          <span>Client Reviews</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- 1. AUTHENTICATION LOCK SCREEN -->
+        <div id="admin-auth-view">
+          <div class="admin-auth-container">
+            <div class="admin-auth-icon">
+              <i data-lucide="shield-check" style="width: 32px; height: 32px;"></i>
+            </div>
+            <h3 class="admin-auth-title">Studio Admin Authentication</h3>
+            <p class="admin-auth-desc">
+              Please enter your official studio email and password to access media uploads, client inquiries, and studio operations.
+            </p>
+
+            <form id="admin-auth-form">
+              <div class="form-group" style="text-align: left; margin-bottom: 0.85rem;">
+                <label class="form-label" for="admin-auth-email">Studio Email *</label>
+                <input type="email" id="admin-auth-email" class="form-input" value="YazhPhotographypvp@gmail.com" placeholder="YazhPhotographypvp@gmail.com" required autocomplete="username" />
+              </div>
+
+              <div class="form-group" style="text-align: left; margin-bottom: 1.25rem;">
+                <label class="form-label" for="admin-auth-passcode">Admin Password *</label>
+                <div class="admin-password-group" style="margin-bottom: 0;">
+                  <input type="password" id="admin-auth-passcode" class="admin-password-input" placeholder="Enter Password" required autocomplete="current-password" />
+                  <button type="button" class="btn-toggle-pwd" id="admin-toggle-pwd-visibility" title="Show/Hide Password">
+                    <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
+                  </button>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+                Authenticate & Unlock Studio
+              </button>
+            </form>
+
+            <p class="admin-default-hint">
+              <i data-lucide="lock" style="width: 12px; height: 12px; vertical-align: middle;"></i> Confidential Studio Administration Portal
+            </p>
+          </div>
+        </div>
+
+        <!-- 2. AUTHENTICATED DASHBOARD CONTENT -->
+        <div id="admin-dashboard-view" class="hidden">
+          <!-- TAB 1: OVERVIEW -->
+          <div class="admin-tab-panel active" id="admin-tab-overview">
+            <!-- 4 Financial & Operational Metric Cards -->
+            <div class="admin-metrics-grid">
+              <div class="admin-metric-card">
+                <div class="admin-metric-header">
+                  <span class="admin-metric-label">Pipeline Value</span>
+                  <div class="admin-metric-icon">₹</div>
+                </div>
+                <strong class="admin-metric-val" id="admin-total-revenue">₹1,35,000</strong>
+                <span class="admin-metric-trend">↑ Active Wedding Season</span>
+              </div>
+              <div class="admin-metric-card">
+                <div class="admin-metric-header">
+                  <span class="admin-metric-label">Booking Inquiries</span>
+                  <div class="admin-metric-icon">📅</div>
+                </div>
+                <strong class="admin-metric-val" id="admin-bookings-count">1</strong>
+                <span class="admin-metric-trend">Received Inquiries</span>
+              </div>
+              <div class="admin-metric-card">
+                <div class="admin-metric-header">
+                  <span class="admin-metric-label">Advance Collected</span>
+                  <div class="admin-metric-icon">✓</div>
+                </div>
+                <strong class="admin-metric-val" id="admin-advance-revenue" style="color: var(--color-success);">₹10,000</strong>
+                <span class="admin-metric-trend">Confirmed Tokens</span>
+              </div>
+              <div class="admin-metric-card">
+                <div class="admin-metric-header">
+                  <span class="admin-metric-label">Balance Due</span>
+                  <div class="admin-metric-icon">⏳</div>
+                </div>
+                <strong class="admin-metric-val" id="admin-remaining-revenue" style="color: var(--accent-gold);">₹1,25,000</strong>
+                <span class="admin-metric-trend">To Collect On Event</span>
+              </div>
+            </div>
+
+            <!-- Action Shortcut Cards Grid -->
+            <div class="admin-action-cards-grid">
+              <div class="admin-action-box">
+                <div>
+                  <h4 class="admin-action-box-title">
+                    <i data-lucide="image-plus" style="width: 18px; height: 18px; color: var(--accent-gold);"></i>
+                    Upload New Photographs
+                  </h4>
+                  <p class="admin-action-box-desc">
+                    Drag and drop photos directly from your computer into the public portfolio gallery.
+                  </p>
+                </div>
+                <button type="button" class="btn btn-primary btn-sm" onclick="document.querySelector('.admin-tab-btn[data-tab=\'media\']').click();">
+                  Launch Uploader →
+                </button>
+              </div>
+
+              <div class="admin-action-box">
+                <div>
+                  <h4 class="admin-action-box-title">
+                    <i data-lucide="calendar" style="width: 18px; height: 18px; color: var(--accent-gold);"></i>
+                    Process Booking Leads
+                  </h4>
+                  <p class="admin-action-box-desc">
+                    Review client package requests, phone numbers, and calculate payment balances.
+                  </p>
+                </div>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="document.querySelector('.admin-tab-btn[data-tab=\'bookings\']').click();">
+                  View Inquiries Table →
+                </button>
+              </div>
+
+              <div class="admin-action-box">
+                <div>
+                  <h4 class="admin-action-box-title">
+                    <i data-lucide="sliders" style="width: 18px; height: 18px; color: var(--accent-gold);"></i>
+                    Studio Settings & Password
+                  </h4>
+                  <p class="admin-action-box-desc">
+                    Manage photography categories or update your admin master password anytime.
+                  </p>
+                </div>
+                <button type="button" class="btn btn-secondary btn-sm" id="btn-change-admin-pwd">
+                  Update Password
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: PHOTO UPLOAD & MEDIA LIBRARY -->
+          <div class="admin-tab-panel" id="admin-tab-media">
+            <div class="upload-manager-layout">
+              <!-- Left: Dropzone & Live Preview -->
+              <div>
+                <div class="upload-dropzone-box" id="admin-photo-dropzone">
+                  <i data-lucide="image-plus" class="upload-dropzone-icon"></i>
+                  <h4 class="upload-dropzone-title">Drag & Drop Image or Click to Browse</h4>
+                  <p class="upload-dropzone-hint">Supports high-resolution JPG, PNG, WEBP from your local storage</p>
+                  <input type="file" id="admin-photo-file-input" class="hidden-file-input" accept="image/*" />
+                </div>
+
+                <!-- Preview Card -->
+                <div class="upload-preview-card" id="admin-photo-preview-card">
+                  <img src="" id="admin-photo-preview-img" alt="Selected Preview" class="upload-preview-img" />
+                </div>
+              </div>
+
+              <!-- Right: Photo Details & Division Form -->
+              <div class="upload-form-panel">
+                <h4 class="upload-panel-header">
+                  <i data-lucide="sliders" style="width: 18px; height: 18px; color: var(--accent-gold);"></i>
+                  Photo Metadata & Publishing
+                </h4>
+
+                <form id="admin-photo-upload-form">
+                  <div class="form-group">
+                    <label class="form-label" for="admin-photo-title">Photo Title / Caption *</label>
+                    <input type="text" id="admin-photo-title" class="form-input" placeholder="e.g. Traditional Muhurtham Garland Exchange" required />
+                  </div>
+
+                  <div class="form-group">
+                    <div class="category-manager-header-bar">
+                      <label class="form-label" for="admin-photo-category" style="margin-bottom: 0;">Category *</label>
+                      <button type="button" class="btn-manage-categories-link" id="btn-toggle-category-manager">
+                        ⚙️ Edit Categories Directory
+                      </button>
+                    </div>
+                    <select id="admin-photo-category" class="form-select" required></select>
+                  </div>
+
+                  <div class="form-group" id="custom-cat-input-group" style="display: none; background: var(--accent-subtle); padding: 0.85rem; border-radius: var(--radius-sm); margin-bottom: 1rem;">
+                    <label class="form-label" for="admin-custom-category-name">Enter Custom Category Name *</label>
+                    <input type="text" id="admin-custom-category-name" class="form-input" placeholder="e.g. Haldi Ceremony, Fashion Portfolio" />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="admin-photo-desc">Description / Backstory (Optional)</label>
+                    <input type="text" id="admin-photo-desc" class="form-input" placeholder="Brief backstory or location details..." />
+                  </div>
+
+                  <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 0.5rem;">
+                    <i data-lucide="upload" style="width: 16px; height: 16px;"></i> Publish to Public Portfolio
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            <!-- Uploaded Media Library Explorer Bar -->
+            <div class="media-explorer-header-bar">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <h4 class="media-explorer-title">Uploaded Photo Library</h4>
+                <span class="admin-title-badge" id="admin-library-photo-count">0 Photos</span>
+              </div>
+              <div class="media-explorer-controls">
+                <input type="text" id="admin-media-search" class="media-search-input" placeholder="Search photos..." />
+              </div>
+            </div>
+            <div class="photo-manager-grid" id="admin-photo-library-grid"></div>
+          </div>
+
+          <!-- TAB 3: BOOKINGS -->
+          <div class="admin-tab-panel" id="admin-tab-bookings">
+            <div class="media-explorer-header-bar" style="border-top: none; padding-top: 0;">
+              <h4 class="media-explorer-title">Client Booking Inquiries & Leads</h4>
+            </div>
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Inquiry ID</th>
+                    <th>Client Information</th>
+                    <th>Package Category</th>
+                    <th>Date & Location</th>
+                    <th>Payment Breakdown</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-bookings-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- TAB 4: CUSTOM PACKAGE PRICING & SERVICES -->
+          <div class="admin-tab-panel" id="admin-tab-services">
+            <div class="media-explorer-header-bar" style="border-top: none; padding-top: 0;">
+              <div>
+                <h4 class="media-explorer-title">Custom Package Services & Pricing Manager</h4>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">
+                  Edit service names and base prices. Changes update the client-facing Custom Package Builder instantly.
+                </p>
+              </div>
+            </div>
+
+            <!-- Existing Services Table -->
+            <div class="admin-table-wrap" style="margin-bottom: 2rem;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Service Name</th>
+                    <th>Category</th>
+                    <th>Price (₹)</th>
+                    <th>Unit / Duration</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-services-table-body"></tbody>
+              </table>
+            </div>
+
+            <!-- Add New Service Box -->
+            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.5rem;">
+              <h4 style="font-size: 1rem; color: var(--text-primary); margin-bottom: 1rem;">➕ Add New Custom Service</h4>
+              <form id="admin-add-service-form">
+                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 0.85rem; margin-bottom: 0.85rem;">
+                  <div>
+                    <label class="form-label">Service Title *</label>
+                    <input type="text" id="admin-new-srv-name" class="form-input" placeholder="e.g. Sangeet Choreography Video" required />
+                  </div>
+                  <div>
+                    <label class="form-label">Category</label>
+                    <input type="text" id="admin-new-srv-cat" class="form-input" placeholder="e.g. Cinematography" />
+                  </div>
+                  <div>
+                    <label class="form-label">Price (₹) *</label>
+                    <input type="number" id="admin-new-srv-price" class="form-input" placeholder="5000" required />
+                  </div>
+                  <div>
+                    <label class="form-label">Unit / Timing</label>
+                    <input type="text" id="admin-new-srv-unit" class="form-input" placeholder="per day" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Service Description</label>
+                  <input type="text" id="admin-new-srv-desc" class="form-input" placeholder="Brief details about the service deliverable..." />
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm">
+                  Add Service to Custom Builder
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- TAB 5: REVIEWS MODERATION -->
+          <div class="admin-tab-panel" id="admin-tab-reviews">
+            <div class="media-explorer-header-bar" style="border-top: none; padding-top: 0;">
+              <h4 class="media-explorer-title">Client Reviews & Testimonials Moderation</h4>
+            </div>
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Client Name</th>
+                    <th>Rating</th>
+                    <th>Event Category</th>
+                    <th>Review Feedback</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-reviews-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- H. CATEGORY MANAGER MODAL -->
+  <div class="modal category-manager-modal" id="category-manager-modal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-container">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">Edit & Manage Categories</h3>
+          <span style="font-size: 0.78rem; color: var(--accent-gold);">Yazh Photography Category Directory</span>
+        </div>
+        <button type="button" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1rem;">
+          Edit category titles or delete unwanted categories. Changes will update the uploader and live website filter bar instantly.
+        </p>
+
+        <!-- Category List with Edit & Delete actions -->
+        <div class="categories-list-box" id="admin-categories-list-container"></div>
+
+        <!-- Add New Category Form -->
+        <div class="add-category-box">
+          <h4 style="font-size: 0.88rem; margin-bottom: 0.65rem; color: var(--text-primary);">➕ Add New Category</h4>
+          <form id="admin-add-category-form" style="display: flex; gap: 0.5rem;">
+            <input type="text" id="admin-new-cat-name" class="form-input" placeholder="e.g. Sangeet & Mehndi / Housewarming" required style="flex: 1;" />
+            <button type="submit" class="btn btn-primary btn-sm">
+              Add Category
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- I. CLIENT REVIEW SUBMISSION MODAL -->
+  <div class="modal review-modal" id="client-review-modal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-container">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">Share Your Experience</h3>
+          <span style="font-size: 0.78rem; color: var(--accent-gold);">Yazh Photography Client Feedback</span>
+        </div>
+        <button type="button" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="submit-client-review-form">
+          <!-- Star Rating Selector -->
+          <div class="form-group" style="background: var(--bg-secondary); padding: 1.15rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); margin-bottom: 1.25rem;">
+            <label class="form-label" style="margin-bottom: 0.4rem;">Overall Studio Rating *</label>
+            <div class="interactive-stars-box" id="interactive-stars-wrap">
+              <button type="button" class="star-rating-btn selected" data-rating="1">★</button>
+              <button type="button" class="star-rating-btn selected" data-rating="2">★</button>
+              <button type="button" class="star-rating-btn selected" data-rating="3">★</button>
+              <button type="button" class="star-rating-btn selected" data-rating="4">★</button>
+              <button type="button" class="star-rating-btn selected" data-rating="5">★</button>
+              <span class="star-rating-text" id="star-rating-text-label">Outstanding Experience! (5/5)</span>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+            <div class="form-group">
+              <label class="form-label" for="review-client-name">Your Name / Couple Name *</label>
+              <input type="text" id="review-client-name" class="form-input" placeholder="e.g. Karthik & Ananya" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="review-location">City / Location</label>
+              <input type="text" id="review-location" class="form-input" placeholder="e.g. Pattiveeranpatti, Madurai" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="review-event-type">Event Type / Service *</label>
+            <select id="review-event-type" class="form-select" required>
+              <option value="Traditional Wedding (திருமணம்)">Traditional Wedding (திருமணம்)</option>
+              <option value="Candid Photography & Cinema">Candid Photography & Cinema</option>
+              <option value="Pre-Wedding & Outdoor Shoot">Pre-Wedding & Outdoor Shoot</option>
+              <option value="Engagement Ceremony (நிச்சயதார்த்தம்)">Engagement Ceremony (நிச்சயதார்த்தம்)</option>
+              <option value="Reception & Sangeet">Reception & Sangeet</option>
+              <option value="Maternity & Baby Shoot">Maternity & Baby Shoot</option>
+              <option value="Birthday & Family Event">Birthday & Family Event</option>
+              <option value="Deluxe 36×12 Album Experience">Deluxe 36×12 Album Experience</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="review-title">Review Headline *</label>
+            <input type="text" id="review-title" class="form-input" placeholder="e.g. Captured our special day beyond our expectations!" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="review-comment">Detailed Feedback / Review *</label>
+            <textarea id="review-comment" class="form-textarea" rows="4" placeholder="Tell us about the photographers, candid moments, album delivery, or customer service..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 0.5rem;">
+            Submit Client Review
+          </button>
+        </form>
+      </div>
+    </div>
+  <!-- ===================================================
+       11. MOBILE BOTTOM QUICK ACTION BAR (STICKY)
+       =================================================== -->
+  <div class="mobile-bottom-bar" id="mobile-bottom-bar">
+    <a href="tel:8148274100" class="mobile-bottom-btn" id="m-btn-call" title="Call Yazh Photography">
+      <i data-lucide="phone-call" class="mobile-bottom-icon" style="color: var(--accent-gold);"></i>
+      <span>Call Studio</span>
+    </a>
+    <a href="https://wa.me/918148274100?text=Hi%20Yazh%20Photography%2C%20I%20would%20like%20to%20inquire%20about%20wedding%20packages" target="_blank" rel="noopener" class="mobile-bottom-btn highlight-wa" id="m-btn-wa" title="WhatsApp Studio">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mobile-bottom-icon">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+      </svg>
+      <span>WhatsApp</span>
+    </a>
+    <a href="#session-booking-form" class="mobile-bottom-btn btn-cta-gold" id="m-btn-book" title="Book Wedding Date">
+      <i data-lucide="calendar-check" class="mobile-bottom-icon"></i>
+      <span>Book Date</span>
+    </a>
+  </div>
+
+  <script type="module" src="./src/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <!-- Deep Royal Blue Background Gradient -->
+    <radialGradient id="bg-glow" cx="35%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#0b5ed7" stop-opacity="1"/>
+      <stop offset="35%" stop-color="#003594" stop-opacity="1"/>
+      <stop offset="70%" stop-color="#02174d" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#01081f" stop-opacity="1"/>
+    </radialGradient>
+
+    <!-- Cyan Flare Light -->
+    <radialGradient id="cyan-flare" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.8"/>
+      <stop offset="40%" stop-color="#0088ff" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0088ff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Bokeh Circle Particle -->
+    <radialGradient id="bokeh-particle" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="100%" height="100%" fill="url(#bg-glow)"/>
+
+  <!-- Luminous Bokeh Particles -->
+  <circle cx="280" cy="380" r="140" fill="url(#cyan-flare)"/>
+  <circle cx="450" cy="220" r="90" fill="url(#bokeh-particle)"/>
+  <circle cx="150" cy="520" r="110" fill="url(#bokeh-particle)"/>
+  <circle cx="700" cy="300" r="70" fill="url(#bokeh-particle)"/>
+  <circle cx="950" cy="180" r="130" fill="url(#cyan-flare)"/>
+  <circle cx="1200" cy="450" r="85" fill="url(#bokeh-particle)"/>
+  <circle cx="1600" cy="280" r="160" fill="url(#cyan-flare)"/>
+  <circle cx="1780" cy="650" r="100" fill="url(#bokeh-particle)"/>
+  <circle cx="1450" cy="780" r="120" fill="url(#bokeh-particle)"/>
+  <circle cx="350" cy="820" r="150" fill="url(#cyan-flare)"/>
+
+  <!-- Tiny Sparkle Dots -->
+  <circle cx="120" cy="180" r="5" fill="#ffffff" opacity="0.8"/>
+  <circle cx="220" cy="290" r="4" fill="#38bdf8" opacity="0.9"/>
+  <circle cx="390" cy="410" r="7" fill="#ffffff" opacity="0.9"/>
+  <circle cx="580" cy="160" r="6" fill="#38bdf8" opacity="0.8"/>
+  <circle cx="820" cy="260" r="5" fill="#ffffff" opacity="0.7"/>
+  <circle cx="1080" cy="380" r="8" fill="#38bdf8" opacity="0.9"/>
+  <circle cx="1340" cy="220" r="6" fill="#ffffff" opacity="0.8"/>
+  <circle cx="1520" cy="420" r="7" fill="#38bdf8" opacity="0.9"/>
+  <circle cx="1720" cy="190" r="5" fill="#ffffff" opacity="0.7"/>
+  <circle cx="1650" cy="720" r="6" fill="#38bdf8" opacity="0.8"/>
+  <circle cx="620" cy="790" r="8" fill="#ffffff" opacity="0.9"/>
+
+  <!-- Studio Ambient Vignette -->
+  <rect width="100%" height="100%" fill="none" stroke="rgba(0,0,0,0.4)" stroke-width="40"/>
+</svg>

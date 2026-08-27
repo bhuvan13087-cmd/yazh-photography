@@ -1,0 +1,342 @@
+/* ===================================================
+   Custom Package Builder & Service Pricing Styles
+   =================================================== */
+
+/* Packages Section View Switcher */
+.package-view-switcher {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+}
+
+.package-view-btn {
+  padding: 0.65rem 1.4rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all var(--transition-fast);
+}
+
+.package-view-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-glass);
+}
+
+.package-view-btn.active {
+  background: var(--accent-gold);
+  color: #000000;
+  border-color: var(--accent-gold);
+  box-shadow: 0 4px 14px rgba(197, 160, 89, 0.3);
+}
+
+/* Custom Package Builder Stage */
+.custom-package-builder-stage {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.custom-package-builder-stage.active {
+  display: block;
+}
+
+.custom-package-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Services Selection Grid */
+.custom-services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.custom-service-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.85rem;
+  transition: all var(--transition-fast);
+  position: relative;
+  user-select: none;
+}
+
+.custom-service-card:hover {
+  border-color: var(--border-glass);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.custom-service-card.selected {
+  border-color: var(--accent-gold);
+  background: rgba(197, 160, 89, 0.05);
+  box-shadow: 0 0 0 1px var(--accent-gold), var(--shadow-md);
+}
+
+.custom-service-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.custom-service-checkbox {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border-glass);
+  background: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.custom-service-card.selected .custom-service-checkbox {
+  background: var(--accent-gold);
+  border-color: var(--accent-gold);
+  color: #000000;
+}
+
+.custom-service-category {
+  font-size: 0.72rem;
+  color: var(--accent-gold);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.custom-service-title {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.35;
+  margin-top: 0.25rem;
+}
+
+.custom-service-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.custom-service-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.custom-service-price {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.custom-service-unit {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+/* Sticky Custom Package Live Summary Sidebar */
+.custom-package-summary-sidebar {
+  position: sticky;
+  top: calc(var(--header-height) + 1.5rem);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.custom-summary-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.custom-summary-selected-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 0.25rem;
+}
+
+.custom-summary-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px dashed var(--border-subtle);
+}
+
+.custom-summary-item-name {
+  color: var(--text-secondary);
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.custom-summary-item-price {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.custom-summary-totals-box {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.custom-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.custom-total-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.custom-total-value {
+  font-family: var(--font-serif);
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+.custom-advance-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.76rem;
+  color: var(--color-success);
+}
+
+.custom-balance-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.76rem;
+  color: var(--text-dim);
+}
+
+/* ===================================================
+   ADMIN CUSTOM SERVICES MANAGER
+   =================================================== */
+
+.admin-service-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 100px 80px;
+  gap: 0.75rem;
+  align-items: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.65rem;
+}
+
+.admin-service-input {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.65rem;
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  width: 100%;
+}
+
+.admin-service-input:focus {
+  outline: none;
+  border-color: var(--accent-gold);
+}
+
+@media (max-width: 900px) {
+  .custom-package-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .custom-package-summary-sidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .package-view-switcher {
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .package-view-btn {
+    padding: 0.5rem 0.85rem;
+    font-size: 0.78rem;
+  }
+
+  .custom-services-grid {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  .custom-service-card {
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .custom-service-title {
+    font-size: 0.92rem;
+  }
+
+  .custom-service-desc {
+    font-size: 0.78rem;
+  }
+
+  .custom-service-price {
+    font-size: 1.15rem;
+  }
+
+  .custom-package-summary-sidebar {
+    padding: 1.25rem 1rem;
+    border-radius: var(--radius-md);
+  }
+
+  .custom-summary-title {
+    font-size: 1.15rem;
+  }
+
+  .custom-total-value {
+    font-size: 1.35rem;
+  }
+}

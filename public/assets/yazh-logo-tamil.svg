@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 240" fill="none">
+  <!-- Tamil Ya (ய) with Yazh/Veena strings inside -->
+  <g stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Outer U-shape of Ya -->
+    <path d="M 60 40 L 60 170 C 60 210 130 210 130 170 L 130 40" fill="none"/>
+    <!-- Top bridge -->
+    <line x1="50" y1="40" x2="140" y2="40" stroke-width="8"/>
+    <!-- Vertical strings inside Yazh/Veena -->
+    <line x1="74" y1="45" x2="74" y2="185" stroke="#ffffff" stroke-width="2.5" opacity="0.85"/>
+    <line x1="88" y1="45" x2="88" y2="190" stroke="#ffffff" stroke-width="2.5" opacity="0.85"/>
+    <line x1="102" y1="45" x2="102" y2="190" stroke="#ffffff" stroke-width="2.5" opacity="0.85"/>
+    <line x1="116" y1="45" x2="116" y2="185" stroke="#ffffff" stroke-width="2.5" opacity="0.85"/>
+    
+    <!-- Long A-leg connecting -->
+    <path d="M 130 170 C 130 210 200 210 200 170 L 200 40" fill="none"/>
+
+    <!-- Aa vowel sign (ா) -->
+    <path d="M 230 40 L 230 190 M 230 40 C 270 40 270 190 270 190" fill="none"/>
+
+    <!-- Zha (ழ்) with dot -->
+    <path d="M 310 190 L 310 90 C 310 40 370 40 370 90 L 370 190 C 370 220 330 220 330 190 C 330 160 370 160 410 190 C 440 210 470 190 470 150 C 470 110 430 110 410 140" fill="none"/>
+    <circle cx="340" cy="25" r="10" fill="#ffffff" stroke="none"/>
+  </g>
+
+  <!-- Subtitle: போட்டோகிராபி (Photography) -->
+  <text x="240" y="235" text-anchor="middle" font-family="'Plus Jakarta Sans', 'Noto Sans Tamil', sans-serif" font-size="28" font-weight="700" fill="#ffffff" letter-spacing="4">
+    போட்டோகிராபி
+  </text>
+</svg>

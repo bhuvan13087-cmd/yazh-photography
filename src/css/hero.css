@@ -1,0 +1,219 @@
+/* Studio Entrance Hero Showcase - Perfect Alignment */
+
+.hero-section {
+  position: relative;
+  background-color: var(--bg-primary);
+  padding-top: 1.5rem;
+  padding-bottom: 2.5rem;
+  overflow: hidden;
+}
+
+.hero-banner-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-subtle);
+  background: #01081f;
+}
+
+.hero-banner-aspect {
+  position: relative;
+  width: 100%;
+  /* 2:1 aspect ratio matching the official banner image */
+  aspect-ratio: 2 / 1;
+  max-height: 75vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #01081f;
+}
+
+.hero-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+/* Quick Action & Contact Bar directly below the banner */
+.hero-action-bar-wrap {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 1.25rem auto 0;
+}
+
+.hero-action-bar-glass {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1.75rem;
+  box-shadow: var(--shadow-sm);
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.hero-contact-direct {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  flex-wrap: wrap;
+}
+
+.hero-contact-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+}
+
+.hero-contact-chip strong {
+  color: var(--accent-gold);
+}
+
+.hero-contact-chip a {
+  color: inherit;
+  transition: color var(--transition-fast);
+}
+
+.hero-contact-chip a:hover {
+  color: var(--accent-gold);
+}
+
+.hero-cta-group {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+/* Studio Highlights Stats Bar */
+.hero-stats-bar {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 1.75rem 0;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-num {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 950px) {
+  .hero-banner-aspect {
+    aspect-ratio: 16 / 9;
+    min-height: 240px;
+  }
+  .hero-banner-img {
+    object-fit: cover;
+  }
+  .hero-action-bar-glass {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1.25rem;
+    gap: 1rem;
+  }
+  .hero-contact-direct {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .hero-cta-group {
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+  .hero-cta-group .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.85rem 1.25rem;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-section {
+    padding-top: 0.75rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .hero-banner-aspect {
+    aspect-ratio: 16 / 10;
+    min-height: 180px;
+  }
+
+  .hero-action-bar-wrap {
+    margin-top: 0.85rem;
+  }
+
+  .hero-action-bar-glass {
+    padding: 1rem 0.95rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .hero-contact-chip {
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+
+  .hero-stats-bar {
+    padding: 1.25rem 0;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .stat-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 0.85rem 0.5rem;
+  }
+
+  .stat-num {
+    font-size: 1.35rem;
+  }
+
+  .stat-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    margin-top: 0.2rem;
+  }
+}

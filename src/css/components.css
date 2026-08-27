@@ -1,0 +1,383 @@
+/* Minimalist Components: Buttons, Badges, Modals, Forms & Toasts */
+
+/* --- Minimalist Buttons --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.6rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  border-color: var(--btn-primary-bg);
+}
+
+.btn-primary:hover {
+  background: var(--btn-primary-hover-bg);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--accent-subtle);
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+}
+
+.btn-secondary:hover {
+  background: rgba(128, 128, 128, 0.15);
+  border-color: var(--border-glass);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-glass);
+}
+
+.btn-outline:hover {
+  background: var(--accent-subtle);
+  border-color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.btn-glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--text-primary);
+  border-color: var(--border-glass);
+}
+
+.btn-glass:hover {
+  background: var(--accent-subtle);
+  border-color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.btn-lg {
+  padding: 0.95rem 2rem;
+  font-size: 0.92rem;
+  letter-spacing: 0.05em;
+}
+
+.btn-sm {
+  padding: 0.45rem 1rem;
+  font-size: 0.78rem;
+}
+
+.btn-icon-only {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: var(--radius-sm);
+}
+
+/* --- Badges & Tags --- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.22rem 0.65rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+}
+
+.badge-gold {
+  background: rgba(197, 160, 89, 0.12);
+  color: var(--accent-gold);
+  border: 1px solid var(--border-gold);
+}
+
+.badge-subtle {
+  background: var(--accent-subtle);
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+}
+
+.badge-edition {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.22rem 0.55rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-glass);
+}
+
+/* --- Cards & Glass Surface --- */
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-xl);
+  transition: all var(--transition-fast);
+}
+
+.glass-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-glass);
+}
+
+/* --- Form Controls --- */
+.form-group {
+  margin-bottom: 1.25rem;
+  text-align: left;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 0.45rem;
+  letter-spacing: 0.02em;
+}
+
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--accent-subtle);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  transition: border-color var(--transition-fast);
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  background: transparent;
+  border-color: var(--text-primary);
+}
+
+.form-select {
+  cursor: pointer;
+}
+
+.form-select option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/* --- Modals Base --- */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast);
+  padding: 1.5rem;
+}
+
+.modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.modal-container {
+  position: relative;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  max-width: 880px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  z-index: 10;
+  box-shadow: var(--shadow-lg);
+  transform: scale(0.98);
+  transition: transform var(--transition-fast);
+}
+
+.modal.active .modal-container {
+  transform: scale(1);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+  position: sticky;
+  top: 0;
+  background: var(--bg-secondary);
+  z-index: 5;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+.modal-close {
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 1.6rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color var(--transition-fast);
+  padding: 0.2rem;
+}
+
+.modal-close:hover {
+  color: var(--text-primary);
+}
+
+.modal-body {
+  padding: 1.75rem;
+}
+
+/* --- Minimalist Toast Notifications --- */
+.toast-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 100000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  pointer-events: none;
+  max-width: 360px;
+  width: calc(100vw - 4rem);
+}
+
+.toast-item {
+  position: relative;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1.1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  color: var(--text-primary);
+  pointer-events: auto;
+  transform: translateX(120%);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.toast-item.toast-show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.toast-item.toast-hide {
+  transform: translateX(120%);
+  opacity: 0;
+}
+
+.toast-icon-wrapper {
+  font-size: 1rem;
+  color: var(--text-primary);
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.toast-content {
+  flex-grow: 1;
+}
+
+.toast-title {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  margin-bottom: 0.15rem;
+}
+
+.toast-message {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.toast-close {
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  line-height: 1;
+}
+
+.toast-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--text-primary);
+  animation: toastProgress linear forwards;
+}
+
+@media (max-width: 600px) {
+  .modal {
+    padding: 0.5rem;
+  }
+
+  .modal-container {
+    max-height: 94vh;
+    border-radius: var(--radius-md);
+  }
+
+  .modal-header {
+    padding: 0.95rem 1.15rem;
+  }
+
+  .modal-body {
+    padding: 1.15rem 1rem;
+  }
+
+  .modal-title {
+    font-size: 1.1rem;
+  }
+
+  .toast-container {
+    bottom: calc(75px + env(safe-area-inset-bottom, 0px));
+    right: 1rem;
+    left: 1rem;
+    width: auto;
+    max-width: 100%;
+  }
+}
