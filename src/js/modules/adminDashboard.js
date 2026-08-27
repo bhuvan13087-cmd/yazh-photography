@@ -1,6 +1,6 @@
 // Yazh Photography — Executive Studio Dashboard Suite
 // Desktop-First Business Management System
-// Complete Production Photo Library, Modals, Category CRUD, and Action Controller
+// Clean Production UI & Client-Event-Only Notification Controller
 
 import { currency } from './currency.js';
 import { dataStore } from '../utils/dataStore.js';
@@ -39,7 +39,7 @@ export class AdminDashboard {
     this.setupPhotoUploader();
     this.setupCategoryManager();
 
-    // Event listeners for synchronized data updates across views
+    // Event listeners for data updates (UI updates silently without routine toasts)
     document.addEventListener('bookingsUpdated', () => this.refreshActiveViews());
     document.addEventListener('photosUpdated', () => this.refreshActiveViews());
     document.addEventListener('packagesUpdated', () => this.refreshActiveViews());
@@ -50,6 +50,33 @@ export class AdminDashboard {
       this.renderPhotoLibrary();
     });
     document.addEventListener('currencyChange', () => this.refreshActiveViews());
+
+    // Genuine Incoming Client Event Notifications ONLY
+    document.addEventListener('newBookingInquiry', (e) => {
+      const b = e.detail;
+      if (b) {
+        sound.playSuccessChime();
+        toast.show({
+          title: 'New Booking Inquiry',
+          message: `${b.clientName} submitted an inquiry for ${b.packageName} (${b.eventDate || 'Date TBD'}).`,
+          type: 'info',
+          icon: 'info'
+        });
+      }
+    });
+
+    document.addEventListener('newClientReview', (e) => {
+      const r = e.detail;
+      if (r) {
+        sound.playSuccessChime();
+        toast.show({
+          title: 'New Client Review',
+          message: `${r.name} submitted a ${r.rating}★ review for ${r.eventType || 'Wedding'}.`,
+          type: 'info',
+          icon: 'info'
+        });
+      }
+    });
   }
 
   setupClock() {
@@ -100,7 +127,6 @@ export class AdminDashboard {
         this.isAuthenticated = true;
         sessionStorage.setItem('yazh_admin_authenticated', 'true');
         sound.playSuccessChime();
-        toast.success('Admin authentication verified.', 'Welcome Studio Admin');
         if (pwdInput) pwdInput.value = '';
         this.renderAuthView();
         await this.loadAllViews();
@@ -122,7 +148,6 @@ export class AdminDashboard {
     logoutBtn?.addEventListener('click', () => {
       this.isAuthenticated = false;
       sessionStorage.removeItem('yazh_admin_authenticated');
-      toast.info('Studio admin session locked.');
       this.renderAuthView();
     });
   }
@@ -572,13 +597,12 @@ export class AdminDashboard {
       });
 
       sound.playSuccessChime();
-      toast.success('Photo uploaded successfully.', 'Portfolio Updated');
 
       // Reset form and selected file state
       document.getElementById('admin-photo-upload-form')?.reset();
       this.clearSelectedFile();
 
-      // Immediate UI synchronization without browser refresh
+      // Immediate UI synchronization without browser refresh (no routine toast)
       await this.renderPhotoLibrary();
       await this.renderOverview();
     } catch (err) {
@@ -605,14 +629,10 @@ export class AdminDashboard {
       return;
     }
 
-    toast.info('Uploading replacement to Cloud CDN...', 'Processing');
-
     try {
       const uploadResult = await cloudStorage.uploadImageFile(file);
       await dataStore.replacePhoto(itemId, uploadResult);
-
       sound.playSuccessChime();
-      toast.success('Photo replaced successfully.', 'Image Updated');
       await this.renderPhotoLibrary();
     } catch (err) {
       console.error(err);
@@ -733,14 +753,11 @@ export class AdminDashboard {
 
         const newPublishedState = !(currentItem.published !== false);
 
-        // Immediate visual update feedback
         btn.textContent = 'Updating...';
         btn.style.opacity = '0.7';
 
         try {
           await dataStore.updatePhoto(id, { published: newPublishedState });
-          sound.playSuccessChime();
-          toast.success(newPublishedState ? 'Photo published successfully.' : 'Photo moved to draft.');
           await this.renderPhotoLibrary();
         } catch (err) {
           console.error(err);
@@ -808,13 +825,12 @@ export class AdminDashboard {
       await dataStore.deletePhoto(id);
 
       sound.playSuccessChime();
-      toast.success('Photo deleted successfully.', 'Photo Removed');
 
       // Close modal
       this.closeSubModal('admin-delete-confirm-modal');
       this.pendingDeleteId = null;
 
-      // Immediate UI update without requiring browser refresh
+      // Immediate UI update without requiring browser refresh (no routine toast)
       await this.renderPhotoLibrary();
       await this.renderOverview();
       this.updateSidebarCounters();
@@ -907,13 +923,10 @@ export class AdminDashboard {
       });
 
       sound.playSuccessChime();
-      toast.success('Photo updated successfully.', 'Changes Saved');
-
       this.closeSubModal('admin-edit-photo-modal');
       await this.renderPhotoLibrary();
     } catch (err) {
       console.error('Update photo error:', err);
-      // Keep modal open, show error, preserve entered values
       toast.show({ title: 'Save Failed', message: 'Unable to save changes. Please try again.', type: 'error', icon: 'error' });
       if (saveBtn) {
         saveBtn.disabled = false;
@@ -1025,7 +1038,6 @@ export class AdminDashboard {
           try {
             await dataStore.deleteBooking(id);
             sound.playSuccessChime();
-            toast.success(`Booking inquiry ${id} deleted successfully.`);
             await this.renderBookings();
             await this.renderOverview();
           } catch (err) {
@@ -1112,7 +1124,6 @@ export class AdminDashboard {
         if (pkg) {
           const newStatus = pkg.status === 'disabled' ? 'active' : 'disabled';
           await dataStore.updatePackage(id, { status: newStatus });
-          toast.success(`Package "${pkg.name}" is now ${newStatus}.`);
           await this.renderPackages();
         }
       });
@@ -1128,7 +1139,6 @@ export class AdminDashboard {
           try {
             await dataStore.deletePackage(id);
             sound.playSuccessChime();
-            toast.success(`Package "${pkg?.name}" deleted successfully.`);
             await this.renderPackages();
           } catch (err) {
             console.error('Delete package error:', err);
@@ -1220,7 +1230,6 @@ export class AdminDashboard {
         if (rev) {
           const newStatus = rev.status === 'published' ? 'draft' : 'published';
           await dataStore.updateReview(id, { status: newStatus });
-          toast.success(`Review by "${rev.name}" is now ${newStatus}.`);
           await this.renderReviews();
         }
       });
@@ -1236,7 +1245,6 @@ export class AdminDashboard {
           try {
             await dataStore.deleteReview(id);
             sound.playSuccessChime();
-            toast.success(`Review by "${rev?.name}" deleted successfully.`);
             await this.renderReviews();
           } catch (err) {
             console.error('Delete review error:', err);
@@ -1292,7 +1300,25 @@ export class AdminDashboard {
       }
     });
 
-    // Top & Edit Modal Category Manager Triggers
+    // Category Modal Triggers
+    document.getElementById('btn-open-add-category-modal')?.addEventListener('click', () => {
+      this.openAddCategoryModal();
+    });
+
+    document.getElementById('btn-top-open-add-cat')?.addEventListener('click', () => {
+      this.openAddCategoryModal();
+    });
+
+    document.getElementById('btn-cat-mgr-open-add')?.addEventListener('click', () => {
+      this.closeSubModal('category-manager-modal');
+      this.openAddCategoryModal();
+    });
+
+    document.getElementById('btn-toggle-category-manager')?.addEventListener('click', async () => {
+      this.openSubModal('category-manager-modal');
+      await this.renderCategoryManagerList();
+    });
+
     document.getElementById('btn-toggle-category-manager-top')?.addEventListener('click', async () => {
       this.openSubModal('category-manager-modal');
       await this.renderCategoryManagerList();
@@ -1301,6 +1327,12 @@ export class AdminDashboard {
     document.getElementById('btn-edit-modal-manage-cat')?.addEventListener('click', async () => {
       this.openSubModal('category-manager-modal');
       await this.renderCategoryManagerList();
+    });
+
+    // Handle Standalone Add Category Modal Form Submit
+    document.getElementById('admin-add-category-modal-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await this.handleStandaloneAddCategory();
     });
 
     // Trigger Add Package Modal
@@ -1339,14 +1371,12 @@ export class AdminDashboard {
 
       if (id) {
         await dataStore.updatePackage(id, { name, category, priceINR, unit, duration, description: desc, deliverables });
-        toast.success(`Package "${name}" updated.`);
       } else {
         await dataStore.addPackage({ name, category, priceINR, unit, duration, description: desc, deliverables });
-        toast.success(`Package "${name}" created.`);
       }
 
       this.closeSubModal('admin-package-modal');
-      this.renderPackages();
+      await this.renderPackages();
     });
 
     // Handle Review Form Submit
@@ -1363,14 +1393,12 @@ export class AdminDashboard {
 
       if (id) {
         await dataStore.updateReview(id, { name, location, rating, eventType, title, comment, status });
-        toast.success(`Review by "${name}" updated.`);
       } else {
         await dataStore.addReview({ name, location, rating, eventType, title, comment, status });
-        toast.success(`Review by "${name}" saved.`);
       }
 
       this.closeSubModal('admin-review-modal');
-      this.renderReviews();
+      await this.renderReviews();
     });
 
     // Handle Change Status Form Submit
@@ -1381,10 +1409,9 @@ export class AdminDashboard {
 
       if (id && newStatus) {
         await dataStore.updateBooking(id, { status: newStatus });
-        toast.success(`Lead ${id} marked as ${newStatus}.`);
         this.closeSubModal('admin-status-modal');
-        this.renderBookings();
-        this.renderOverview();
+        await this.renderBookings();
+        await this.renderOverview();
       }
     });
 
@@ -1407,10 +1434,63 @@ export class AdminDashboard {
       }
 
       await dataStore.updateAdminPassword(newPwd);
-      toast.success('Admin master password key updated securely.', 'Security Updated');
       this.closeSubModal('admin-password-modal');
       document.getElementById('admin-password-form')?.reset();
     });
+  }
+
+  // ==========================================
+  // DEDICATED ADD CATEGORY MODAL LOGIC
+  // ==========================================
+  openAddCategoryModal() {
+    const errorEl = document.getElementById('admin-modal-add-cat-error');
+    const input = document.getElementById('admin-modal-cat-name');
+    if (errorEl) errorEl.style.display = 'none';
+    if (input) input.value = '';
+    this.openSubModal('admin-add-category-modal');
+    input?.focus();
+  }
+
+  async handleStandaloneAddCategory() {
+    const input = document.getElementById('admin-modal-cat-name');
+    const errorEl = document.getElementById('admin-modal-add-cat-error');
+    const submitBtn = document.getElementById('btn-modal-submit-add-cat');
+    const name = input?.value.trim();
+
+    if (!name) return;
+
+    if (errorEl) errorEl.style.display = 'none';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="btn-spinner"></span> Adding...';
+    }
+
+    try {
+      const added = await dataStore.addCategory(name);
+      sound.playSuccessChime();
+
+      // Close modal automatically
+      this.closeSubModal('admin-add-category-modal');
+
+      // Refresh category selects and auto-select the new category
+      await this.refreshCategories();
+      const uploaderSelect = document.getElementById('admin-photo-category');
+      if (uploaderSelect && added?.id) {
+        uploaderSelect.value = added.id;
+      }
+
+      await this.renderPhotoLibrary();
+    } catch (err) {
+      if (errorEl) {
+        errorEl.textContent = err.message || 'Unable to add category.';
+        errorEl.style.display = 'block';
+      }
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Add Category';
+      }
+    }
   }
 
   openPackageModal(pkg) {
@@ -1520,65 +1600,25 @@ export class AdminDashboard {
   // CATEGORY DIRECTORY MANAGER
   // ==========================================
   setupCategoryManager() {
-    const modal = document.getElementById('category-manager-modal');
-    const toggleBtn = document.getElementById('btn-toggle-category-manager');
-    const addForm = document.getElementById('admin-add-category-form');
-    const newCatInput = document.getElementById('admin-new-cat-name');
-
-    toggleBtn?.addEventListener('click', async () => {
-      this.openSubModal('category-manager-modal');
-      await this.renderCategoryManagerList();
-    });
-
-    // Close Category Modal Triggers
-    modal?.querySelectorAll('.close-category-modal').forEach(btn => {
-      btn.addEventListener('click', () => {
-        this.closeSubModal('category-manager-modal');
-      });
-    });
-
-    addForm?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const val = newCatInput?.value.trim();
-      if (!val) return;
-
-      const submitBtn = document.getElementById('btn-submit-add-cat');
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="btn-spinner"></span> Adding...';
-      }
-
-      try {
-        await dataStore.addCategory(val);
-        if (newCatInput) newCatInput.value = '';
-        sound.playSuccessChime();
-        toast.success(`Category "${val}" added successfully.`);
-        await this.renderCategoryManagerList();
-        await this.refreshCategories();
-      } catch (err) {
-        toast.show({ title: 'Category Error', message: err.message || 'Unable to add category.', type: 'warning', icon: 'warning' });
-      } finally {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = 'Add Category';
-        }
-      }
-    });
+    // Category Manager events already handled in setupModals
   }
 
   async renderCategoryManagerList() {
     const container = document.getElementById('admin-categories-list-container');
+    const badge = document.getElementById('admin-cat-count-badge');
     if (!container) return;
 
     const categories = await dataStore.getCategories();
     const photos = await dataStore.getPhotos();
+
+    if (badge) badge.textContent = `${categories.length} Categories`;
 
     container.innerHTML = categories.map((cat, idx) => {
       const count = photos.filter(p => p.category === cat.id).length;
       return `
         <div class="category-admin-row" data-id="${cat.id}">
           <input type="text" class="category-admin-name-input" value="${cat.name}" data-id="${cat.id}" data-idx="${idx}" />
-          <span style="font-size: 0.72rem; color: #6b7280; white-space: nowrap; margin-right: 0.35rem;">(${count} photos)</span>
+          <span style="font-size: 0.74rem; color: #9ca3af; white-space: nowrap; margin-right: 0.35rem;">(${count} photos)</span>
           <div class="category-admin-actions">
             <button type="button" class="btn-cat-save" data-id="${cat.id}">Save</button>
             <button type="button" class="btn-cat-delete" data-id="${cat.id}" ${categories.length <= 1 ? 'disabled style="opacity:0.4;"' : ''}>Delete</button>
@@ -1599,7 +1639,6 @@ export class AdminDashboard {
           try {
             await dataStore.updateCategory(id, newName);
             sound.playSuccessChime();
-            toast.success(`Category renamed to "${newName}".`);
             await this.refreshCategories();
             await this.renderCategoryManagerList();
           } catch (err) {
@@ -1625,7 +1664,6 @@ export class AdminDashboard {
           try {
             await dataStore.deleteCategory(id);
             sound.playSuccessChime();
-            toast.success(`Category "${cat.name}" deleted successfully.`);
             await this.renderCategoryManagerList();
             await this.refreshCategories();
             await this.renderPhotoLibrary();

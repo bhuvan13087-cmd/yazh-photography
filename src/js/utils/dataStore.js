@@ -18,6 +18,12 @@ async function sha256(str) {
   return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
+function safeDispatch(name, detail) {
+  if (typeof document !== 'undefined') {
+    document.dispatchEvent(new CustomEvent(name, { detail }));
+  }
+}
+
 // Default Admin Credentials (hashed)
 // Yazh4100 salted SHA-256
 const DEFAULT_ADMIN_EMAIL = 'yazhphotographypvp@gmail.com';
@@ -50,6 +56,7 @@ class DataStoreManager {
   }
 
   loadFromLocalCache() {
+    if (typeof localStorage === 'undefined') return;
     try {
       const cached = localStorage.getItem(CACHE_STORAGE_KEY);
       if (cached) {
@@ -78,6 +85,7 @@ class DataStoreManager {
   }
 
   saveToLocalCache() {
+    if (typeof localStorage === 'undefined') return;
     try {
       localStorage.setItem(CACHE_STORAGE_KEY, JSON.stringify(this.data));
     } catch (e) {
@@ -299,7 +307,8 @@ class DataStoreManager {
 
     this.data.bookings.unshift(newBooking);
     await this.syncToCloud();
-    document.dispatchEvent(new CustomEvent('bookingsUpdated', { detail: this.data.bookings }));
+    safeDispatch('bookingsUpdated', this.data.bookings);
+    safeDispatch('newBookingInquiry', newBooking);
     return newBooking;
   }
 
@@ -313,7 +322,7 @@ class DataStoreManager {
         updatedAt: new Date().toISOString()
       };
       await this.syncToCloud();
-      document.dispatchEvent(new CustomEvent('bookingsUpdated', { detail: this.data.bookings }));
+      safeDispatch('bookingsUpdated', this.data.bookings);
       return this.data.bookings[index];
     }
     return null;
@@ -323,7 +332,7 @@ class DataStoreManager {
     await this.initPromise;
     this.data.bookings = this.data.bookings.filter(b => b.id !== id);
     await this.syncToCloud();
-    document.dispatchEvent(new CustomEvent('bookingsUpdated', { detail: this.data.bookings }));
+    safeDispatch('bookingsUpdated', this.data.bookings);
     return true;
   }
 
@@ -419,7 +428,7 @@ class DataStoreManager {
 
     this.data.photos.unshift(newPhoto);
     await this.syncToCloud();
-    document.dispatchEvent(new CustomEvent('photosUpdated', { detail: await this.getAllPortfolioPhotos() }));
+    safeDispatch('photosUpdated', await this.getAllPortfolioPhotos());
     return newPhoto;
   }
 
@@ -435,7 +444,7 @@ class DataStoreManager {
         updatedAt: new Date().toISOString()
       };
       await this.syncToCloud();
-      document.dispatchEvent(new CustomEvent('photosUpdated', { detail: await this.getAllPortfolioPhotos() }));
+      safeDispatch('photosUpdated', await this.getAllPortfolioPhotos());
       return this.data.photos[customIndex];
     }
 
@@ -448,7 +457,7 @@ class DataStoreManager {
     };
 
     await this.syncToCloud();
-    document.dispatchEvent(new CustomEvent('photosUpdated', { detail: await this.getAllPortfolioPhotos() }));
+    safeDispatch('photosUpdated', await this.getAllPortfolioPhotos());
     return this.data.photoOverrides[id];
   }
 
@@ -476,8 +485,8 @@ class DataStoreManager {
     }
 
     await this.syncToCloud();
-    document.dispatchEvent(new CustomEvent('photosUpdated', { detail: await this.getAllPortfolioPhotos() }));
-    document.dispatchEvent(new CustomEvent('photoReplaced', { detail: { id, image: versionedUrl, thumbnail: versionedThumb } }));
+    safeDispatch('photosUpdated', await this.getAllPortfolioPhotos());
+    safeDispatch('photoReplaced', { id, image: versionedUrl, thumbnail: versionedThumb });
     return { id, image: versionedUrl, thumbnail: versionedThumb };
   }
 
@@ -502,7 +511,7 @@ class DataStoreManager {
     }
 
     await this.syncToCloud();
-    document.dispatchEvent(new CustomEvent('photosUpdated', { detail: await this.getAllPortfolioPhotos() }));
+    safeDispatch('photosUpdated', await this.getAllPortfolioPhotos());
     return true;
   }
 
@@ -542,7 +551,7 @@ class DataStoreManager {
 
     this.data.packages.push(newPkg);
     await this.syncToCloud();
-    document.dispatchEvent(new CustomEvent('packagesUpdated', { detail: this.data.packages }));
+    safeDispatch('packagesUpdated', this.data.packages);
     return newPkg;
   }
 
@@ -557,7 +566,7 @@ class DataStoreManager {
         updatedAt: new Date().toISOString()
       };
       await this.syncToCloud();
-      document.dispatchEvent(new CustomEvent('packagesUpdated', { detail: this.data.packages }));
+      safeDispatch('packagesUpdated', this.data.packages);
       return this.data.packages[index];
     }
     return null;
@@ -567,7 +576,7 @@ class DataStoreManager {
     await this.initPromise;
     this.data.packages = this.data.packages.filter(p => p.id !== id);
     await this.syncToCloud();
-    document.dispatchEvent(new CustomEvent('packagesUpdated', { detail: this.data.packages }));
+    safeDispatch('packagesUpdated', this.data.packages);
     return true;
   }
 
@@ -591,7 +600,7 @@ class DataStoreManager {
     };
     this.data.services.push(newSrv);
     await this.syncToCloud();
-    document.dispatchEvent(new CustomEvent('servicesUpdated', { detail: this.data.services }));
+    safeDispatch('servicesUpdated', this.data.services);
     return newSrv;
   }
 
@@ -606,7 +615,7 @@ class DataStoreManager {
         updatedAt: new Date().toISOString()
       };
       await this.syncToCloud();
-      document.dispatchEvent(new CustomEvent('servicesUpdated', { detail: this.data.services }));
+      safeDispatch('servicesUpdated', this.data.services);
       return this.data.services[index];
     }
     return null;
@@ -616,7 +625,7 @@ class DataStoreManager {
     await this.initPromise;
     this.data.services = this.data.services.filter(s => s.id !== id);
     await this.syncToCloud();
-    document.dispatchEvent(new CustomEvent('servicesUpdated', { detail: this.data.services }));
+    safeDispatch('servicesUpdated', this.data.services);
     return true;
   }
 
@@ -651,7 +660,8 @@ class DataStoreManager {
 
     this.data.reviews.unshift(newReview);
     await this.syncToCloud();
-    document.dispatchEvent(new CustomEvent('reviewsUpdated', { detail: this.data.reviews }));
+    safeDispatch('reviewsUpdated', this.data.reviews);
+    safeDispatch('newClientReview', newReview);
     return newReview;
   }
 
@@ -666,7 +676,7 @@ class DataStoreManager {
         updatedAt: new Date().toISOString()
       };
       await this.syncToCloud();
-      document.dispatchEvent(new CustomEvent('reviewsUpdated', { detail: this.data.reviews }));
+      safeDispatch('reviewsUpdated', this.data.reviews);
       return this.data.reviews[index];
     }
     return null;
@@ -676,7 +686,7 @@ class DataStoreManager {
     await this.initPromise;
     this.data.reviews = this.data.reviews.filter(r => r.id !== id);
     await this.syncToCloud();
-    document.dispatchEvent(new CustomEvent('reviewsUpdated', { detail: this.data.reviews }));
+    safeDispatch('reviewsUpdated', this.data.reviews);
     return true;
   }
 
@@ -692,7 +702,7 @@ class DataStoreManager {
     await this.initPromise;
     this.data.categories = cats;
     await this.syncToCloud();
-    document.dispatchEvent(new CustomEvent('categoriesUpdated', { detail: cats }));
+    safeDispatch('categoriesUpdated', cats);
     return cats;
   }
 

@@ -919,11 +919,16 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
                   <div>
                     <h3 class="admin-section-title">Photo Library & Cloud Asset Manager</h3>
-                    <p class="admin-section-subtitle">Manage high-resolution showcase imagery with permanent Cloud CDN hosting and instant replacement.</p>
+                    <p class="admin-section-subtitle">Manage showcase imagery with permanent Cloud CDN hosting and instant replacement.</p>
                   </div>
-                  <button type="button" class="btn btn-secondary btn-sm" id="btn-toggle-category-manager-top">
-                    ⚙️ Manage Categories Directory
-                  </button>
+                  <div style="display: flex; gap: 0.5rem;">
+                    <button type="button" class="btn btn-secondary btn-sm" id="btn-top-open-add-cat">
+                      <i data-lucide="plus" style="width: 14px; height: 14px;"></i> Add Category
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-sm" id="btn-toggle-category-manager-top">
+                      <i data-lucide="settings" style="width: 14px; height: 14px;"></i> Manage Categories
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -943,10 +948,14 @@
                     <div class="admin-dropzone-box" id="admin-photo-dropzone">
                       <div class="dropzone-idle-state" id="dropzone-idle-state">
                         <div class="admin-dropzone-icon-wrap">
-                          <i data-lucide="image-plus" class="admin-dropzone-icon"></i>
+                          <i data-lucide="cloud-upload" class="admin-dropzone-icon"></i>
                         </div>
-                        <h4 class="admin-dropzone-title">Drag & Drop Image or <span style="color: #c5a059; text-decoration: underline;">Browse</span></h4>
-                        <p class="admin-dropzone-hint">Supports JPG, JPEG, PNG, WEBP (Max 15MB)</p>
+                        <h4 class="admin-dropzone-title">Drag &amp; drop your image here</h4>
+                        <p class="admin-dropzone-sub">or <span class="admin-dropzone-browse-text">browse files</span></p>
+                        <div class="admin-dropzone-meta-tags">
+                          <span class="dropzone-tag">JPG, PNG, WEBP</span>
+                          <span class="dropzone-tag">Max 15MB</span>
+                        </div>
                       </div>
 
                       <div class="dropzone-selected-state" id="dropzone-selected-state" style="display: none;">
@@ -954,10 +963,12 @@
                           <img src="" id="admin-photo-preview-img" alt="Preview" class="upload-preview-img" />
                         </div>
                         <div class="upload-file-details">
-                          <strong class="upload-file-name" id="admin-photo-file-name">filename.jpg</strong>
-                          <span class="upload-file-size" id="admin-photo-file-size">0.0 MB</span>
+                          <div class="upload-file-info-row">
+                            <strong class="upload-file-name" id="admin-photo-file-name">filename.jpg</strong>
+                            <span class="upload-file-size" id="admin-photo-file-size">0.0 MB</span>
+                          </div>
                           <button type="button" class="btn-remove-selected-file" id="btn-remove-selected-file" title="Remove selected image">
-                            ✕ Remove / Change Image
+                            <i data-lucide="x" style="width: 12px; height: 12px;"></i> Remove Image
                           </button>
                         </div>
                       </div>
@@ -976,13 +987,16 @@
                       </div>
 
                       <div class="form-group">
-                        <div class="category-manager-header-bar">
-                          <label class="form-label" for="admin-photo-category" style="margin-bottom: 0;">Portfolio Category *</label>
-                          <button type="button" class="btn-manage-categories-link" id="btn-toggle-category-manager">
-                            ⚙️ Manage Categories
+                        <label class="form-label" for="admin-photo-category">Portfolio Category *</label>
+                        <div class="category-select-control-row">
+                          <select id="admin-photo-category" class="form-select" required style="flex: 1;"></select>
+                          <button type="button" class="btn btn-secondary btn-sm" id="btn-open-add-category-modal" title="Add New Category" style="white-space: nowrap;">
+                            <i data-lucide="plus" style="width: 13px; height: 13px;"></i> Add Category
+                          </button>
+                          <button type="button" class="btn btn-secondary btn-sm" id="btn-toggle-category-manager" title="Manage All Categories" style="white-space: nowrap;">
+                            <i data-lucide="settings" style="width: 13px; height: 13px;"></i> Manage
                           </button>
                         </div>
-                        <select id="admin-photo-category" class="form-select" required></select>
                       </div>
 
                       <div class="form-group">
@@ -1018,6 +1032,16 @@
                       <!-- Action Button Row -->
                       <div class="admin-form-btn-row">
                         <button type="submit" id="btn-admin-submit-upload" class="btn btn-primary btn-lg" style="flex: 2;">
+                          <i data-lucide="cloud-upload" style="width: 16px; height: 16px;"></i> Publish to Public Portfolio
+                        </button>
+                        <button type="button" id="btn-admin-clear-upload" class="btn btn-secondary btn-lg" style="flex: 1;">
+                          Clear
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
                           <i data-lucide="cloud-upload" style="width: 16px; height: 16px;"></i> Publish to Public Portfolio
                         </button>
                         <button type="button" id="btn-admin-clear-upload" class="btn btn-secondary btn-lg" style="flex: 1;">
@@ -1445,40 +1469,56 @@
   </div>
 
 
-  <!-- H. CATEGORY MANAGER MODAL -->
-  <div class="admin-sub-modal category-manager-modal" id="category-manager-modal">
-    <div class="admin-sub-modal-box" style="max-width: 540px;">
+  <!-- SUB-MODAL 6: ADD CATEGORY MODAL -->
+  <div class="admin-sub-modal" id="admin-add-category-modal">
+    <div class="admin-sub-modal-box" style="max-width: 460px;">
       <div class="admin-sub-modal-header">
-        <div>
-          <h4 class="admin-sub-modal-title">Manage Photography Categories</h4>
-          <span style="font-size: 0.76rem; color: #c5a059;">Live sync with uploader & public filter bar</span>
-        </div>
-        <button type="button" class="btn-header-close close-category-modal">&times;</button>
+        <h4 class="admin-sub-modal-title">Add Category</h4>
+        <button type="button" class="btn-header-close close-sub-modal">&times;</button>
       </div>
       <div class="admin-sub-modal-body">
-        <!-- Add New Category Form -->
-        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 1.15rem; margin-bottom: 1.5rem;">
-          <h4 style="font-size: 0.85rem; margin-bottom: 0.65rem; color: #ffffff; display: flex; align-items: center; gap: 0.4rem;">
-            <i data-lucide="plus-circle" style="width: 15px; height: 15px; color: #c5a059;"></i> Add New Category
-          </h4>
-          <form id="admin-add-category-form" style="display: flex; gap: 0.5rem;">
-            <input type="text" id="admin-new-cat-name" class="form-input" placeholder="e.g. Sangeet, Haldi, Maternity" required style="flex: 1;" />
-            <button type="submit" id="btn-submit-add-cat" class="btn btn-primary btn-sm" style="white-space: nowrap;">
+        <form id="admin-add-category-modal-form">
+          <div class="form-group">
+            <label class="form-label" for="admin-modal-cat-name">Category Name *</label>
+            <input type="text" id="admin-modal-cat-name" class="form-input" placeholder="e.g. Sangeet, Haldi, Maternity, Outdoor" required />
+            <div id="admin-modal-add-cat-error" style="display: none; color: #f87171; font-size: 0.78rem; margin-top: 0.5rem;"></div>
+          </div>
+          <div class="admin-form-btn-row" style="margin-top: 1.5rem;">
+            <button type="button" class="btn btn-secondary close-sub-modal" style="flex: 1;">Cancel</button>
+            <button type="submit" id="btn-modal-submit-add-cat" class="btn btn-primary" style="flex: 1.5;">
               Add Category
             </button>
-          </form>
-        </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
-        <h4 style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; color: #9ca3af; margin-bottom: 0.75rem;">
-          Existing Categories
-        </h4>
+  <!-- SUB-MODAL 7: MANAGE CATEGORIES MODAL -->
+  <div class="admin-sub-modal category-manager-modal" id="category-manager-modal">
+    <div class="admin-sub-modal-box" style="max-width: 560px;">
+      <div class="admin-sub-modal-header">
+        <div style="display: flex; align-items: center; gap: 0.65rem;">
+          <h4 class="admin-sub-modal-title">Manage Categories</h4>
+          <span class="admin-title-badge" id="admin-cat-count-badge" style="font-size: 0.7rem;">0 Categories</span>
+        </div>
+        <button type="button" class="btn-header-close close-sub-modal">&times;</button>
+      </div>
+      <div class="admin-sub-modal-body">
+        <p style="font-size: 0.82rem; color: #9ca3af; margin: 0 0 1.15rem; line-height: 1.5;">
+          Edit category titles or delete unused categories. Categories automatically synchronize with the uploader and public portfolio filters.
+        </p>
 
         <!-- Category List with Edit & Delete actions -->
         <div class="categories-list-box" id="admin-categories-list-container"></div>
 
-        <div style="margin-top: 1.5rem; text-align: right;">
-          <button type="button" class="btn btn-secondary btn-sm close-category-modal">
+        <!-- Footer with Close and Add Category actions -->
+        <div class="admin-sub-modal-footer-row" style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.08);">
+          <button type="button" class="btn btn-secondary btn-sm close-sub-modal">
             Close
+          </button>
+          <button type="button" class="btn btn-primary btn-sm" id="btn-cat-mgr-open-add">
+            <i data-lucide="plus" style="width: 14px; height: 14px;"></i> Add Category
           </button>
         </div>
       </div>
