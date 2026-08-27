@@ -1339,9 +1339,15 @@ export class AdminDashboard {
     document.getElementById('btn-admin-add-package')?.addEventListener('click', () => {
       this.openPackageModal(null);
     });
+    document.getElementById('btn-open-add-package-modal')?.addEventListener('click', () => {
+      this.openPackageModal(null);
+    });
 
     // Trigger Add Review Modal
     document.getElementById('btn-admin-add-review')?.addEventListener('click', () => {
+      this.openReviewModal(null);
+    });
+    document.getElementById('btn-open-add-review-modal')?.addEventListener('click', () => {
       this.openReviewModal(null);
     });
 
