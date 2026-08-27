@@ -983,6 +983,18 @@ export class AdminDashboard {
       const waLink = `https://wa.me/91${cleanPhone}?text=Hello%20${encodeURIComponent(b.clientName)},%20thank%20you%20for%20contacting%20Yazh%20Photography!`;
       const statusClass = this.getStatusBadgeClass(b.status);
 
+      let customHtml = '';
+      if (b.customizations && Array.isArray(b.customizations) && b.customizations.length > 0) {
+        customHtml = `
+          <div style="margin-top: 0.35rem; font-size: 0.74rem; background: rgba(197, 160, 89, 0.08); padding: 0.35rem 0.5rem; border-radius: 4px; border: 1px solid rgba(197, 160, 89, 0.2);">
+            <span style="color: #c5a059; font-weight: 700;">Add-ons (${currency.format(b.customizationTotal || 0)}):</span>
+            <div style="margin-top: 0.15rem; line-height: 1.4;">
+              ${b.customizations.map(c => `<span style="color: #d1d5db;">• ${c.name} (${currency.format(c.price)})</span>`).join('<br>')}
+            </div>
+          </div>
+        `;
+      }
+
       return `
         <tr data-id="${b.id}">
           <td><strong style="color: #c5a059;">${b.id}</strong></td>
@@ -991,15 +1003,19 @@ export class AdminDashboard {
             <small style="color: #9ca3af;">📞 ${b.clientPhone}</small><br>
             <small style="color: #6b7280;">✉️ ${b.clientEmail || 'No email'}</small>
           </td>
-          <td><span style="font-weight: 700; color: #ffffff;">${b.packageName}</span></td>
+          <td>
+            <span style="font-weight: 700; color: #ffffff;">${b.packageName}</span>
+            ${b.packagePrice ? `<small style="color: #9ca3af;"> (${currency.format(b.packagePrice)})</small>` : ''}
+            ${customHtml}
+          </td>
           <td>
             <strong>${b.eventDate || 'Date TBD'}</strong><br>
             <small style="color: #9ca3af;">📍 ${b.location || 'Venue TBD'}</small>
           </td>
           <td>
-            <strong>${currency.format(b.totalINR)}</strong><br>
+            <strong style="font-size: 0.95rem; color: #ffffff;">${currency.format(b.totalINR)}</strong><br>
             <small style="color: #10b981;">Advance: ${currency.format(b.advanceINR)}</small><br>
-            <small style="color: #c5a059;">Due: ${currency.format(b.remainingINR)}</small>
+            <small style="color: #eab308; font-weight: 600;">Due: ${currency.format(b.remainingINR)}</small>
           </td>
           <td>
             <span class="admin-badge ${statusClass}">${b.status || 'New'}</span>
@@ -1152,6 +1168,100 @@ export class AdminDashboard {
         }
       });
     });
+
+    // 2. Render Customization Services Table
+    const srvTbody = document.getElementById('admin-services-tbody');
+    if (srvTbody) {
+      const services = await dataStore.getAllCustomServices();
+      const srvCountBadge = document.getElementById('admin-services-count-badge');
+      if (srvCountBadge) srvCountBadge.textContent = `${services.length} Services`;
+
+      if (services.length === 0) {
+        srvTbody.innerHTML = `
+          <tr>
+            <td colspan="7" style="text-align: center; padding: 2.5rem; color: #6b7280;">
+              No customization services found. Click "+ Add Customization Service" to create one.
+            </td>
+          </tr>
+        `;
+      } else {
+        srvTbody.innerHTML = services.map(srv => {
+          const isAct = srv.status !== 'disabled';
+          const statusClass = isAct ? 'badge-active' : 'badge-disabled';
+          const statusLabel = isAct ? 'Active' : 'Disabled';
+
+          return `
+            <tr data-id="${srv.id}">
+              <td><strong style="color: #ffffff;">${srv.name}</strong></td>
+              <td><span style="color: #c5a059; font-weight: 600;">${srv.category || 'Photography'}</span></td>
+              <td><strong style="color: #ffffff;">${currency.format(srv.priceINR)}</strong></td>
+              <td><span>${srv.unit || 'per event'}</span><br><small style="color:#6b7280;">${srv.duration || '1 Day'}</small></td>
+              <td style="max-width: 250px; font-size: 0.78rem; color: #9ca3af;">${srv.description || '—'}</td>
+              <td>
+                <span class="admin-badge ${statusClass} btn-toggle-srv-status" data-id="${srv.id}" style="cursor: pointer;" title="Toggle Active / Disabled">
+                  ${statusLabel}
+                </span>
+              </td>
+              <td>
+                <div class="admin-table-actions">
+                  <button type="button" class="btn-tbl-action btn-edit-service" data-id="${srv.id}">
+                    <i data-lucide="edit-2" style="width: 12px; height: 12px;"></i> Edit
+                  </button>
+                  <button type="button" class="btn-tbl-action btn-tbl-delete btn-delete-service" data-id="${srv.id}">
+                    <i data-lucide="trash-2" style="width: 12px; height: 12px;"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        if (window.lucide) window.lucide.createIcons();
+
+        // Bind Edit Service
+        srvTbody.querySelectorAll('.btn-edit-service').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.dataset.id;
+            const srv = services.find(s => s.id === id);
+            if (srv) this.openServiceModal(srv);
+          });
+        });
+
+        // Bind Toggle Service Status
+        srvTbody.querySelectorAll('.btn-toggle-srv-status').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const id = btn.dataset.id;
+            const srv = services.find(s => s.id === id);
+            if (srv) {
+              const newStatus = srv.status === 'disabled' ? 'active' : 'disabled';
+              await dataStore.updateCustomService(id, { status: newStatus });
+              await this.renderPackages();
+            }
+          });
+        });
+
+        // Bind Delete Service
+        srvTbody.querySelectorAll('.btn-delete-service').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const id = btn.dataset.id;
+            const srv = services.find(s => s.id === id);
+            if (confirm(`Permanently delete customization service "${srv?.name}"? Historical bookings will safely preserve their price snapshot.`)) {
+              btn.disabled = true;
+              try {
+                await dataStore.deleteCustomService(id);
+                sound.playSuccessChime();
+                await this.renderPackages();
+              } catch (err) {
+                console.error('Delete service error:', err);
+                toast.show({ title: 'Delete Failed', message: 'Unable to delete customization service.', type: 'error', icon: 'error' });
+              } finally {
+                btn.disabled = false;
+              }
+            }
+          });
+        });
+      }
+    }
   }
 
   // ==========================================
@@ -1346,6 +1456,11 @@ export class AdminDashboard {
       this.openPackageModal(null);
     });
 
+    // Trigger Add Customization Service Modal
+    document.getElementById('btn-open-add-service-modal')?.addEventListener('click', () => {
+      this.openServiceModal(null);
+    });
+
     // Trigger Add Review Modal
     document.getElementById('btn-admin-add-review')?.addEventListener('click', () => {
       this.openReviewModal(null);
@@ -1385,6 +1500,33 @@ export class AdminDashboard {
       }
 
       this.closeSubModal('admin-package-modal');
+      await this.renderPackages();
+    });
+
+    // Handle Customization Service Form Submit
+    document.getElementById('admin-service-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('admin-srv-id')?.value;
+      const name = document.getElementById('admin-srv-name')?.value.trim();
+      const category = document.getElementById('admin-srv-category')?.value.trim() || 'Photography';
+      const priceINR = Number(document.getElementById('admin-srv-price')?.value) || 0;
+      const unit = document.getElementById('admin-srv-unit')?.value.trim() || 'per day';
+      const status = document.getElementById('admin-srv-status')?.value || 'active';
+      const desc = document.getElementById('admin-srv-desc')?.value.trim() || '';
+
+      if (!name) {
+        toast.show({ title: 'Service Name Required', message: 'Please enter a valid service name.', type: 'warning', icon: 'warning' });
+        return;
+      }
+
+      if (id) {
+        await dataStore.updateCustomService(id, { name, category, priceINR, unit, status, description: desc });
+      } else {
+        await dataStore.addCustomService({ name, category, priceINR, unit, status, description: desc });
+      }
+
+      this.closeSubModal('admin-service-modal');
+      sound.playSuccessChime();
       await this.renderPackages();
     });
 
@@ -1529,6 +1671,35 @@ export class AdminDashboard {
     }
 
     this.openSubModal('admin-package-modal');
+  }
+
+  openServiceModal(srv) {
+    const titleEl = document.getElementById('admin-srv-modal-title');
+    const idInput = document.getElementById('admin-srv-id');
+    const nameInput = document.getElementById('admin-srv-name');
+    const catInput = document.getElementById('admin-srv-category');
+    const priceInput = document.getElementById('admin-srv-price');
+    const unitInput = document.getElementById('admin-srv-unit');
+    const statusSelect = document.getElementById('admin-srv-status');
+    const descInput = document.getElementById('admin-srv-desc');
+
+    if (srv) {
+      if (titleEl) titleEl.textContent = 'Edit Customization Service';
+      if (idInput) idInput.value = srv.id;
+      if (nameInput) nameInput.value = srv.name;
+      if (catInput) catInput.value = srv.category || 'Photography';
+      if (priceInput) priceInput.value = srv.priceINR;
+      if (unitInput) unitInput.value = srv.unit || 'per day';
+      if (statusSelect) statusSelect.value = srv.status || 'active';
+      if (descInput) descInput.value = srv.description || '';
+    } else {
+      if (titleEl) titleEl.textContent = 'Add Customization Service';
+      document.getElementById('admin-service-form')?.reset();
+      if (idInput) idInput.value = '';
+      if (statusSelect) statusSelect.value = 'active';
+    }
+
+    this.openSubModal('admin-service-modal');
   }
 
   openReviewModal(rev) {

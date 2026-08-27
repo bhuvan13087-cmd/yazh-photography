@@ -342,6 +342,29 @@
                   <select id="booking-package-select" class="form-select" required></select>
                 </div>
 
+                <!-- Customization / Additional Services -->
+                <div class="booking-customization-box">
+                  <label class="form-label" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <span><i data-lucide="sparkles" style="width: 14px; height: 14px; color: var(--accent-gold); vertical-align: middle;"></i> Customization &amp; Add-ons</span>
+                    <span style="font-size: 0.75rem; color: var(--accent-gold); font-weight: 600;" id="customization-count-label">0 Selected</span>
+                  </label>
+                  <p style="font-size: 0.76rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+                    Select optional services to tailor your wedding coverage (e.g. Drone, Candid Cinema, Extra Album, Pre-Wedding).
+                  </p>
+                  
+                  <div class="customization-select-row">
+                    <select id="booking-customization-dropdown" class="form-select">
+                      <option value="">-- Choose a Customization Service --</option>
+                    </select>
+                    <button type="button" class="btn btn-secondary btn-sm" id="btn-add-customization-service" style="white-space: nowrap;">
+                      <i data-lucide="plus" style="width: 13px; height: 13px;"></i> Add
+                    </button>
+                  </div>
+
+                  <!-- Selected Customizations Dynamic List -->
+                  <div class="selected-customizations-container" id="selected-customizations-list" style="display: none;"></div>
+                </div>
+
                 <div class="booking-form-fields">
                   <div class="form-group">
                     <label class="form-label" for="booking-client-name">Full Name *</label>
@@ -372,7 +395,7 @@
                     <span>Initial Booking Token / Advance (₹)</span>
                     <span style="font-size: 0.75rem; color: var(--accent-gold);">Customizable</span>
                   </label>
-                  <input type="number" id="booking-advance-amount" class="form-input" value="5000" min="500" step="500" placeholder="e.g. 1000, 5000" />
+                  <input type="number" id="booking-advance-amount" class="form-input" value="5000" min="0" step="500" placeholder="e.g. 1000, 5000" />
                   <div class="advance-presets-row">
                     <button type="button" class="btn-advance-preset" data-amount="1000">₹1,000 (Token)</button>
                     <button type="button" class="btn-advance-preset active" data-amount="5000">₹5,000 (Advance)</button>
@@ -399,12 +422,21 @@
               </div>
               <div class="summary-line-items">
                 <div class="summary-row">
-                  <span class="summary-row-label">Package Category:</span>
+                  <span class="summary-row-label">Selected Package:</span>
                   <strong class="summary-row-val" id="summary-selected-pkg">Standard package</strong>
                 </div>
                 <div class="summary-row">
-                  <span class="summary-row-label">Total Package Cost:</span>
-                  <strong class="summary-row-val" id="summary-total-pkg-cost">₹60,000</strong>
+                  <span class="summary-row-label">Base Package Price:</span>
+                  <strong class="summary-row-val" id="summary-base-pkg-cost">₹60,000</strong>
+                </div>
+                <div class="summary-row" id="summary-customization-total-row" style="display: none;">
+                  <span class="summary-row-label">Customization Total:</span>
+                  <strong class="summary-row-val" id="summary-customization-total" style="color: var(--accent-gold);">+₹0</strong>
+                </div>
+                <div id="summary-customizations-breakdown" class="customization-summary-list" style="display: none;"></div>
+                <div class="summary-row" style="border-top: 1px dashed var(--border-subtle); padding-top: 0.5rem; margin-top: 0.35rem;">
+                  <span class="summary-row-label">Final Package Amount:</span>
+                  <strong class="summary-row-val" id="summary-total-pkg-cost" style="color: var(--text-primary); font-size: 1.05rem;">₹60,000</strong>
                 </div>
                 <div class="summary-row" style="color: var(--color-success);">
                   <span class="summary-row-label">Initial Token / Advance:</span>
@@ -630,11 +662,16 @@
         </p>
 
         <div style="background: var(--accent-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 1.15rem; text-align: left; margin-bottom: 1.5rem; font-size: 0.85rem; display: flex; flex-direction: column; gap: 0.5rem;">
-          <div><strong>Package Category:</strong> <span id="conf-package-title"></span></div>
+          <div><strong>Selected Package:</strong> <span id="conf-package-title"></span></div>
+          <div><strong>Base Package Price:</strong> <span id="conf-base-pkg-cost"></span></div>
+          <div id="conf-customizations-row" style="display: none;">
+            <strong>Customizations:</strong>
+            <div id="conf-customizations-list" style="font-size: 0.8rem; color: var(--accent-gold); margin-top: 0.2rem; padding-left: 0.5rem;"></div>
+          </div>
           <div><strong>Event Date:</strong> <span id="conf-event-date"></span></div>
           <div><strong>Venue:</strong> <span id="conf-location"></span></div>
           <div style="border-top: 1px solid var(--border-subtle); padding-top: 0.5rem; display: flex; justify-content: space-between;">
-            <span>Total Package Cost:</span>
+            <span>Final Package Amount:</span>
             <strong id="conf-total-value"></strong>
           </div>
           <div style="color: var(--color-success); display: flex; justify-content: space-between;">
@@ -1102,8 +1139,8 @@
                       <tr>
                         <th>Inquiry ID</th>
                         <th>Client Information</th>
-                        <th>Package Details</th>
-                        <th>Event Date & Venue</th>
+                        <th>Package &amp; Customizations</th>
+                        <th>Event Date &amp; Venue</th>
                         <th>Financials</th>
                         <th>Status</th>
                         <th>Actions</th>
@@ -1120,24 +1157,28 @@
                  ========================================== -->
             <section class="admin-section-view" id="admin-view-packages">
               <div class="admin-overview-header">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-                  <div>
-                    <h3 class="admin-section-title">Packages & Pricing Manager</h3>
-                    <p class="admin-section-subtitle">Manage studio packages and custom services. Changes update the public booking calculator instantly.</p>
-                  </div>
-                  <button type="button" class="btn btn-primary btn-sm" id="btn-open-add-package-modal">
-                    ➕ Add New Package / Service
-                  </button>
+                <div>
+                  <h3 class="admin-section-title">Packages &amp; Customization Services Manager</h3>
+                  <p class="admin-section-subtitle">Manage studio packages and optional add-on customization services. Changes update the public booking calculator instantly.</p>
                 </div>
               </div>
 
-              <!-- Packages Table -->
-              <div class="admin-card-section">
+              <!-- 1. Packages Table Card -->
+              <div class="admin-card-section" style="margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.06); flex-wrap: wrap; gap: 1rem;">
+                  <div>
+                    <h4 style="font-size: 1.05rem; font-weight: 700; color: #ffffff; margin: 0;">Wedding &amp; Event Packages</h4>
+                    <span style="font-size: 0.78rem; color: #9ca3af;" id="admin-packages-count-badge">4 Packages</span>
+                  </div>
+                  <button type="button" class="btn btn-primary btn-sm" id="btn-open-add-package-modal">
+                    ➕ Add New Package
+                  </button>
+                </div>
                 <div class="admin-table-container">
                   <table class="admin-table">
                     <thead>
                       <tr>
-                        <th>Package / Service Name</th>
+                        <th>Package Name</th>
                         <th>Category</th>
                         <th>Price (₹)</th>
                         <th>Unit / Duration</th>
@@ -1150,6 +1191,35 @@
                   </table>
                 </div>
               </div>
+
+              <!-- 2. Add-on Customization Services Card -->
+              <div class="admin-card-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.06); flex-wrap: wrap; gap: 1rem;">
+                  <div>
+                    <h4 style="font-size: 1.05rem; font-weight: 700; color: #ffffff; margin: 0;">Add-on Customization Services (Client Booking Add-ons)</h4>
+                    <span style="font-size: 0.78rem; color: #9ca3af;" id="admin-services-count-badge">Custom Services</span>
+                  </div>
+                  <button type="button" class="btn btn-primary btn-sm" id="btn-open-add-service-modal">
+                    ➕ Add Customization Service
+                  </button>
+                </div>
+                <div class="admin-table-container">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Service Name</th>
+                        <th>Category / Type</th>
+                        <th>Price (₹)</th>
+                        <th>Unit / Timing</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="admin-services-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
             </section>
 
             <!-- ==========================================
@@ -1159,7 +1229,7 @@
               <div class="admin-overview-header">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
                   <div>
-                    <h3 class="admin-section-title">Client Reviews & Testimonials Moderation</h3>
+                    <h3 class="admin-section-title">Client Reviews &amp; Testimonials Moderation</h3>
                     <p class="admin-section-subtitle">Moderate feedback and testimonials. Only published reviews appear on the client website.</p>
                   </div>
                   <button type="button" class="btn btn-primary btn-sm" id="btn-open-add-review-modal">
@@ -1177,9 +1247,8 @@
                         <th>Client Info</th>
                         <th>Rating</th>
                         <th>Event Category</th>
-                        <th>Review Headline & Comment</th>
-                        <th>Visibility</th>
-                        <th>Date</th>
+                        <th>Review Headline &amp; Comment</th>
+                        <th>Status</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
@@ -1196,7 +1265,7 @@
     </div>
   </div>
 
-  <!-- SUB-MODAL 1: ADD / EDIT PACKAGE & SERVICE -->
+  <!-- SUB-MODAL 1: ADD / EDIT PACKAGE -->
   <div class="admin-sub-modal" id="admin-package-modal">
     <div class="admin-sub-modal-box">
       <div class="admin-sub-modal-header">
@@ -1207,7 +1276,7 @@
         <form id="admin-package-form">
           <input type="hidden" id="admin-pkg-id" />
           <div class="form-group">
-            <label class="form-label">Package / Service Name *</label>
+            <label class="form-label">Package Name *</label>
             <input type="text" id="admin-pkg-name" class="form-input" placeholder="e.g. Royal Wedding Package" required />
           </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
@@ -1217,7 +1286,7 @@
             </div>
             <div class="form-group">
               <label class="form-label">Price in INR (₹) *</label>
-              <input type="number" id="admin-pkg-price" class="form-input" placeholder="60000" required />
+              <input type="number" id="admin-pkg-price" class="form-input" placeholder="60000" min="0" required />
             </div>
           </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
@@ -1236,6 +1305,55 @@
           </div>
           <button type="submit" class="btn btn-primary" style="width: 100%;">
             Save Package
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUB-MODAL 1B: ADD / EDIT CUSTOMIZATION SERVICE -->
+  <div class="admin-sub-modal" id="admin-service-modal">
+    <div class="admin-sub-modal-box">
+      <div class="admin-sub-modal-header">
+        <h4 class="admin-sub-modal-title" id="admin-srv-modal-title">Add Customization Service</h4>
+        <button type="button" class="btn-header-close close-sub-modal">&times;</button>
+      </div>
+      <div class="admin-sub-modal-body">
+        <form id="admin-service-form">
+          <input type="hidden" id="admin-srv-id" />
+          <div class="form-group">
+            <label class="form-label">Customization Service Name *</label>
+            <input type="text" id="admin-srv-name" class="form-input" placeholder="e.g. 4K Drone Cinematography" required />
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+            <div class="form-group">
+              <label class="form-label">Category / Type *</label>
+              <input type="text" id="admin-srv-category" class="form-input" placeholder="Photography / Drone / Cinema" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Price in INR (₹) *</label>
+              <input type="number" id="admin-srv-price" class="form-input" placeholder="5000" min="0" required />
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+            <div class="form-group">
+              <label class="form-label">Unit / Timing</label>
+              <input type="text" id="admin-srv-unit" class="form-input" placeholder="per day / per session" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Status</label>
+              <select id="admin-srv-status" class="form-select">
+                <option value="active">Active (Available for Clients)</option>
+                <option value="disabled">Disabled (Hidden from Clients)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description / Deliverable Note</label>
+            <textarea id="admin-srv-desc" class="form-input" rows="2" placeholder="Brief note about the equipment or deliverable"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">
+            Save Customization Service
           </button>
         </form>
       </div>

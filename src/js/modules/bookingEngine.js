@@ -9,27 +9,42 @@ export class BookingEngine {
   constructor() {
     this.packages = PHOTOGRAPHY_PACKAGES;
     this.selectedPackage = this.packages[1] || this.packages[0];
+    this.customServices = [];
+    this.selectedCustomizations = new Map(); // key: serviceId -> { id, name, price }
     this.advanceAmount = 5000;
     this.init();
   }
 
   async init() {
     await this.loadPackages();
+    await this.loadCustomServices();
     this.renderPackages();
     this.populatePackageDropdown();
+    this.populateCustomizationDropdown();
     this.bindEvents();
     this.updateCalculation();
 
+    // Listen to live currency changes
     document.addEventListener('currencyChange', () => {
+      this.renderPackages();
+      this.populatePackageDropdown();
+      this.populateCustomizationDropdown();
+      this.renderSelectedCustomizations();
+      this.updateCalculation();
+    });
+
+    // Listen to admin package updates
+    document.addEventListener('packagesUpdated', async () => {
+      await this.loadPackages();
       this.renderPackages();
       this.populatePackageDropdown();
       this.updateCalculation();
     });
 
-    document.addEventListener('packagesUpdated', async () => {
-      await this.loadPackages();
-      this.renderPackages();
-      this.populatePackageDropdown();
+    // Listen to admin customization services updates
+    document.addEventListener('servicesUpdated', async () => {
+      await this.loadCustomServices();
+      this.populateCustomizationDropdown();
       this.updateCalculation();
     });
   }
@@ -41,7 +56,7 @@ export class BookingEngine {
         this.packages = activePkgs.map(p => ({
           id: p.id,
           title: p.name || p.title,
-          priceINR: p.priceINR,
+          priceINR: Number(p.priceINR) || 0,
           deliverables: p.deliverables || (p.description ? p.description.split('·').map(s => s.trim()) : [])
         }));
         if (!this.selectedPackage || !this.packages.some(p => p.id === this.selectedPackage.id)) {
@@ -50,6 +65,23 @@ export class BookingEngine {
       }
     } catch (e) {
       console.warn('Could not load packages from dataStore:', e);
+    }
+  }
+
+  async loadCustomServices() {
+    try {
+      const activeServices = await dataStore.getCustomServices();
+      this.customServices = activeServices.map(s => ({
+        id: s.id,
+        name: s.name,
+        category: s.category || 'Photography',
+        priceINR: Number(s.priceINR) || 0,
+        unit: s.unit || 'per day',
+        description: s.description || ''
+      }));
+    } catch (e) {
+      console.warn('Could not load custom services from dataStore:', e);
+      this.customServices = [];
     }
   }
 
@@ -100,6 +132,126 @@ export class BookingEngine {
     }).join('');
   }
 
+  populateCustomizationDropdown() {
+    const select = document.getElementById('booking-customization-dropdown');
+    if (!select) return;
+
+    if (this.customServices.length === 0) {
+      select.innerHTML = `<option value="" disabled selected>No customization options available</option>`;
+      return;
+    }
+
+    const options = this.customServices.map(srv => {
+      const isAlreadySelected = this.selectedCustomizations.has(srv.id);
+      return `<option value="${srv.id}" ${isAlreadySelected ? 'disabled' : ''}>
+        ${srv.name} — ${currency.format(srv.priceINR)}${srv.unit ? ` (${srv.unit})` : ''} ${isAlreadySelected ? '(Added)' : ''}
+      </option>`;
+    }).join('');
+
+    select.innerHTML = `
+      <option value="">-- Choose a Customization Service --</option>
+      ${options}
+    `;
+  }
+
+  renderSelectedCustomizations() {
+    const container = document.getElementById('selected-customizations-list');
+    const countLabel = document.getElementById('customization-count-label');
+    const summaryBreakdown = document.getElementById('summary-customizations-breakdown');
+    if (!container) return;
+
+    const items = Array.from(this.selectedCustomizations.values());
+
+    if (countLabel) {
+      countLabel.textContent = `${items.length} Selected`;
+    }
+
+    if (items.length === 0) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+      if (summaryBreakdown) {
+        summaryBreakdown.style.display = 'none';
+        summaryBreakdown.innerHTML = '';
+      }
+      return;
+    }
+
+    container.style.display = 'flex';
+    container.innerHTML = items.map(item => `
+      <div class="selected-customization-item" data-id="${item.id}">
+        <div class="customization-item-left">
+          <i data-lucide="check-circle" style="width: 14px; height: 14px; color: var(--accent-gold);"></i>
+          <span class="customization-item-name">${item.name}</span>
+        </div>
+        <div class="customization-item-right">
+          <span class="customization-item-price">+${currency.format(item.price)}</span>
+          <button type="button" class="btn-remove-customization" data-id="${item.id}" title="Remove this add-on">
+            <i data-lucide="x" style="width: 11px; height: 11px;"></i> Remove
+          </button>
+        </div>
+      </div>
+    `).join('');
+
+    if (summaryBreakdown) {
+      summaryBreakdown.style.display = 'flex';
+      summaryBreakdown.innerHTML = items.map(item => `
+        <div style="display: flex; justify-content: space-between;">
+          <span>+ ${item.name}</span>
+          <strong>${currency.format(item.price)}</strong>
+        </div>
+      `).join('');
+    }
+
+    if (window.lucide) window.lucide.createIcons();
+
+    // Bind remove buttons
+    container.querySelectorAll('.btn-remove-customization').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+        this.removeCustomization(id);
+      });
+    });
+  }
+
+  addCustomization(serviceId) {
+    if (!serviceId) return;
+
+    const srv = this.customServices.find(s => s.id === serviceId);
+    if (!srv) {
+      toast.show({ title: 'Service Not Found', message: 'The selected customization service could not be found.', type: 'warning', icon: 'warning' });
+      return;
+    }
+
+    if (this.selectedCustomizations.has(srv.id)) {
+      toast.show({ title: 'Already Added', message: `"${srv.name}" is already included in your booking.`, type: 'info', icon: 'info' });
+      return;
+    }
+
+    // Store exact price snapshot at time of selection
+    this.selectedCustomizations.set(srv.id, {
+      id: srv.id,
+      name: srv.name,
+      price: Number(srv.priceINR) || 0
+    });
+
+    this.renderSelectedCustomizations();
+    this.populateCustomizationDropdown();
+    this.updateCalculation();
+    sound.playSuccessChime();
+    toast.info(`Added ${srv.name} (+${currency.format(srv.priceINR)})`, 'Customization Added');
+  }
+
+  removeCustomization(serviceId) {
+    if (this.selectedCustomizations.has(serviceId)) {
+      const item = this.selectedCustomizations.get(serviceId);
+      this.selectedCustomizations.delete(serviceId);
+      this.renderSelectedCustomizations();
+      this.populateCustomizationDropdown();
+      this.updateCalculation();
+      toast.info(`Removed ${item?.name || 'customization'}`, 'Customization Removed');
+    }
+  }
+
   bindEvents() {
     // Package Card Selection
     const packagesGrid = document.getElementById('booking-packages-grid');
@@ -128,6 +280,19 @@ export class BookingEngine {
         this.renderPackages();
         this.updateCalculation();
         toast.info(`Selected ${found.title}`, 'Package Updated');
+      }
+    });
+
+    // Add Customization Service Button
+    const addCustomBtn = document.getElementById('btn-add-customization-service');
+    const customDropdown = document.getElementById('booking-customization-dropdown');
+    addCustomBtn?.addEventListener('click', () => {
+      const selectedId = customDropdown?.value;
+      if (selectedId) {
+        this.addCustomization(selectedId);
+        if (customDropdown) customDropdown.value = '';
+      } else {
+        toast.show({ title: 'Select a Service', message: 'Please pick a customization option from the dropdown first.', type: 'warning', icon: 'warning' });
       }
     });
 
@@ -175,19 +340,38 @@ export class BookingEngine {
   }
 
   updateCalculation() {
-    if (!this.selectedPackage) return;
-    const totalINR = this.selectedPackage.priceINR;
-    const advanceINR = Math.min(this.advanceAmount, totalINR);
-    const remainingINR = Math.max(0, totalINR - advanceINR);
+    const packagePrice = this.selectedPackage ? Number(this.selectedPackage.priceINR) || 0 : 0;
+    
+    // Calculate customization total
+    let customizationTotal = 0;
+    this.selectedCustomizations.forEach(item => {
+      customizationTotal += Number(item.price) || 0;
+    });
+
+    const finalAmount = packagePrice + customizationTotal;
+    const advanceINR = Math.max(0, Math.min(this.advanceAmount, finalAmount));
+    const remainingINR = Math.max(0, finalAmount - advanceINR);
 
     const selectedPkgEl = document.getElementById('summary-selected-pkg');
+    const basePkgCostEl = document.getElementById('summary-base-pkg-cost');
+    const customTotalRow = document.getElementById('summary-customization-total-row');
+    const customTotalVal = document.getElementById('summary-customization-total');
     const totalPkgCostEl = document.getElementById('summary-total-pkg-cost');
     const advancePaidEl = document.getElementById('summary-advance-paid');
     const remainingBalanceEl = document.getElementById('summary-remaining-balance');
 
-    if (selectedPkgEl) selectedPkgEl.textContent = this.selectedPackage.title;
-    if (totalPkgCostEl) totalPkgCostEl.textContent = currency.format(totalINR);
-    if (advancePaidEl) advancePaidEl.textContent = currency.format(advanceINR);
+    if (selectedPkgEl && this.selectedPackage) selectedPkgEl.textContent = this.selectedPackage.title;
+    if (basePkgCostEl) basePkgCostEl.textContent = currency.format(packagePrice);
+    
+    if (customTotalRow) {
+      customTotalRow.style.display = customizationTotal > 0 ? 'flex' : 'none';
+    }
+    if (customTotalVal) {
+      customTotalVal.textContent = `+${currency.format(customizationTotal)}`;
+    }
+
+    if (totalPkgCostEl) totalPkgCostEl.textContent = currency.format(finalAmount);
+    if (advancePaidEl) advancePaidEl.textContent = `-${currency.format(advanceINR)}`;
     if (remainingBalanceEl) remainingBalanceEl.textContent = currency.format(remainingINR);
   }
 
@@ -204,10 +388,25 @@ export class BookingEngine {
       return;
     }
 
-    const totalINR = this.selectedPackage.priceINR;
-    const advanceINR = Math.min(this.advanceAmount, totalINR);
-    const remainingINR = Math.max(0, totalINR - advanceINR);
+    const packagePrice = this.selectedPackage ? Number(this.selectedPackage.priceINR) || 0 : 0;
+    
+    // Calculate customization total
+    let customizationTotal = 0;
+    const customizationsList = Array.from(this.selectedCustomizations.values()).map(c => {
+      const p = Number(c.price) || 0;
+      customizationTotal += p;
+      return {
+        id: c.id,
+        name: c.name,
+        price: p
+      };
+    });
 
+    const finalAmount = packagePrice + customizationTotal;
+    const advanceINR = Math.max(0, Math.min(this.advanceAmount, finalAmount));
+    const remainingINR = Math.max(0, finalAmount - advanceINR);
+
+    // Build historical booking snapshot with permanent price locking
     const bookingRecord = {
       id: `YZ-${Date.now().toString().slice(-6)}`,
       createdAt: new Date().toISOString(),
@@ -216,8 +415,11 @@ export class BookingEngine {
       clientPhone: phoneInput.value.trim(),
       eventDate: dateInput.value,
       location: locationInput?.value.trim() || 'Venue TBD',
-      packageName: this.selectedPackage.title,
-      totalINR: totalINR,
+      packageName: this.selectedPackage?.title || 'Wedding Photography',
+      packagePrice: packagePrice,
+      customizations: customizationsList,
+      customizationTotal: customizationTotal,
+      totalINR: finalAmount,
       advanceINR: advanceINR,
       remainingINR: remainingINR,
       status: 'New',
@@ -235,6 +437,13 @@ export class BookingEngine {
     });
 
     this.showConfirmationModal(bookingRecord);
+
+    // Reset customizations and form
+    this.selectedCustomizations.clear();
+    this.renderSelectedCustomizations();
+    this.populateCustomizationDropdown();
+    this.updateCalculation();
+    document.getElementById('session-booking-form')?.reset();
   }
 
   showConfirmationModal(record) {
@@ -244,6 +453,24 @@ export class BookingEngine {
     document.getElementById('conf-booking-id').textContent = record.id;
     document.getElementById('conf-client-name').textContent = record.clientName;
     document.getElementById('conf-package-title').textContent = record.packageName;
+    
+    const basePkgEl = document.getElementById('conf-base-pkg-cost');
+    if (basePkgEl) basePkgEl.textContent = currency.format(record.packagePrice || record.totalINR);
+
+    const customRow = document.getElementById('conf-customizations-row');
+    const customList = document.getElementById('conf-customizations-list');
+    if (customRow && customList) {
+      if (record.customizations && record.customizations.length > 0) {
+        customRow.style.display = 'block';
+        customList.innerHTML = record.customizations.map(c => `
+          <div>• ${c.name} (${currency.format(c.price)})</div>
+        `).join('');
+      } else {
+        customRow.style.display = 'none';
+        customList.innerHTML = '';
+      }
+    }
+
     document.getElementById('conf-event-date').textContent = record.eventDate;
     document.getElementById('conf-location').textContent = record.location;
     document.getElementById('conf-total-value').textContent = currency.format(record.totalINR);

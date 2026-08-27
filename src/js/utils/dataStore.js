@@ -595,17 +595,22 @@ class DataStoreManager {
     return (this.data.services || []).filter(s => s.status !== 'disabled');
   }
 
+  async getAllCustomServices() {
+    await this.initPromise;
+    return this.data.services || [];
+  }
+
   async addCustomService(srvData) {
     await this.initPromise;
     const newSrv = {
       id: srvData.id || `srv-${Date.now()}`,
-      name: srvData.name,
+      name: (srvData.name || 'New Custom Service').trim(),
       category: srvData.category || 'Photography',
-      priceINR: Number(srvData.priceINR) || 5000,
+      priceINR: Number(srvData.priceINR) || 0,
       unit: srvData.unit || 'per day',
       duration: srvData.duration || '1 Day',
       description: srvData.description || '',
-      status: 'active',
+      status: srvData.status || 'active',
       updatedAt: new Date().toISOString()
     };
     this.data.services.push(newSrv);
