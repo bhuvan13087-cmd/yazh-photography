@@ -412,15 +412,25 @@ class DataStoreManager {
 
   async addPhoto(photoData) {
     await this.initPromise;
+    const photoId = photoData.id || `photo-${Date.now()}`;
+    const imageUrl = photoData.url || photoData.image;
+
+    // Idempotency: Guard against duplicate record creation if same ID or identical image was added within 5s
+    const existing = this.data.photos.find(p => p.id === photoId || (imageUrl && p.image === imageUrl && (Date.now() - new Date(p.createdAt || 0).getTime()) < 5000));
+    if (existing) {
+      console.warn('[DataStore] Duplicate photo addition prevented for:', photoId);
+      return existing;
+    }
+
     const newPhoto = {
-      id: photoData.id || `photo-${Date.now()}`,
+      id: photoId,
       title: photoData.title || 'Untitled Photograph',
       category: photoData.category || 'traditional',
       categoryName: photoData.categoryName || photoData.category || 'Wedding',
       description: photoData.description || 'Master wedding photograph by Yazh Photography.',
-      image: photoData.url || photoData.image,
-      thumbnail: photoData.thumbnail || photoData.url || photoData.image,
-      url: photoData.url || photoData.image,
+      image: imageUrl,
+      thumbnail: photoData.thumbnail || imageUrl,
+      url: imageUrl,
       published: photoData.published !== undefined ? photoData.published : true,
       createdAt: photoData.createdAt || new Date().toISOString(),
       updatedAt: new Date().toISOString()

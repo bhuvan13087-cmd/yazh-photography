@@ -1,10 +1,9 @@
 // Persistent Cloud Image Storage & Cloud Manifest Service for Yazh Photography
-// Multi-Tier Cloud Architecture: Same-Origin Serverless API Proxy (/api/upload) + CORS Direct Fallback
+// Multi-Tier Cloud Architecture: Client-Side Optimization + Same-Origin API Proxy (/api/upload) -> Catbox CDN
 
 const CLOUD_MANIFEST_BIN_ID = 'fbfcdba';
 const CLOUD_MANIFEST_URL = `https://extendsclass.com/api/json-storage/bin/${CLOUD_MANIFEST_BIN_ID}`;
 const PRIMARY_UPLOAD_ENDPOINT = '/api/upload';
-const DIRECT_FALLBACK_ENDPOINT = 'https://tmpfiles.org/api/v1/upload';
 
 // Max file size: 15 MB
 export const MAX_IMAGE_FILE_SIZE_BYTES = 15 * 1024 * 1024;
@@ -80,7 +79,6 @@ class CloudStorageService {
   constructor() {
     this.manifestUrl = CLOUD_MANIFEST_URL;
     this.uploadEndpoint = PRIMARY_UPLOAD_ENDPOINT;
-    this.fallbackEndpoint = DIRECT_FALLBACK_ENDPOINT;
     this.cacheBustCounter = Date.now();
     this.inMemoryCache = null;
   }
@@ -113,7 +111,7 @@ class CloudStorageService {
     return { valid: true };
   }
 
-  // Upload an image binary to Cloud CDN with resilient multi-tier fallbacks
+  // Upload an image binary to Cloud CDN with progress tracking
   async uploadImageFile(file, onProgress = null) {
     const validation = this.validateImageFile(file);
     if (!validation.valid) {
@@ -126,7 +124,7 @@ class CloudStorageService {
     const readyFile = await optimizeImageForUpload(file);
 
     // 2. Convert file to base64 for API transmission
-    if (onProgress) onProgress(30, 'Encoding image payload...');
+    if (onProgress) onProgress(35, 'Encoding image payload...');
     const base64Data = await new Promise((resolve, reject) => {
       if (typeof FileReader === 'undefined') {
         reject(new Error('FileReader not available in this environment.'));
@@ -142,76 +140,36 @@ class CloudStorageService {
       reader.readAsDataURL(readyFile);
     });
 
-    if (onProgress) onProgress(50, 'Uploading image to Cloud CDN...');
+    if (onProgress) onProgress(60, 'Uploading to Cloud CDN...');
 
-    // 3. Primary Attempt: Same-Origin Serverless API (/api/upload)
-    try {
-      const res = await fetch(this.uploadEndpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          image: base64Data,
-          filename: readyFile.name
-        })
-      });
+    // 3. Send to Same-Origin Serverless API (/api/upload)
+    const res = await fetch(this.uploadEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        image: base64Data,
+        filename: readyFile.name
+      })
+    });
 
-      if (onProgress) onProgress(80, 'Processing CDN delivery URL...');
+    if (onProgress) onProgress(85, 'Processing CDN delivery link...');
 
-      if (res.ok) {
-        const data = await res.json();
-        if (data.success && data.image) {
-          if (onProgress) onProgress(100, 'Upload complete!');
-          return data.image;
-        } else if (data.error) {
-          throw new Error(data.error);
-        }
-      } else {
-        const errText = await res.text().catch(() => '');
-        console.warn(`[CloudStorage] Primary /api/upload returned ${res.status}:`, errText.slice(0, 150));
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success && data.image) {
+        if (onProgress) onProgress(100, 'Upload complete!');
+        return data.image;
+      } else if (data.error) {
+        throw new Error(data.error);
       }
-    } catch (err) {
-      console.warn('[CloudStorage] /api/upload error, initiating direct CORS fallback:', err.message);
     }
 
-    // 4. Secondary Attempt: Direct Browser Upload Fallback (Tmpfiles CDN with CORS)
-    if (onProgress) onProgress(65, 'Connecting to secondary Cloud CDN...');
-
-    try {
-      const fallbackFormData = new FormData();
-      fallbackFormData.append('file', readyFile, readyFile.name);
-
-      const fallbackRes = await fetch(this.fallbackEndpoint, {
-        method: 'POST',
-        body: fallbackFormData
-      });
-
-      if (fallbackRes.ok) {
-        const tmpJson = await fallbackRes.json();
-        if (tmpJson?.data?.url) {
-          const rawUrl = tmpJson.data.url;
-          const directUrl = rawUrl.replace('tmpfiles.org/', 'tmpfiles.org/dl/');
-          const timestamp = Date.now();
-          const finalUrl = `${directUrl}?v=${timestamp}`;
-
-          if (onProgress) onProgress(100, 'Upload complete!');
-
-          return {
-            url: finalUrl,
-            thumbnail: finalUrl,
-            id: `img-${timestamp}`,
-            filename: readyFile.name,
-            size: readyFile.size
-          };
-        }
-      }
-    } catch (fallbackErr) {
-      console.error('[CloudStorage] Secondary fallback also failed:', fallbackErr);
-    }
-
-    throw new Error('Cloud image upload failed on all storage providers. Please check your connection and try again.');
+    const errJson = await res.json().catch(() => null);
+    const errMsg = errJson?.error || `Upload failed with status ${res.status}`;
+    throw new Error(errMsg);
   }
 }
 

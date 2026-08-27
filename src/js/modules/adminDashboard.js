@@ -32,6 +32,9 @@ export class AdminDashboard {
   }
 
   async init() {
+    if (this.isInitialized) return;
+    this.isInitialized = true;
+
     this.bindEvents();
     this.setupAuth();
     this.setupModals();
@@ -710,7 +713,7 @@ export class AdminDashboard {
       return `
         <div class="admin-photo-card" data-id="${p.id}">
           <div class="admin-photo-thumb-box">
-            <img src="${displayImg}" alt="${p.title}" class="admin-photo-thumb" loading="lazy" />
+            <img src="${displayImg}" alt="${p.title}" class="admin-photo-thumb" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80';" />
             <span class="admin-photo-pill-category">${catName}</span>
             ${statusBadge}
           </div>
@@ -1697,4 +1700,3 @@ export class AdminDashboard {
   }
 }
 
-export const adminDashboard = new AdminDashboard();

@@ -1,6 +1,35 @@
 import { defineConfig } from 'vite';
 
 const CLOUD_STORAGE_ENDPOINT = 'https://extendsclass.com/api/json-storage/bin/fbfcdba';
+const CATBOX_API_URL = 'https://catbox.moe/user/api.php';
+
+async function uploadToCatbox(blob, filename, maxRetries = 2) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const formData = new FormData();
+      formData.append('reqtype', 'fileupload');
+      formData.append('fileToUpload', blob, filename);
+
+      const response = await fetch(CATBOX_API_URL, {
+        method: 'POST',
+        body: formData
+      });
+
+      if (response.ok) {
+        const text = (await response.text()).trim();
+        if (text.startsWith('http://') || text.startsWith('https://')) {
+          return text.replace(/^http:\/\//i, 'https://');
+        }
+      }
+    } catch (e) {
+      console.warn(`[Vite Middleware Catbox Attempt ${attempt} Failed]:`, e.message);
+      if (attempt < maxRetries) {
+        await new Promise(r => setTimeout(r, 500 * attempt));
+      }
+    }
+  }
+  return null;
+}
 
 function apiProxyPlugin() {
   return {
@@ -113,76 +142,29 @@ function apiProxyPlugin() {
 
               const blob = new Blob([buffer], { type: mimeType });
 
-              // Primary Cloud Upload: Catbox.moe
-              try {
-                const catboxForm = new FormData();
-                catboxForm.append('reqtype', 'fileupload');
-                catboxForm.append('fileToUpload', blob, filename);
+              // Upload to Catbox Direct Image CDN
+              const cdnUrl = await uploadToCatbox(blob, filename);
 
-                const catboxRes = await fetch('https://catbox.moe/user/api.php', {
-                  method: 'POST',
-                  body: catboxForm
-                });
+              if (cdnUrl) {
+                const timestamp = Date.now();
+                const versionedUrl = `${cdnUrl}?v=${timestamp}`;
 
-                if (catboxRes.ok) {
-                  const directUrl = (await catboxRes.text()).trim();
-                  if (directUrl.startsWith('http')) {
-                    const timestamp = Date.now();
-                    const finalUrl = `${directUrl}?v=${timestamp}`;
-                    res.statusCode = 200;
-                    res.end(JSON.stringify({
-                      success: true,
-                      image: {
-                        url: finalUrl,
-                        thumbnail: finalUrl,
-                        id: `img-${timestamp}`,
-                        filename: filename,
-                        size: buffer.length
-                      }
-                    }));
-                    return;
+                res.statusCode = 200;
+                res.end(JSON.stringify({
+                  success: true,
+                  image: {
+                    url: versionedUrl,
+                    thumbnail: versionedUrl,
+                    id: `img-${timestamp}`,
+                    filename: filename,
+                    size: buffer.length
                   }
-                }
-              } catch (e) {
-                console.warn('[Vite Middleware] Catbox upload error, trying fallback:', e.message);
-              }
-
-              // Secondary Fallback: Tmpfiles CDN
-              try {
-                const tmpForm = new FormData();
-                tmpForm.append('file', blob, filename);
-
-                const tmpRes = await fetch('https://tmpfiles.org/api/v1/upload', {
-                  method: 'POST',
-                  body: tmpForm
-                });
-
-                if (tmpRes.ok) {
-                  const tmpJson = await tmpRes.json();
-                  if (tmpJson?.data?.url) {
-                    const rawUrl = tmpJson.data.url;
-                    const directUrl = rawUrl.replace('tmpfiles.org/', 'tmpfiles.org/dl/');
-                    const timestamp = Date.now();
-                    res.statusCode = 200;
-                    res.end(JSON.stringify({
-                      success: true,
-                      image: {
-                        url: `${directUrl}?v=${timestamp}`,
-                        thumbnail: `${directUrl}?v=${timestamp}`,
-                        id: `img-${timestamp}`,
-                        filename: filename,
-                        size: buffer.length
-                      }
-                    }));
-                    return;
-                  }
-                }
-              } catch (e) {
-                console.warn('[Vite Middleware] Tmpfiles fallback error:', e.message);
+                }));
+                return;
               }
 
               res.statusCode = 500;
-              res.end(JSON.stringify({ success: false, error: 'All cloud image storage backends failed' }));
+              res.end(JSON.stringify({ success: false, error: 'Could not upload image to persistent cloud storage' }));
             } catch (err) {
               console.error('[Vite Dev Middleware /api/upload Error]:', err.message);
               res.statusCode = 500;
