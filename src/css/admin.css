@@ -1346,7 +1346,7 @@
   overflow: hidden;
   border: 1px solid var(--adm-border);
   box-shadow: var(--adm-shadow-md);
-  background: #000000;
+  background: var(--adm-bg-alt);
 }
 
 .upload-preview-img {
@@ -1542,7 +1542,7 @@
   width: 100%;
   height: 210px;
   overflow: hidden;
-  background: #0f172a;
+  background: var(--adm-bg-alt);
   display: flex;
   align-items: center;
   justify-content: center;
