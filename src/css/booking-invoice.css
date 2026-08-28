@@ -432,81 +432,62 @@
   align-items: stretch;
 }
 
-.clean-payment-terms-box {
-  background: #f8fafc;
-  border: 1.5px solid #e2e8f0;
+.clean-warning-note-box {
+  background: #fffdf5;
+  border: 1.5px solid #fef08a;
+  border-left: 4px solid #d97706;
   border-radius: 8px;
-  padding: 1.1rem 1.25rem;
+  padding: 1.15rem 1.25rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 0.75rem;
+  justify-content: center;
+  gap: 0.6rem;
 }
 
-.clean-payment-terms-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.clean-terms-icon {
-  font-size: 1.1rem;
-}
-
-.clean-terms-title {
-  font-size: 0.78rem;
+.clean-note-header {
+  font-size: 0.95rem;
   font-weight: 800;
-  color: #0f172a;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  color: #78350f;
+  letter-spacing: 0.02em;
 }
 
-.clean-terms-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-  font-size: 0.78rem;
-  color: #475569;
-  line-height: 1.45;
-}
-
-.clean-terms-list li {
+.clean-warning-banner {
   display: flex;
   align-items: flex-start;
-  gap: 0.45rem;
+  gap: 0.65rem;
+  background: rgba(254, 240, 138, 0.45);
+  border: 1px solid rgba(217, 119, 6, 0.35);
+  border-radius: 6px;
+  padding: 0.85rem 1rem;
 }
 
-.term-bullet {
-  color: #c59b27;
-  font-size: 0.75rem;
+.clean-warning-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+  flex-shrink: 0;
   margin-top: 0.1rem;
 }
 
-.clean-payment-status-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  background: #ffffff;
-  border: 1px solid #cbd5e1;
-  padding: 0.35rem 0.65rem;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  color: #334155;
-  margin-top: 0.25rem;
+.clean-warning-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
-.clean-payment-status-chip strong {
-  color: #059669;
-  font-weight: 700;
+.clean-warning-heading {
+  font-size: 0.82rem;
+  font-weight: 900;
+  color: #b45309;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-.chip-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+.clean-warning-text {
+  font-size: 0.82rem;
+  color: #92400e;
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 0;
 }
 
 /* Right Side: Multi-Tier Calculation Card */
