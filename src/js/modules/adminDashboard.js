@@ -404,7 +404,7 @@ export class AdminDashboard {
       if (bookings.length === 0) {
         recentTbody.innerHTML = `
           <tr>
-            <td colspan="6" style="text-align: center; padding: 2.5rem; color: #6b7280;">
+            <td colspan="6" style="text-align: center; padding: 2.5rem; color: var(--adm-text-muted);">
               No booking inquiries on record yet.
             </td>
           </tr>
@@ -414,11 +414,11 @@ export class AdminDashboard {
           const statusClass = this.getStatusBadgeClass(b.status);
           return `
             <tr>
-              <td><strong style="color: #c5a059;">${b.id}</strong></td>
-              <td><strong>${b.clientName}</strong><br><small style="color:#9ca3af;">${b.clientPhone}</small></td>
-              <td><span style="font-weight:600; color:#ffffff;">${b.packageName}</span></td>
-              <td><strong>${b.eventDate || 'Date TBD'}</strong><br><small style="color:#6b7280;">${b.location || 'Tamil Nadu'}</small></td>
-              <td><strong>${currency.format(b.totalINR)}</strong><br><small style="color:#10b981;">Adv: ${currency.format(b.advanceINR)}</small></td>
+              <td><strong style="color: var(--adm-gold);">${b.id}</strong></td>
+              <td><strong style="color: var(--adm-text-primary);">${b.clientName}</strong><br><small style="color: var(--adm-text-muted);">${b.clientPhone}</small></td>
+              <td><span style="font-weight: 600; color: var(--adm-text-primary);">${b.packageName}</span></td>
+              <td><strong style="color: var(--adm-text-primary);">${b.eventDate || 'Date TBD'}</strong><br><small style="color: var(--adm-text-muted);">${b.location || 'Tamil Nadu'}</small></td>
+              <td><strong style="color: var(--adm-text-primary);">${currency.format(b.totalINR)}</strong><br><small style="color: #059669; font-weight: 600;">Adv: ${currency.format(b.advanceINR)}</small></td>
               <td><span class="admin-badge ${statusClass}">${b.status || 'New'}</span></td>
             </tr>
           `;
@@ -986,10 +986,10 @@ export class AdminDashboard {
       let customHtml = '';
       if (b.customizations && Array.isArray(b.customizations) && b.customizations.length > 0) {
         customHtml = `
-          <div style="margin-top: 0.35rem; font-size: 0.74rem; background: rgba(197, 160, 89, 0.08); padding: 0.35rem 0.5rem; border-radius: 4px; border: 1px solid rgba(197, 160, 89, 0.2);">
-            <span style="color: #c5a059; font-weight: 700;">Add-ons (${currency.format(b.customizationTotal || 0)}):</span>
+          <div style="margin-top: 0.35rem; font-size: 0.74rem; background: var(--adm-gold-light); padding: 0.35rem 0.55rem; border-radius: 6px; border: 1px solid var(--adm-gold-border);">
+            <span style="color: var(--adm-gold); font-weight: 700;">Add-ons (${currency.format(b.customizationTotal || 0)}):</span>
             <div style="margin-top: 0.15rem; line-height: 1.4;">
-              ${b.customizations.map(c => `<span style="color: #d1d5db;">• ${c.name} (${currency.format(c.price)})</span>`).join('<br>')}
+              ${b.customizations.map(c => `<span style="color: var(--adm-text-secondary);">• ${c.name} (${currency.format(c.price)})</span>`).join('<br>')}
             </div>
           </div>
         `;
@@ -997,25 +997,25 @@ export class AdminDashboard {
 
       return `
         <tr data-id="${b.id}">
-          <td><strong style="color: #c5a059;">${b.id}</strong></td>
+          <td><strong style="color: var(--adm-gold);">${b.id}</strong></td>
           <td>
-            <strong>${b.clientName}</strong><br>
-            <small style="color: #9ca3af;">📞 ${b.clientPhone}</small><br>
-            <small style="color: #6b7280;">✉️ ${b.clientEmail || 'No email'}</small>
+            <strong style="color: var(--adm-text-primary); font-size: 0.92rem;">${b.clientName}</strong><br>
+            <small style="color: var(--adm-text-muted);">📞 ${b.clientPhone}</small><br>
+            <small style="color: var(--adm-text-dim);">✉️ ${b.clientEmail || 'No email'}</small>
           </td>
           <td>
-            <span style="font-weight: 700; color: #ffffff;">${b.packageName}</span>
-            ${b.packagePrice ? `<small style="color: #9ca3af;"> (${currency.format(b.packagePrice)})</small>` : ''}
+            <span style="font-weight: 700; color: var(--adm-text-primary);">${b.packageName}</span>
+            ${b.packagePrice ? `<small style="color: var(--adm-text-muted);"> (${currency.format(b.packagePrice)})</small>` : ''}
             ${customHtml}
           </td>
           <td>
-            <strong>${b.eventDate || 'Date TBD'}</strong><br>
-            <small style="color: #9ca3af;">📍 ${b.location || 'Venue TBD'}</small>
+            <strong style="color: var(--adm-text-primary);">${b.eventDate || 'Date TBD'}</strong><br>
+            <small style="color: var(--adm-text-muted);">📍 ${b.location || 'Venue TBD'}</small>
           </td>
           <td>
-            <strong style="font-size: 0.95rem; color: #ffffff;">${currency.format(b.totalINR)}</strong><br>
-            <small style="color: #10b981;">Advance: ${currency.format(b.advanceINR)}</small><br>
-            <small style="color: #eab308; font-weight: 600;">Due: ${currency.format(b.remainingINR)}</small>
+            <strong style="font-size: 0.95rem; color: var(--adm-text-primary);">${currency.format(b.totalINR)}</strong><br>
+            <small style="color: #059669; font-weight: 600;">Advance: ${currency.format(b.advanceINR)}</small><br>
+            <small style="color: #b45309; font-weight: 600;">Due: ${currency.format(b.remainingINR)}</small>
           </td>
           <td>
             <span class="admin-badge ${statusClass}">${b.status || 'New'}</span>
@@ -1100,11 +1100,11 @@ export class AdminDashboard {
 
       return `
         <tr data-id="${pkg.id}">
-          <td><strong style="color: #ffffff;">${pkg.name}</strong></td>
-          <td><span style="color: #c5a059; font-weight: 600;">${pkg.category || 'Wedding'}</span></td>
-          <td><strong style="color: #ffffff;">${currency.format(pkg.priceINR)}</strong></td>
-          <td><span>${pkg.unit || 'Full Event'}</span><br><small style="color:#6b7280;">${pkg.duration || '1 Day'}</small></td>
-          <td style="max-width: 250px; font-size: 0.78rem; color: #9ca3af;" title="${deliverablesList}">${deliverablesList || '—'}</td>
+          <td><strong style="color: var(--adm-text-primary); font-size: 0.92rem;">${pkg.name}</strong></td>
+          <td><span style="color: var(--adm-gold); font-weight: 700;">${pkg.category || 'Wedding'}</span></td>
+          <td><strong style="color: var(--adm-text-primary); font-size: 0.95rem;">${currency.format(pkg.priceINR)}</strong></td>
+          <td><span style="color: var(--adm-text-secondary);">${pkg.unit || 'Full Event'}</span><br><small style="color: var(--adm-text-muted);">${pkg.duration || '1 Day'}</small></td>
+          <td style="max-width: 250px; font-size: 0.8rem; color: var(--adm-text-secondary);" title="${deliverablesList}">${deliverablesList || '—'}</td>
           <td>
             <span class="admin-badge ${statusClass} btn-toggle-pkg-status" data-id="${pkg.id}" style="cursor: pointer;" title="Toggle Active / Disabled">
               ${statusLabel}
@@ -1179,7 +1179,7 @@ export class AdminDashboard {
       if (services.length === 0) {
         srvTbody.innerHTML = `
           <tr>
-            <td colspan="7" style="text-align: center; padding: 2.5rem; color: #6b7280;">
+            <td colspan="7" style="text-align: center; padding: 2.5rem; color: var(--adm-text-muted);">
               No customization services found. Click "+ Add Customization Service" to create one.
             </td>
           </tr>
@@ -1192,11 +1192,11 @@ export class AdminDashboard {
 
           return `
             <tr data-id="${srv.id}">
-              <td><strong style="color: #ffffff;">${srv.name}</strong></td>
-              <td><span style="color: #c5a059; font-weight: 600;">${srv.category || 'Photography'}</span></td>
-              <td><strong style="color: #ffffff;">${currency.format(srv.priceINR)}</strong></td>
-              <td><span>${srv.unit || 'per event'}</span><br><small style="color:#6b7280;">${srv.duration || '1 Day'}</small></td>
-              <td style="max-width: 250px; font-size: 0.78rem; color: #9ca3af;">${srv.description || '—'}</td>
+              <td><strong style="color: var(--adm-text-primary); font-size: 0.92rem;">${srv.name}</strong></td>
+              <td><span style="color: var(--adm-gold); font-weight: 700;">${srv.category || 'Photography'}</span></td>
+              <td><strong style="color: var(--adm-text-primary); font-size: 0.95rem;">${currency.format(srv.priceINR)}</strong></td>
+              <td><span style="color: var(--adm-text-secondary);">${srv.unit || 'per event'}</span><br><small style="color: var(--adm-text-muted);">${srv.duration || '1 Day'}</small></td>
+              <td style="max-width: 250px; font-size: 0.8rem; color: var(--adm-text-secondary);">${srv.description || '—'}</td>
               <td>
                 <span class="admin-badge ${statusClass} btn-toggle-srv-status" data-id="${srv.id}" style="cursor: pointer;" title="Toggle Active / Disabled">
                   ${statusLabel}
@@ -1278,7 +1278,7 @@ export class AdminDashboard {
     if (reviews.length === 0) {
       tbody.innerHTML = `
         <tr>
-          <td colspan="7" style="text-align: center; padding: 2.5rem; color: #6b7280;">
+          <td colspan="7" style="text-align: center; padding: 2.5rem; color: var(--adm-text-muted);">
             No client reviews recorded yet. Click "+ Add Client Review" to create one.
           </td>
         </tr>
@@ -1295,21 +1295,21 @@ export class AdminDashboard {
       return `
         <tr data-id="${rev.id}">
           <td>
-            <strong style="color: #ffffff;">${rev.name}</strong><br>
-            <small style="color: #9ca3af;">📍 ${rev.location || 'Tamil Nadu'}</small>
+            <strong style="color: var(--adm-text-primary); font-size: 0.92rem;">${rev.name}</strong><br>
+            <small style="color: var(--adm-text-muted);">📍 ${rev.location || 'Tamil Nadu'}</small>
           </td>
-          <td><span style="color: #c5a059; letter-spacing: 2px;">${stars}</span></td>
-          <td><span style="color: #60a5fa;">${rev.eventType || 'Wedding'}</span></td>
+          <td><span style="color: var(--adm-gold); letter-spacing: 2px;">${stars}</span></td>
+          <td><span style="color: #2563eb; font-weight: 600;">${rev.eventType || 'Wedding'}</span></td>
           <td style="max-width: 250px;">
-            <strong style="font-size: 0.82rem; color: #ffffff;">${rev.title}</strong><br>
-            <span style="font-size: 0.76rem; color: #9ca3af;">${rev.comment}</span>
+            <strong style="font-size: 0.84rem; color: var(--adm-text-primary);">${rev.title}</strong><br>
+            <span style="font-size: 0.78rem; color: var(--adm-text-muted);">${rev.comment}</span>
           </td>
           <td>
             <span class="admin-badge ${statusClass} btn-toggle-review-status" data-id="${rev.id}" style="cursor: pointer;" title="Toggle Published / Draft">
               ${statusLabel}
             </span>
           </td>
-          <td><small style="color: #6b7280;">${rev.date || 'Recent'}</small></td>
+          <td><small style="color: var(--adm-text-muted);">${rev.date || 'Recent'}</small></td>
           <td>
             <div class="admin-table-actions">
               <button type="button" class="btn-tbl-action btn-edit-review" data-id="${rev.id}">
@@ -1798,7 +1798,7 @@ export class AdminDashboard {
       return `
         <div class="category-admin-row" data-id="${cat.id}">
           <input type="text" class="category-admin-name-input" value="${cat.name}" data-id="${cat.id}" data-idx="${idx}" />
-          <span style="font-size: 0.74rem; color: #9ca3af; white-space: nowrap; margin-right: 0.35rem;">(${count} photos)</span>
+          <span style="font-size: 0.74rem; color: var(--adm-text-muted); white-space: nowrap; margin-right: 0.35rem;">(${count} photos)</span>
           <div class="category-admin-actions">
             <button type="button" class="btn-cat-save" data-id="${cat.id}">Save</button>
             <button type="button" class="btn-cat-delete" data-id="${cat.id}" ${categories.length <= 1 ? 'disabled style="opacity:0.4;"' : ''}>Delete</button>
