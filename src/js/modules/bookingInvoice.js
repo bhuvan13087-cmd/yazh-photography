@@ -414,43 +414,91 @@ export class BookingInvoiceManager {
     const originalText = dlBtn ? dlBtn.innerHTML : '';
     if (dlBtn) {
       dlBtn.disabled = true;
-      dlBtn.innerHTML = '<span class="btn-spinner"></span> Saving Image...';
+      dlBtn.innerHTML = '<span class="btn-spinner"></span> Saving Bill...';
     }
 
     try {
       sound.playShutter();
       
       const canvas = await html2canvas(cardEl, {
-        scale: 2.5, // Crisp 300 DPI retina resolution
+        scale: 2.5, // 300 DPI high-res output
         useCORS: true,
+        allowTaint: false,
         backgroundColor: '#ffffff',
         logging: false,
-        allowTaint: true
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: cardEl.offsetWidth,
+        windowHeight: cardEl.offsetHeight,
+        onclone: (clonedDoc) => {
+          const clonedCard = clonedDoc.getElementById('yazh-official-invoice-card');
+          if (clonedCard) {
+            clonedCard.style.margin = '0 auto';
+            clonedCard.style.boxShadow = 'none';
+          }
+        }
       });
 
-      const imgData = canvas.toDataURL('image/png');
-      const filename = `yazh_photography_bill_${this.currentBooking ? this.currentBooking.id : 'invoice'}.png`;
+      const filename = `yazh_bill_${this.currentBooking ? this.currentBooking.id : 'YZ-000001'}.png`;
 
-      // Direct download trigger for Gallery / Camera Roll / Downloads
+      // 1. Generate PNG Blob
+      const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png', 1.0));
+      if (!blob) throw new Error('Canvas to Blob conversion returned null');
+
+      const file = new File([blob], filename, { type: 'image/png' });
+
+      // 2. If mobile device supports Web Share with files, invoke native save to gallery / camera roll
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({
+            files: [file],
+            title: 'Yazh Photography Official Bill',
+            text: `Official Booking Bill ${this.currentBooking ? this.currentBooking.id : 'YZ-000001'}`
+          });
+          sound.playSuccessChime();
+          toast.show({
+            title: 'Bill Saved / Shared!',
+            message: `Official bill image (${filename}) ready in your gallery.`,
+            type: 'success',
+            icon: 'image'
+          });
+          return;
+        } catch (shareErr) {
+          if (shareErr.name === 'AbortError') {
+            return; // User cancelled share sheet
+          }
+          console.warn('Native share failed, falling back to direct download:', shareErr);
+        }
+      }
+
+      // 3. Fallback to direct download via Blob Object URL
+      const blobUrl = URL.createObjectURL(blob);
       const link = document.createElement('a');
-      link.href = imgData;
+      link.href = blobUrl;
       link.download = filename;
+      link.style.display = 'none';
       document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link);
+
+      setTimeout(() => {
+        if (document.body.contains(link)) {
+          document.body.removeChild(link);
+        }
+        URL.revokeObjectURL(blobUrl);
+      }, 2000);
 
       sound.playSuccessChime();
       toast.show({
         title: 'Bill Saved to Gallery!',
-        message: `Official bill saved as high-resolution image (${filename}).`,
+        message: `Official high-res bill image downloaded (${filename}).`,
         type: 'success',
         icon: 'image'
       });
     } catch (err) {
       console.error('Error generating invoice image:', err);
       toast.show({
-        title: 'Download Failed',
-        message: 'Could not generate image. You can still Print or Share to WhatsApp.',
+        title: 'Download Fallback',
+        message: 'Could not directly export image. Please use Print Bill or Share WhatsApp.',
         type: 'error',
         icon: 'error'
       });
