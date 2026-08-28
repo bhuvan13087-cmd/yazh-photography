@@ -815,7 +815,7 @@
       <div class="invoice-modal-body">
         <div class="clean-bill-sheet" id="yazh-official-invoice-card">
           
-          <!-- CLEAN HEADER -->
+          <!-- 1. CLEAN BRAND HEADER -->
           <div class="clean-bill-header">
             <div class="clean-bill-brand-wrap">
               <img id="inv-circle-logo-img" src="/images/yazh-circle-logo.png" alt="Yazh Photography Logo" class="clean-bill-circle-logo" />
@@ -843,22 +843,27 @@
                 </div>
               </div>
             </div>
-            
-            <div class="clean-bill-doc-meta">
-              <div class="clean-doc-badge">OFFICIAL BOOKING INVOICE</div>
-              <div class="clean-doc-ref" id="inv-bill-id">YZ-000001</div>
-              <div class="clean-doc-date">Date Issued: <strong id="inv-issued-date">28 Aug 2026</strong></div>
+          </div>
+
+          <!-- 2. DOCUMENT REF & STATUS BAR -->
+          <div class="clean-bill-doc-meta-bar">
+            <div class="clean-doc-badge-group">
+              <span class="clean-doc-badge">OFFICIAL BOOKING INVOICE</span>
+              <strong class="clean-doc-ref" id="inv-bill-id">YZ-000001</strong>
+            </div>
+            <div class="clean-doc-status-group">
+              <span class="clean-doc-date">Date: <strong id="inv-issued-date">28 Aug 2026</strong></span>
               <span class="clean-status-pill status-approved" id="inv-status-badge">&check; APPROVED &amp; CONFIRMED</span>
             </div>
           </div>
 
-          <!-- CLIENT & EVENT PARTICULARS (4-GRID) -->
+          <!-- 3. CLIENT & EVENT PARTICULARS (COMPACT 2x2 GRID) -->
           <div class="clean-client-grid">
             <div class="clean-grid-cell">
               <span class="clean-cell-lbl">Client / Couple Name</span>
               <strong class="clean-cell-val" id="inv-client-name">NIZARDEEN S</strong>
             </div>
-            <div class="clean-grid-cell">
+            <div class="clean-grid-cell text-right">
               <span class="clean-cell-lbl">Contact Phone</span>
               <span class="clean-cell-val" id="inv-client-phone">+91 82485 26646</span>
             </div>
@@ -866,88 +871,71 @@
               <span class="clean-cell-lbl">Event Date</span>
               <strong class="clean-cell-val clean-cell-highlight" id="inv-event-date">12 Sep 2026</strong>
             </div>
-            <div class="clean-grid-cell">
+            <div class="clean-grid-cell text-right">
               <span class="clean-cell-lbl">Event Venue</span>
               <span class="clean-cell-val" id="inv-event-location">Singampunari, Tamil Nadu</span>
             </div>
           </div>
 
-          <!-- DELIVERABLES & SERVICES TABLE -->
+          <!-- 4. SELECTED PACKAGE & DELIVERABLES -->
           <table class="clean-bill-table">
             <thead>
               <tr>
-                <th style="width: 7%; text-align: center;">S.NO</th>
-                <th style="width: 58%;">SELECTED PACKAGE &amp; DELIVERABLES</th>
-                <th style="width: 15%; text-align: center;">COVERAGE</th>
-                <th style="width: 20%; text-align: right;">AMOUNT (₹)</th>
+                <th style="width: 72%;">SELECTED PACKAGE &amp; DELIVERABLES</th>
+                <th style="width: 28%; text-align: right;">AMOUNT (₹)</th>
               </tr>
             </thead>
             <tbody id="inv-items-tbody">
               <tr>
-                <td style="text-align: center; font-weight: 700; color: #64748b;">1</td>
                 <td>
                   <div class="clean-item-name">📸 Standard Wedding Photography Package</div>
-                  <div class="clean-item-desc">Full Day Photography Coverage • High-Res Master Retouched Proofs • Digital Cloud Gallery • Album Print Ready Deliverables</div>
+                  <div class="clean-item-desc">Full Day Professional Coverage • Master Retouched Photos</div>
                 </td>
-                <td style="text-align: center; font-weight: 600; color: #64748b; font-size: 0.8rem;">Full Event</td>
-                <td style="text-align: right; font-weight: 700; color: #0f172a;">₹60,000</td>
+                <td style="text-align: right; font-weight: 800; color: #0f172a;">₹60,000</td>
               </tr>
             </tbody>
           </table>
 
-          <!-- MODERN FINANCIAL BREAKDOWN & PAYMENT SUMMARY -->
-          <div class="clean-financial-section">
-            
-            <!-- Left Side: Official Payment Notice & Warning -->
-            <div class="clean-payment-terms-box clean-warning-note-box">
-              <div class="clean-note-header">
-                <span class="clean-note-title">Note:</span>
+          <!-- 5. FINANCIAL BREAKDOWN SUMMARY -->
+          <div class="clean-calc-card">
+            <div class="calc-card-row">
+              <span class="calc-label">Subtotal Quotation</span>
+              <span class="calc-value" id="inv-calc-subtotal">₹60,000</span>
+            </div>
+            <div class="calc-card-row calc-discount-row" id="inv-calc-discount-row" style="display: none;">
+              <span class="calc-label">Special Discount</span>
+              <span class="calc-value discount-value" id="inv-calc-discount">- ₹0</span>
+            </div>
+            <div class="calc-card-row calc-advance-row">
+              <span class="calc-label"><span class="status-tick">✓</span> Advance / Token Received</span>
+              <span class="calc-value advance-value" id="inv-calc-advance">₹5,000</span>
+            </div>
+            <div class="calc-card-banner calc-balance-banner">
+              <div class="balance-banner-left">
+                <span class="balance-lbl">Balance Due on Event Day</span>
+                <span class="balance-sub">Payable at event completion</span>
               </div>
-              <div class="clean-warning-banner">
-                <div class="clean-warning-icon">⚠️</div>
-                <div class="clean-warning-content">
-                  <span class="clean-warning-heading">WARNING:</span>
-                  <p class="clean-warning-text">
-                    Payment must be made on or before the Due Date. A fine will be charged for payments made after the Due Date.
-                  </p>
-                </div>
+              <div class="balance-banner-right">
+                <span class="balance-val" id="inv-calc-balance">₹55,000</span>
               </div>
             </div>
-
-            <!-- Right Side: Luxury Multi-Tier Breakdown Card -->
-            <div class="clean-calc-card">
-              <div class="calc-card-row">
-                <span class="calc-label">Package &amp; Add-ons Subtotal</span>
-                <span class="calc-value" id="inv-calc-subtotal">₹60,000</span>
-              </div>
-              <div class="calc-card-row calc-discount-row" id="inv-calc-discount-row" style="display: none;">
-                <span class="calc-label">Studio Promotional Benefit</span>
-                <span class="calc-value discount-value" id="inv-calc-discount">- ₹0</span>
-              </div>
-              <div class="calc-card-row calc-total-row">
-                <span class="calc-label">Total Quotation Value</span>
-                <span class="calc-value" id="inv-calc-total">₹60,000</span>
-              </div>
-              <div class="calc-card-row calc-advance-row">
-                <span class="calc-label">
-                  <span class="status-tick">✓</span> Advance / Token Received
-                </span>
-                <span class="calc-value advance-value" id="inv-calc-advance">₹5,000</span>
-              </div>
-              <div class="calc-card-banner calc-balance-banner">
-                <div class="balance-banner-left">
-                  <span class="balance-lbl">Balance Due on Event Day</span>
-                  <span class="balance-sub">Payable at event completion</span>
-                </div>
-                <div class="balance-banner-right">
-                  <span class="balance-val" id="inv-calc-balance">₹55,000</span>
-                </div>
-              </div>
-            </div>
-
           </div>
 
-          <!-- SIGNATURES & OWNER SIGN SECTION -->
+          <!-- 6. OFFICIAL PAYMENT WARNING NOTE -->
+          <div class="clean-warning-note-box">
+            <div class="clean-note-header">Note:</div>
+            <div class="clean-warning-banner">
+              <div class="clean-warning-icon">⚠️</div>
+              <div class="clean-warning-content">
+                <span class="clean-warning-heading">WARNING:</span>
+                <p class="clean-warning-text">
+                  Payment must be made on or before the Due Date. A fine will be charged for payments made after the Due Date.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7. AUTHORIZED OWNER SIGNATURE -->
           <div class="clean-signature-section">
             <div class="clean-sig-box">
               <div class="clean-sig-line"></div>
@@ -956,19 +944,12 @@
             </div>
             
             <div class="clean-owner-sig-box">
-              <!-- Authentic Transparent Owner Signature of N. Karthigadevi -->
               <img id="inv-owner-signature-img" src="/images/owner-signature.png" alt="N. Karthigadevi Signature" class="clean-signature-img" />
               <div class="clean-sig-line"></div>
               <div class="clean-sig-name">N. Karthigadevi</div>
               <div class="clean-sig-role">Studio Owner &amp; Lead Photographer</div>
-              <div class="clean-sig-sub">Yazh Photography &bull; <span id="inv-signatory-date">Tamil Nadu</span></div>
+              <div class="clean-sig-sub">Yazh Photography</div>
             </div>
-          </div>
-
-          <!-- COMPACT FOOTER NOTE -->
-          <div class="clean-bill-footer-notes">
-            <span>&bull; High-res master raw &amp; retouched photos delivered via secure private cloud within 5-7 business days.</span>
-            <span>&bull; Remaining balance payable on the event date.</span>
           </div>
 
         </div>

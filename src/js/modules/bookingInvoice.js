@@ -312,19 +312,16 @@ export class BookingInvoiceManager {
     const tbody = document.getElementById('inv-items-tbody');
     if (tbody) {
       let rowsHtml = '';
-      let slNo = 1;
       
       // Base Package Row
       const basePrice = Number(b.packagePrice) || Number(b.totalINR) || 0;
       rowsHtml += `
         <tr>
-          <td style="text-align: center; font-weight: 700; color: #64748b;">${slNo++}</td>
           <td>
             <div class="clean-item-name">📸 ${b.packageName || 'Wedding Photography Package'}</div>
-            <div class="clean-item-desc">Full Day Photography Coverage • High-Res Master Retouched Proofs • Digital Cloud Gallery • Album Print Ready Deliverables</div>
+            <div class="clean-item-desc">Full Day Professional Coverage • Master Retouched Photos</div>
           </td>
-          <td style="text-align: center; font-weight: 600; color: #64748b; font-size: 0.8rem;">Full Event</td>
-          <td style="text-align: right; font-weight: 700; color: #0f172a;">${currency.format(basePrice)}</td>
+          <td style="text-align: right; font-weight: 800; color: #0f172a;">${currency.format(basePrice)}</td>
         </tr>
       `;
 
@@ -333,13 +330,11 @@ export class BookingInvoiceManager {
         b.customizations.forEach(c => {
           rowsHtml += `
             <tr>
-              <td style="text-align: center; font-weight: 700; color: #64748b;">${slNo++}</td>
               <td>
                 <div class="clean-item-name">✨ ${c.name}</div>
-                <div class="clean-item-desc">Selected premium service add-on customization</div>
+                <div class="clean-item-desc">Selected service add-on deliverable</div>
               </td>
-              <td style="text-align: center; font-weight: 600; color: #64748b; font-size: 0.8rem;">Add-on</td>
-              <td style="text-align: right; font-weight: 700; color: #0f172a;">${currency.format(c.price || 0)}</td>
+              <td style="text-align: right; font-weight: 800; color: #0f172a;">${currency.format(c.price || 0)}</td>
             </tr>
           `;
         });

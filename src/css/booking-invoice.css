@@ -1,56 +1,58 @@
 /* ==========================================================================
-   YAZH PHOTOGRAPHY — OFFICIAL BOOKING INVOICE & CLIENT BILL
-   Focused, clean, luxury light-themed invoice with authentic owner signature
+   YAZH PHOTOGRAPHY — OFFICIAL BOOKING INVOICE (FORMAL 9:16 PRODUCTION BILL)
+   Clean, essential, 9:16 aspect ratio vertical bill sheet with owner signature
    ========================================================================== */
 
-/* 1. INVOICE MODAL SHELL */
+/* 1. Modal Overlay & Container */
 .invoice-modal {
   position: fixed;
   inset: 0;
   z-index: 100050;
-  display: none;
+  display: none !important;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 1.25rem;
   opacity: 0;
   visibility: hidden;
-  pointer-events: none;
+  pointer-events: none !important;
   transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
 .invoice-modal.active {
-  display: flex;
+  display: flex !important;
   opacity: 1;
   visibility: visible;
-  pointer-events: auto;
+  pointer-events: auto !important;
 }
 
 .invoice-modal-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(15, 23, 42, 0.75);
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .invoice-modal-container {
   position: relative;
   width: 100%;
-  max-width: 840px;
+  max-width: 520px;
   max-height: 94vh;
-  background: #0f172a;
-  border: 1px solid rgba(197, 160, 89, 0.35);
-  border-radius: 12px;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(197, 160, 89, 0.15);
-  z-index: 10;
+  background: #0f172a;
+  border: 1.5px solid rgba(197, 155, 39, 0.4);
+  border-radius: 14px;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 35px rgba(197, 155, 39, 0.15);
   overflow: hidden;
+  z-index: 10;
   animation: invoiceModalEnter 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes invoiceModalEnter {
   from {
     opacity: 0;
-    transform: scale(0.97) translateY(8px);
+    transform: scale(0.95) translateY(12px);
   }
   to {
     opacity: 1;
@@ -63,18 +65,18 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75rem 1.25rem;
+  padding: 0.65rem 1rem;
   background: #1e293b;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  gap: 0.75rem;
+  gap: 0.5rem;
   flex-wrap: wrap;
 }
 
 .invoice-toolbar-title {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  font-size: 0.9rem;
+  gap: 0.45rem;
+  font-size: 0.84rem;
   font-weight: 700;
   color: #f8fafc;
   letter-spacing: 0.02em;
@@ -83,140 +85,146 @@
 .invoice-toolbar-actions {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.4rem;
   flex-wrap: wrap;
 }
 
 .btn-invoice-action {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.42rem 0.75rem;
-  font-size: 0.78rem;
+  gap: 0.35rem;
+  padding: 0.38rem 0.65rem;
+  font-size: 0.74rem;
   font-weight: 600;
   border-radius: 6px;
   border: 1px solid transparent;
   cursor: pointer;
   transition: all 0.15s ease;
   white-space: nowrap;
-  font-family: inherit;
-  text-decoration: none;
 }
 
 .btn-inv-print {
-  background: #334155;
-  color: #f8fafc;
-  border-color: rgba(255, 255, 255, 0.15);
+  background: #c59b27;
+  color: #000000;
+  font-weight: 700;
 }
+
 .btn-inv-print:hover {
-  background: #475569;
-  border-color: #c5a059;
-  color: #fde047;
+  background: #dfba50;
+  transform: translateY(-1px);
 }
 
 .btn-inv-whatsapp {
-  background: #059669;
-  color: #ffffff;
-}
-.btn-inv-whatsapp:hover {
-  background: #047857;
-  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35);
-}
-
-.btn-inv-gallery {
-  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-  color: #ffffff;
+  background: #25D366;
+  color: #000000;
   font-weight: 700;
-  box-shadow: 0 4px 14px rgba(180, 83, 9, 0.35);
-}
-.btn-inv-gallery:hover {
-  filter: brightness(1.1);
-  box-shadow: 0 6px 18px rgba(180, 83, 9, 0.5);
 }
 
-.btn-inv-copy {
-  background: #334155;
-  color: #cbd5e1;
-  border-color: rgba(255, 255, 255, 0.1);
+.btn-inv-whatsapp:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
 }
-.btn-inv-copy:hover {
-  color: #f8fafc;
-  background: #475569;
+
+.btn-inv-download {
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+.btn-inv-download:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.btn-inv-share {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-inv-share:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .btn-inv-close {
   background: transparent;
-  color: #94a3b8;
-  font-size: 1.35rem;
-  line-height: 1;
   border: none;
+  color: #94a3b8;
+  font-size: 1.25rem;
   cursor: pointer;
   padding: 0.15rem 0.45rem;
-  border-radius: 6px;
-  transition: all 0.15s ease;
+  border-radius: 4px;
+  line-height: 1;
 }
+
 .btn-inv-close:hover {
-  color: #ef4444;
-  background: rgba(239, 68, 68, 0.12);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
 }
 
-/* Modal Content Scroll Area */
 .invoice-modal-body {
-  padding: 1.25rem;
+  padding: 1rem;
   overflow-y: auto;
-  overflow-x: hidden;
-  flex: 1;
-  background: #0f172a;
+  background: #0b0f19;
+  display: flex;
+  justify-content: center;
 }
 
-/* 2. THE CLEAN LUXURY BILL CARD */
+/* ==========================================================================
+   2. FORMAL 9:16 INVOICE SHEET (CLEAN & COMPACT VERTICAL CARD)
+   ========================================================================== */
 .clean-bill-sheet {
   background: #ffffff;
   color: #0f172a;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  padding: 2.2rem 2.4rem;
+  width: 100%;
+  max-width: 460px;
+  min-height: 818px;
+  aspect-ratio: 9 / 16;
+  margin: 0 auto;
+  padding: 1.25rem 1.15rem;
+  border-radius: 10px;
+  border: 1.5px solid rgba(197, 155, 39, 0.35);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.65rem;
   position: relative;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
-/* Header Row */
+/* 1. Brand Header */
 .clean-bill-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1.5rem;
-  padding-bottom: 1.25rem;
-  border-bottom: 2px solid #0f172a;
+  border-bottom: 1.5px solid #0f172a;
+  padding-bottom: 0.65rem;
 }
 
 .clean-bill-brand-wrap {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 0.85rem;
 }
 
 .clean-bill-circle-logo {
-  width: 76px;
-  height: 76px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  border: 1.5px solid #c59b27;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   background: #000000;
 }
 
 .clean-bill-brand {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.15rem;
 }
 
 .clean-bill-title {
   font-family: 'Playfair Display', serif;
-  font-size: 1.85rem;
+  font-size: 1.45rem;
   font-weight: 800;
   color: #0f172a;
   letter-spacing: 0.04em;
@@ -225,7 +233,7 @@
 }
 
 .clean-bill-tagline {
-  font-size: 0.86rem;
+  font-size: 0.76rem;
   color: #c59b27;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -234,24 +242,24 @@
 .clean-bill-contact-info {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  margin-top: 0.45rem;
+  gap: 0.2rem;
+  margin-top: 0.3rem;
 }
 
 .clean-contact-row {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  font-size: 0.8rem;
+  gap: 0.4rem;
+  font-size: 0.72rem;
   color: #334155;
-  line-height: 1.45;
+  line-height: 1.35;
   flex-wrap: wrap;
 }
 
 .clean-contact-item {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.3rem;
 }
 
 .clean-contact-item strong {
@@ -265,53 +273,65 @@
 }
 
 .clean-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.88rem;
+  font-size: 0.75rem;
   line-height: 1;
 }
 
-.clean-bill-doc-meta {
-  text-align: right;
+/* 2. Document Meta Bar */
+.clean-bill-doc-meta-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 0.45rem 0.75rem;
+  gap: 0.5rem;
+}
+
+.clean-doc-badge-group {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 0.35rem;
+  gap: 0.1rem;
 }
 
 .clean-doc-badge {
-  font-size: 1.15rem;
+  font-size: 0.65rem;
   font-weight: 800;
-  color: #0f172a;
+  color: #64748b;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
 }
 
 .clean-doc-ref {
-  font-family: 'Plus Jakarta Sans', monospace;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 800;
   color: #b45309;
   letter-spacing: 0.04em;
 }
 
+.clean-doc-status-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+}
+
 .clean-doc-date {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   color: #475569;
 }
 
 .clean-status-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.25rem 0.75rem;
+  gap: 0.25rem;
+  padding: 0.2rem 0.55rem;
   border-radius: 12px;
-  font-size: 0.74rem;
+  font-size: 0.68rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-top: 0.25rem;
+  letter-spacing: 0.03em;
 }
 
 .clean-status-pill.status-approved {
@@ -326,12 +346,6 @@
   border: 1px solid #f59e0b;
 }
 
-.clean-status-pill.status-inprogress {
-  background: #eff6ff;
-  color: #1d4ed8;
-  border: 1px solid #3b82f6;
-}
-
 .clean-status-pill.status-completed {
   background: #f5f3ff;
   color: #6d28d9;
@@ -344,34 +358,37 @@
   border: 1px solid #ef4444;
 }
 
-/* Client Particulars 4-Box Grid */
+/* 3. Client & Event Particulars (Compact 2x2 Grid) */
 .clean-client-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.75rem;
-  background: #f8fafc;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem 0.75rem;
+  background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
-  padding: 0.85rem 1rem;
-  margin: 1.15rem 0;
+  padding: 0.55rem 0.75rem;
 }
 
 .clean-grid-cell {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: 0.1rem;
+}
+
+.clean-grid-cell.text-right {
+  text-align: right;
 }
 
 .clean-cell-lbl {
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   font-weight: 700;
   text-transform: uppercase;
   color: #64748b;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
 }
 
 .clean-cell-val {
-  font-size: 0.88rem;
+  font-size: 0.8rem;
   font-weight: 700;
   color: #0f172a;
   white-space: nowrap;
@@ -380,123 +397,59 @@
 }
 
 .clean-cell-highlight {
-  color: #92400e;
+  color: #b45309;
   font-weight: 800;
 }
 
-/* Deliverables Table */
+/* 4. Deliverables Table */
 .clean-bill-table {
   width: 100%;
   border-collapse: collapse;
   border: 1px solid #cbd5e1;
-  margin-bottom: 1.15rem;
-  font-size: 0.84rem;
+  font-size: 0.78rem;
+  border-radius: 6px;
+  overflow: hidden;
 }
 
 .clean-bill-table th {
   background: #f1f5f9;
   color: #1e293b;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 0.6rem 0.85rem;
-  border: 1px solid #cbd5e1;
+  letter-spacing: 0.04em;
+  padding: 0.45rem 0.65rem;
+  border-bottom: 1.5px solid #cbd5e1;
 }
 
 .clean-bill-table td {
-  padding: 0.7rem 0.85rem;
-  border: 1px solid #e2e8f0;
-  vertical-align: top;
+  padding: 0.5rem 0.65rem;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: middle;
   color: #1e293b;
 }
 
 .clean-item-name {
   font-weight: 700;
   color: #0f172a;
-  font-size: 0.88rem;
+  font-size: 0.8rem;
+  line-height: 1.25;
 }
 
 .clean-item-desc {
-  font-size: 0.74rem;
+  font-size: 0.68rem;
   color: #64748b;
-  margin-top: 0.15rem;
-}
-
-/* Financial Settlement & Multi-Tier Summary Grid */
-.clean-financial-section {
-  display: grid;
-  grid-template-columns: 1fr 1.15fr;
-  gap: 1.25rem;
-  margin-bottom: 1.5rem;
-  align-items: stretch;
-}
-
-.clean-warning-note-box {
-  background: #fffdf5;
-  border: 1.5px solid #fef08a;
-  border-left: 4px solid #d97706;
-  border-radius: 8px;
-  padding: 1.15rem 1.25rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.6rem;
-}
-
-.clean-note-header {
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: #78350f;
-  letter-spacing: 0.02em;
-}
-
-.clean-warning-banner {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.65rem;
-  background: rgba(254, 240, 138, 0.45);
-  border: 1px solid rgba(217, 119, 6, 0.35);
-  border-radius: 6px;
-  padding: 0.85rem 1rem;
-}
-
-.clean-warning-icon {
-  font-size: 1.3rem;
-  line-height: 1;
-  flex-shrink: 0;
   margin-top: 0.1rem;
+  line-height: 1.25;
 }
 
-.clean-warning-content {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.clean-warning-heading {
-  font-size: 0.82rem;
-  font-weight: 900;
-  color: #b45309;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.clean-warning-text {
-  font-size: 0.82rem;
-  color: #92400e;
-  font-weight: 600;
-  line-height: 1.5;
-  margin: 0;
-}
-
-/* Right Side: Multi-Tier Calculation Card */
+/* 5. Financial Summary Card */
 .clean-calc-card {
   background: #ffffff;
   border: 1.5px solid #cbd5e1;
-  border-radius: 8px;
+  border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
 }
@@ -505,9 +458,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.6rem 1rem;
+  padding: 0.45rem 0.75rem;
   border-bottom: 1px solid #f1f5f9;
-  font-size: 0.84rem;
+  font-size: 0.78rem;
 }
 
 .calc-label {
@@ -518,7 +471,7 @@
 .calc-value {
   color: #0f172a;
   font-weight: 700;
-  font-size: 0.92rem;
+  font-size: 0.84rem;
 }
 
 .calc-discount-row {
@@ -530,30 +483,9 @@
   font-weight: 700;
 }
 
-.calc-total-row {
-  background: #f8fafc;
-  border-top: 1px solid #e2e8f0;
-  border-bottom: 1.5px solid #cbd5e1;
-  padding: 0.65rem 1rem;
-}
-
-.calc-total-row .calc-label {
-  color: #0f172a;
-  font-weight: 800;
-  font-size: 0.86rem;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-
-.calc-total-row .calc-value {
-  color: #0f172a;
-  font-weight: 800;
-  font-size: 1.05rem;
-}
-
 .calc-advance-row {
   background: #f0fdf4;
-  border-bottom: 1.5px solid #bbf7d0;
+  border-bottom: 1px solid #bbf7d0;
 }
 
 .calc-advance-row .calc-label {
@@ -561,7 +493,7 @@
   font-weight: 700;
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.25rem;
 }
 
 .status-tick {
@@ -572,14 +504,13 @@
 .advance-value {
   color: #15803d;
   font-weight: 800;
-  font-size: 0.95rem;
+  font-size: 0.86rem;
 }
 
 .calc-balance-banner {
-  margin-top: auto;
   background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-  border-top: 2px solid #f59e0b;
-  padding: 0.75rem 1rem;
+  border-top: 1.5px solid #f59e0b;
+  padding: 0.55rem 0.75rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -591,7 +522,7 @@
 }
 
 .balance-lbl {
-  font-size: 0.85rem;
+  font-size: 0.76rem;
   font-weight: 800;
   color: #92400e;
   text-transform: uppercase;
@@ -599,36 +530,93 @@
 }
 
 .balance-sub {
-  font-size: 0.7rem;
+  font-size: 0.62rem;
   color: #b45309;
   font-weight: 600;
 }
 
 .balance-val {
   font-family: 'Playfair Display', serif;
-  font-size: 1.35rem;
+  font-size: 1.18rem;
   font-weight: 900;
   color: #78350f;
   letter-spacing: -0.01em;
 }
 
-/* Signature & Owner Sign Row */
+/* 6. Payment Warning Note */
+.clean-warning-note-box {
+  background: #fffdf5;
+  border: 1px solid #fef08a;
+  border-left: 3.5px solid #d97706;
+  border-radius: 6px;
+  padding: 0.5rem 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.clean-note-header {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #78350f;
+}
+
+.clean-warning-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  background: rgba(254, 240, 138, 0.45);
+  border: 1px solid rgba(217, 119, 6, 0.25);
+  border-radius: 4px;
+  padding: 0.4rem 0.55rem;
+}
+
+.clean-warning-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+}
+
+.clean-warning-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.clean-warning-heading {
+  font-size: 0.68rem;
+  font-weight: 900;
+  color: #b45309;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.clean-warning-text {
+  font-size: 0.68rem;
+  color: #92400e;
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 0;
+}
+
+/* 7. Signatures Footer */
 .clean-signature-section {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-top: 1.25rem;
-  padding-top: 0.75rem;
+  padding-top: 0.45rem;
   border-top: 1px solid #e2e8f0;
+  margin-top: auto;
 }
 
 .clean-sig-box {
-  width: 220px;
+  width: 150px;
   text-align: center;
 }
 
 .clean-owner-sig-box {
-  width: 240px;
+  width: 170px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -636,140 +624,90 @@
 }
 
 .clean-signature-img {
-  height: 52px;
+  height: 40px;
   width: auto;
-  max-width: 170px;
+  max-width: 140px;
   object-fit: contain;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.05));
 }
 
 .clean-sig-line {
   border-top: 1.5px solid #475569;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.2rem;
   width: 100%;
 }
 
 .clean-sig-name {
-  font-size: 0.86rem;
-  font-weight: 800;
+  font-size: 0.74rem;
+  font-weight: 700;
   color: #0f172a;
 }
 
 .clean-sig-role {
-  font-size: 0.72rem;
-  color: #92400e;
+  font-size: 0.62rem;
+  color: #64748b;
   font-weight: 600;
 }
 
 .clean-sig-sub {
-  font-size: 0.68rem;
-  color: #64748b;
+  font-size: 0.6rem;
+  color: #94a3b8;
 }
 
-/* Footer Notes */
-.clean-bill-footer-notes {
-  margin-top: 1rem;
-  padding-top: 0.6rem;
-  border-top: 1px dashed #cbd5e1;
-  font-size: 0.72rem;
-  color: #64748b;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-/* 3. PRINT STYLESHEET (@media print) */
+/* ==========================================================================
+   PRINT STYLES FOR CLEAN INVOICE
+   ========================================================================== */
 @media print {
   body * {
-    visibility: hidden !important;
+    visibility: hidden;
   }
-
+  
   #booking-invoice-modal,
   #booking-invoice-modal .invoice-modal-container,
   #booking-invoice-modal .invoice-modal-body,
   #yazh-official-invoice-card,
   #yazh-official-invoice-card * {
-    visibility: visible !important;
+    visibility: visible;
   }
 
   #booking-invoice-modal {
-    position: absolute !important;
-    inset: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    background: #ffffff !important;
-    display: block !important;
+    position: absolute;
+    left: 0;
+    top: 0;
     width: 100% !important;
     height: auto !important;
-    z-index: 999999 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    display: block !important;
   }
 
-  .invoice-modal-backdrop,
   .invoice-modal-toolbar,
-  .btn-inv-close {
+  .invoice-modal-backdrop {
     display: none !important;
   }
 
   .invoice-modal-container {
-    max-width: 100% !important;
-    width: 100% !important;
-    box-shadow: none !important;
     border: none !important;
-    background: #ffffff !important;
-    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    max-width: 100% !important;
+    max-height: none !important;
   }
 
   .invoice-modal-body {
-    background: #ffffff !important;
     padding: 0 !important;
-    overflow: visible !important;
+    background: transparent !important;
   }
 
   .clean-bill-sheet {
-    border: none !important;
-    padding: 20px !important;
-    box-shadow: none !important;
     width: 100% !important;
-  }
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 680px) {
-  .invoice-modal {
-    padding: 0.5rem;
-  }
-
-  .clean-bill-sheet {
-    padding: 1.25rem 1rem;
-  }
-
-  .clean-bill-header {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .clean-bill-doc-meta {
-    text-align: left;
-    align-items: flex-start;
-  }
-
-  .clean-client-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 0.65rem;
-  }
-
-  .clean-signature-section {
-    flex-direction: column;
-    gap: 1.5rem;
-    align-items: center;
-  }
-
-  .btn-invoice-action {
-    flex: 1;
-    justify-content: center;
-    font-size: 0.75rem;
-    padding: 0.4rem 0.5rem;
+    max-width: 480px !important;
+    margin: 0 auto !important;
+    box-shadow: none !important;
+    border: 1px solid #cbd5e1 !important;
+    page-break-inside: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 }
