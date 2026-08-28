@@ -134,11 +134,11 @@
 
 @media (max-width: 950px) {
   .hero-banner-aspect {
-    aspect-ratio: 16 / 9;
-    min-height: 240px;
+    aspect-ratio: 2 / 1;
+    min-height: auto;
   }
   .hero-banner-img {
-    object-fit: cover;
+    object-fit: contain;
   }
   .hero-action-bar-glass {
     flex-direction: column;
@@ -173,8 +173,8 @@
   }
 
   .hero-banner-aspect {
-    aspect-ratio: 16 / 10;
-    min-height: 180px;
+    aspect-ratio: 2 / 1;
+    min-height: auto;
   }
 
   .hero-action-bar-wrap {
