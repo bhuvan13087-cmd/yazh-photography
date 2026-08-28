@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "canvas-confetti": "^1.9.3",
+    "html2canvas": "^1.4.1",
     "lucide": "^0.439.0"
   }
 }

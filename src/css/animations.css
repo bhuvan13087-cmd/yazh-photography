@@ -1,15 +1,13 @@
-/* Minimalist Transitions & Scroll Reveals */
+/* Minimalist Transitions & Scroll Reveals — Zero-Flicker Architecture */
 
 .reveal-on-scroll {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
-}
-
-.reveal-on-scroll.revealed {
   opacity: 1;
   transform: translateY(0);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.js-loaded .reveal-on-scroll {
+  opacity: 1;
 }
 
 @keyframes fadeIn {
@@ -18,5 +16,5 @@
 }
 
 .modal.active .modal-container {
-  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

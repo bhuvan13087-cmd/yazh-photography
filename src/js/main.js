@@ -6,6 +6,7 @@ import { BookingEngine } from './modules/bookingEngine.js';
 import { CustomPackageBuilder } from './modules/customPackageBuilder.js';
 import { ReviewManager } from './modules/reviewManager.js';
 import { AdminDashboard } from './modules/adminDashboard.js';
+import { BookingInvoiceManager } from './modules/bookingInvoice.js';
 import { sound } from './utils/sound.js';
 import { toast } from './utils/toast.js';
 
@@ -35,6 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize Client Review System
   const reviewManager = new ReviewManager();
+
+  // Initialize Booking Invoice & Bill Manager
+  const bookingInvoiceManager = new BookingInvoiceManager();
+  window.bookingInvoiceManager = bookingInvoiceManager;
 
   // Initialize Admin Dashboard
   const adminDashboard = new AdminDashboard();

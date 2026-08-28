@@ -1,4 +1,7 @@
-/* Studio Entrance Hero Showcase - Perfect Alignment */
+/* ==========================================================================
+   YAZH PHOTOGRAPHY — STUDIO ENTRANCE HERO SHOWCASE
+   High-contrast banner, gold contact bar & highlights counter
+   ========================================================================== */
 
 .hero-section {
   position: relative;
@@ -16,14 +19,13 @@
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
-  border: 1px solid var(--border-subtle);
+  border: 1.5px solid var(--border-subtle);
   background: #01081f;
 }
 
 .hero-banner-aspect {
   position: relative;
   width: 100%;
-  /* 2:1 aspect ratio matching the official banner image */
   aspect-ratio: 2 / 1;
   max-height: 75vh;
   display: flex;
@@ -44,7 +46,7 @@
 .hero-action-bar-wrap {
   width: 100%;
   max-width: var(--container-max);
-  margin: 1.25rem auto 0;
+  margin: 1.35rem auto 0;
 }
 
 .hero-action-bar-glass {
@@ -52,35 +54,38 @@
   align-items: center;
   justify-content: space-between;
   background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  border: 1.5px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  padding: 1.15rem 1.75rem;
+  padding: 1.25rem 2rem;
   box-shadow: var(--shadow-sm);
   flex-wrap: wrap;
-  gap: 1.25rem;
+  gap: 1.35rem;
 }
 
 .hero-contact-direct {
   display: flex;
   align-items: center;
-  gap: 1.75rem;
+  gap: 2rem;
   flex-wrap: wrap;
 }
 
 .hero-contact-chip {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.88rem;
+  gap: 0.6rem;
+  font-size: 0.92rem;
+  font-weight: 500;
   color: var(--text-primary);
 }
 
 .hero-contact-chip strong {
   color: var(--accent-gold);
+  font-weight: 700;
 }
 
 .hero-contact-chip a {
   color: inherit;
+  text-decoration: none;
   transition: color var(--transition-fast);
 }
 
@@ -90,8 +95,12 @@
 
 .hero-cta-group {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.85rem;
   align-items: center;
+}
+
+.hero-cta-group .btn {
+  font-weight: 700;
 }
 
 /* Studio Highlights Stats Bar */
@@ -99,13 +108,13 @@
   background: var(--bg-secondary);
   border-top: 1px solid var(--border-subtle);
   border-bottom: 1px solid var(--border-subtle);
-  padding: 1.75rem 0;
+  padding: 2rem 0;
 }
 
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
+  gap: 1.75rem;
   text-align: center;
 }
 
@@ -118,18 +127,19 @@
 
 .stat-num {
   font-family: var(--font-serif);
-  font-size: 1.75rem;
-  font-weight: 700;
+  font-size: 2rem;
+  font-weight: 800;
   color: var(--text-primary);
   line-height: 1.1;
 }
 
 .stat-label {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  margin-top: 0.35rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  margin-top: 0.4rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
 }
 
 @media (max-width: 950px) {
@@ -149,16 +159,16 @@
   .hero-contact-direct {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.75rem;
+    gap: 0.85rem;
   }
   .hero-cta-group {
     flex-direction: column;
-    gap: 0.65rem;
+    gap: 0.75rem;
   }
   .hero-cta-group .btn {
     width: 100%;
     justify-content: center;
-    padding: 0.85rem 1.25rem;
+    padding: 0.9rem 1.25rem;
   }
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -182,38 +192,39 @@
   }
 
   .hero-action-bar-glass {
-    padding: 1rem 0.95rem;
+    padding: 1.1rem 1rem;
     border-radius: var(--radius-sm);
   }
 
   .hero-contact-chip {
-    font-size: 0.82rem;
-    line-height: 1.4;
+    font-size: 0.85rem;
+    line-height: 1.45;
   }
 
   .hero-stats-bar {
-    padding: 1.25rem 0;
+    padding: 1.35rem 0;
   }
 
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
+    gap: 0.85rem;
   }
 
   .stat-item {
     background: var(--bg-card);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-sm);
-    padding: 0.85rem 0.5rem;
+    padding: 0.95rem 0.65rem;
+    box-shadow: var(--shadow-sm);
   }
 
   .stat-num {
-    font-size: 1.35rem;
+    font-size: 1.5rem;
   }
 
   .stat-label {
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     letter-spacing: 0.04em;
-    margin-top: 0.2rem;
+    margin-top: 0.25rem;
   }
 }

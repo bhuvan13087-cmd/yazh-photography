@@ -408,7 +408,7 @@ export class BookingEngine {
 
     // Build historical booking snapshot with permanent price locking
     const bookingRecord = {
-      id: `YZ-${Date.now().toString().slice(-6)}`,
+      id: dataStore.generateNextBookingId(),
       createdAt: new Date().toISOString(),
       clientName: nameInput.value.trim(),
       clientEmail: emailInput?.value.trim() || STUDIO_INFO.email,
@@ -476,6 +476,18 @@ export class BookingEngine {
     document.getElementById('conf-total-value').textContent = currency.format(record.totalINR);
     document.getElementById('conf-advance-paid').textContent = currency.format(record.advanceINR);
     document.getElementById('conf-remaining-balance').textContent = currency.format(record.remainingINR);
+
+    // Bind View Official Bill / Invoice Button
+    const viewBillBtn = document.getElementById('btn-conf-view-bill');
+    if (viewBillBtn) {
+      viewBillBtn.onclick = () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        if (window.bookingInvoiceManager) {
+          window.bookingInvoiceManager.openInvoice(record);
+        }
+      };
+    }
 
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';

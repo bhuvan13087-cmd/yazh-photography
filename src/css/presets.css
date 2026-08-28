@@ -1,25 +1,29 @@
-/* Lightroom Presets & Before/After Slider - Precision Alignment */
+/* ==========================================================================
+   YAZH PHOTOGRAPHY — LIGHTROOM PRESETS & BEFORE/AFTER SLIDER
+   High-contrast preset cards, interactive split slider & pricing
+   ========================================================================== */
 
 .presets-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.75rem;
+  gap: 1.85rem;
   margin-bottom: 3.5rem;
 }
 
 .preset-card {
   background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  border: 1.5px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  padding: 2rem;
+  padding: 2.25rem;
   display: flex;
   flex-direction: column;
+  box-shadow: var(--shadow-sm);
   transition: all var(--transition-normal);
 }
 
 .preset-card:hover {
   transform: translateY(-4px);
-  border-color: var(--border-glass);
+  border-color: var(--border-gold);
   box-shadow: var(--shadow-md);
 }
 
@@ -27,20 +31,21 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1rem;
+  margin-bottom: 1.15rem;
 }
 
 .preset-title {
   font-family: var(--font-serif);
-  font-size: 1.35rem;
+  font-size: 1.45rem;
+  font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.45rem;
 }
 
 .preset-desc {
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  line-height: 1.6;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
   margin-bottom: 1.5rem;
 }
 
@@ -48,22 +53,23 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1.75rem;
+  gap: 0.65rem;
+  margin-bottom: 1.85rem;
 }
 
 .preset-features-list li {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.82rem;
+  gap: 0.65rem;
+  font-size: 0.88rem;
   color: var(--text-secondary);
 }
 
 .preset-features-list li i {
   color: var(--accent-gold);
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
 .preset-footer {
@@ -71,25 +77,25 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 1.25rem;
+  padding-top: 1.35rem;
   border-top: 1px solid var(--border-subtle);
 }
 
 .preset-pricing {
   display: flex;
   align-items: baseline;
-  gap: 0.5rem;
+  gap: 0.6rem;
 }
 
 .preset-price {
   font-family: var(--font-serif);
-  font-size: 1.45rem;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--accent-gold);
 }
 
 .preset-original-price {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--text-dim);
   text-decoration: line-through;
 }
@@ -97,9 +103,9 @@
 /* Interactive Before / After Split Slider */
 .interactive-demo-section {
   background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  border: 1.5px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  padding: 2.5rem;
+  padding: 2.75rem;
   box-shadow: var(--shadow-md);
 }
 
@@ -118,7 +124,7 @@
   overflow: hidden;
   user-select: none;
   cursor: ew-resize;
-  border: 1px solid var(--border-subtle);
+  border: 1.5px solid var(--border-subtle);
   box-shadow: var(--shadow-md);
 }
 
@@ -161,12 +167,12 @@
   top: 0;
   bottom: 0;
   left: 50%;
-  width: 2px;
-  background: #ffffff;
+  width: 2.5px;
+  background: var(--accent-gold);
   z-index: 3;
   transform: translateX(-50%);
   pointer-events: none;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
 }
 
 .ba-slider-handle {
@@ -174,34 +180,35 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 38px;
-  height: 38px;
-  background: #ffffff;
+  width: 40px;
+  height: 40px;
+  background: var(--accent-gold);
   color: #000000;
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  font-size: 0.95rem;
+  font-weight: 800;
+  font-size: 1rem;
   z-index: 4;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
   pointer-events: none;
 }
 
 .ba-tag {
   position: absolute;
   bottom: 1rem;
-  padding: 0.25rem 0.65rem;
+  padding: 0.3rem 0.75rem;
   border-radius: var(--radius-sm);
-  font-size: 0.72rem;
-  font-weight: 600;
+  font-size: 0.76rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(4px);
+  letter-spacing: 0.06em;
+  background: rgba(10, 11, 16, 0.85);
+  backdrop-filter: blur(6px);
   color: #ffffff;
   z-index: 3;
+  border: 1px solid var(--border-glass);
 }
 
 .ba-tag-before { right: 1rem; }
@@ -214,15 +221,16 @@
 
 .ba-info-title {
   font-family: var(--font-serif);
-  font-size: 1.6rem;
+  font-size: 1.75rem;
+  font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 0.65rem;
+  margin-bottom: 0.75rem;
 }
 
 .ba-info-desc {
-  font-size: 0.92rem;
-  color: var(--text-muted);
-  line-height: 1.6;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
   margin-bottom: 1.5rem;
 }
 
@@ -232,15 +240,15 @@
   justify-content: space-between;
   gap: 1rem;
   margin-top: 1.5rem;
-  padding-top: 1.25rem;
+  padding-top: 1.35rem;
   border-top: 1px solid var(--border-subtle);
 }
 
 .ba-price-tag {
   font-family: var(--font-serif);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: var(--accent-gold);
 }
 
 @media (max-width: 900px) {

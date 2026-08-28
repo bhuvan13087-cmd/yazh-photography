@@ -1,56 +1,63 @@
-/* Portfolio Gallery - Aligned Grid & Filters */
+/* ==========================================================================
+   YAZH PHOTOGRAPHY — PORTFOLIO GALLERY & LIGHTBOX
+   High-contrast gallery grid, album frames, crisp overlays & theater lightbox
+   ========================================================================== */
 
 .portfolio-category-nav {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 2.5rem;
+  gap: 0.65rem;
+  margin-bottom: 2.75rem;
 }
 
 .portfolio-filter-btn {
-  padding: 0.5rem 1.15rem;
+  padding: 0.6rem 1.35rem;
   background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  border: 1.5px solid var(--border-subtle);
   border-radius: var(--radius-full);
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  font-weight: 500;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  font-weight: 600;
   cursor: pointer;
+  box-shadow: var(--shadow-sm);
   transition: all var(--transition-fast);
 }
 
 .portfolio-filter-btn:hover {
   color: var(--text-primary);
-  border-color: var(--border-glass);
+  border-color: var(--border-gold);
+  background: var(--bg-card-hover);
 }
 
 .portfolio-filter-btn.active {
-  background: var(--btn-primary-bg);
-  color: var(--btn-primary-text);
-  border-color: var(--btn-primary-bg);
-  font-weight: 600;
+  background: var(--accent-gold);
+  color: #000000;
+  border-color: var(--accent-gold);
+  font-weight: 700;
+  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.35);
 }
 
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  gap: 1.75rem;
 }
 
 .portfolio-item-card {
   position: relative;
   border-radius: var(--radius-md);
   overflow: hidden;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-subtle);
+  box-shadow: var(--shadow-sm);
   transition: all var(--transition-normal);
 }
 
 .portfolio-item-card:hover {
   transform: translateY(-4px);
-  border-color: var(--border-glass);
-  box-shadow: var(--shadow-md);
+  border-color: var(--border-gold);
+  box-shadow: var(--shadow-md), 0 0 20px rgba(212, 175, 55, 0.15);
 }
 
 .portfolio-item-inner {
@@ -65,13 +72,13 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* 36x12 Albums & Frames: Full uncropped panoramic and portrait view */
 .portfolio-item-card.is-album-card {
   background: var(--bg-card);
-  border: 1px solid var(--border-gold, rgba(197, 160, 89, 0.35));
+  border: 1.5px solid var(--border-gold);
   box-shadow: var(--shadow-md);
 }
 
@@ -82,7 +89,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 12px;
 }
 
 .portfolio-item-card.is-album-card .portfolio-img,
@@ -97,7 +104,7 @@
 }
 
 .portfolio-item-card.is-album-card:hover .portfolio-img {
-  transform: scale(1.02);
+  transform: scale(1.03);
 }
 
 .portfolio-item-card:hover .portfolio-img {
@@ -110,18 +117,17 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.3) 55%, rgba(0, 0, 0, 0.1) 100%);
   opacity: 0;
   transition: opacity var(--transition-normal);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 1.25rem;
+  padding: 1.35rem;
 }
 
-/* Semi-translucent overlay on hover for albums so design remains crisp */
 .portfolio-item-card.is-album-card .portfolio-overlay {
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.05) 45%, rgba(0, 0, 0, 0.6) 100%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.94) 0%, rgba(0, 0, 0, 0.15) 50%, rgba(0, 0, 0, 0.7) 100%);
 }
 
 .portfolio-item-card:hover .portfolio-overlay {
@@ -135,23 +141,24 @@
 }
 
 .portfolio-cat-badge {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: var(--bg-card);
-  backdrop-filter: blur(6px);
+  letter-spacing: 0.06em;
+  background: rgba(10, 11, 16, 0.85);
+  backdrop-filter: blur(8px);
   color: var(--accent-gold);
-  padding: 0.2rem 0.55rem;
+  padding: 0.3rem 0.75rem;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-gold);
 }
 
 .btn-like-heart {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-primary);
-  width: 32px;
-  height: 32px;
+  background: rgba(10, 11, 16, 0.85);
+  border: 1px solid var(--border-glass);
+  color: #ffffff;
+  width: 36px;
+  height: 36px;
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
@@ -162,7 +169,7 @@
 
 .btn-like-heart.liked {
   color: #ef4444;
-  background: rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.25);
   border-color: #ef4444;
 }
 
@@ -172,9 +179,11 @@
 }
 
 .portfolio-title {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
+  font-weight: 700;
   color: #ffffff;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.45rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
 
 .portfolio-card-actions {
@@ -190,7 +199,7 @@
   width: 100vw;
   height: 100vh;
   height: 100dvh;
-  background: var(--bg-glass-heavy);
+  background: rgba(0, 0, 0, 0.88);
   backdrop-filter: blur(16px);
   z-index: 10005;
   display: none;
@@ -210,7 +219,7 @@
   height: 90vh;
   height: 90dvh;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 340px;
+  grid-template-columns: minmax(0, 1fr) 350px;
   background: var(--bg-primary);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
@@ -232,9 +241,9 @@
 
 .lightbox-top-toolbar {
   position: absolute;
-  top: 0.85rem;
-  left: 1rem;
-  right: 1rem;
+  top: 1rem;
+  left: 1.25rem;
+  right: 1.25rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -243,32 +252,32 @@
 }
 
 .lightbox-counter-badge {
-  font-size: 0.76rem;
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.05em;
-  background: var(--bg-card);
+  background: rgba(10, 11, 16, 0.9);
   backdrop-filter: blur(8px);
   color: var(--accent-gold);
-  padding: 0.3rem 0.75rem;
+  padding: 0.35rem 0.85rem;
   border-radius: 20px;
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-gold);
   pointer-events: auto;
 }
 
 .lightbox-toolbar-actions {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
   pointer-events: auto;
 }
 
 .lightbox-tool-btn {
-  background: var(--bg-card);
+  background: rgba(10, 11, 16, 0.9);
   backdrop-filter: blur(8px);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-primary);
-  width: 38px;
-  height: 38px;
+  border: 1px solid var(--border-glass);
+  color: #ffffff;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -278,9 +287,10 @@
 }
 
 .lightbox-tool-btn:hover {
-  background: var(--btn-primary-bg);
-  color: var(--btn-primary-text);
-  transform: scale(1.08);
+  background: var(--accent-gold);
+  color: #000000;
+  border-color: var(--accent-gold);
+  transform: scale(1.1);
 }
 
 .lightbox-view-area {
@@ -311,7 +321,7 @@
 }
 
 .lightbox-sidebar {
-  padding: 2.25rem 1.75rem;
+  padding: 2.25rem 1.85rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -323,16 +333,16 @@
 
 .lightbox-cat-tag {
   display: inline-block;
-  font-size: 0.72rem;
+  font-size: 0.76rem;
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.08em;
   color: var(--accent-gold);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
 }
 
 .lightbox-title {
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 1rem;
@@ -340,16 +350,16 @@
 }
 
 .lightbox-story-text {
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   color: var(--text-secondary);
-  line-height: 1.65;
+  line-height: 1.7;
 }
 
 .lightbox-sidebar-close {
   background: transparent;
   border: none;
   color: var(--text-muted);
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   cursor: pointer;
   float: right;
   line-height: 1;
@@ -363,12 +373,12 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: var(--bg-card);
+  background: rgba(10, 11, 16, 0.9);
   backdrop-filter: blur(8px);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-primary);
-  width: 46px;
-  height: 46px;
+  border: 1px solid var(--border-glass);
+  color: #ffffff;
+  width: 48px;
+  height: 48px;
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
@@ -379,13 +389,14 @@
 }
 
 .lightbox-nav-btn:hover {
-  background: var(--btn-primary-bg);
-  color: var(--btn-primary-text);
+  background: var(--accent-gold);
+  color: #000000;
+  border-color: var(--accent-gold);
   transform: translateY(-50%) scale(1.1);
 }
 
 .lightbox-prev { left: 1.25rem; }
-.lightbox-next { right: 355px; }
+.lightbox-next { right: 365px; }
 
 .lightbox-inner.theater-mode .lightbox-next {
   right: 1.25rem;
@@ -431,24 +442,23 @@
   .portfolio-filter-btn {
     white-space: nowrap;
     flex-shrink: 0;
-    padding: 0.42rem 0.95rem;
-    font-size: 0.78rem;
+    padding: 0.48rem 1.05rem;
+    font-size: 0.82rem;
   }
 
   .portfolio-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 1.25rem;
   }
 
-  /* Make overlay readable on touch devices without needing mouse hover */
   .portfolio-overlay {
     opacity: 1;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.1) 45%, rgba(0, 0, 0, 0.4) 100%);
-    padding: 0.95rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.15) 50%, rgba(0, 0, 0, 0.5) 100%);
+    padding: 1.15rem;
   }
 
   .portfolio-title {
-    font-size: 1rem;
+    font-size: 1.05rem;
   }
 
   .lightbox-inner {
@@ -465,10 +475,10 @@
   }
 
   .lightbox-nav-btn {
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
   }
 
-  .lightbox-prev { left: 0.4rem; }
-  .lightbox-next { right: 0.4rem; }
+  .lightbox-prev { left: 0.5rem; }
+  .lightbox-next { right: 0.5rem; }
 }

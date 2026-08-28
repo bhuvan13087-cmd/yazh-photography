@@ -1,0 +1,612 @@
+/* ==========================================================================
+   YAZH PHOTOGRAPHY — OFFICIAL BOOKING INVOICE & CLIENT BILL
+   Focused, clean, luxury light-themed invoice with authentic owner signature
+   ========================================================================== */
+
+/* 1. INVOICE MODAL SHELL */
+.invoice-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100050;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.invoice-modal.active {
+  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.invoice-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.75);
+}
+
+.invoice-modal-container {
+  position: relative;
+  width: 100%;
+  max-width: 840px;
+  max-height: 94vh;
+  background: #0f172a;
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(197, 160, 89, 0.15);
+  z-index: 10;
+  overflow: hidden;
+  animation: invoiceModalEnter 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes invoiceModalEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Modal Action Toolbar */
+.invoice-modal-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem;
+  background: #1e293b;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.invoice-toolbar-title {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #f8fafc;
+  letter-spacing: 0.02em;
+}
+
+.invoice-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.btn-invoice-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.42rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  font-family: inherit;
+  text-decoration: none;
+}
+
+.btn-inv-print {
+  background: #334155;
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+.btn-inv-print:hover {
+  background: #475569;
+  border-color: #c5a059;
+  color: #fde047;
+}
+
+.btn-inv-whatsapp {
+  background: #059669;
+  color: #ffffff;
+}
+.btn-inv-whatsapp:hover {
+  background: #047857;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35);
+}
+
+.btn-inv-gallery {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(180, 83, 9, 0.35);
+}
+.btn-inv-gallery:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 6px 18px rgba(180, 83, 9, 0.5);
+}
+
+.btn-inv-copy {
+  background: #334155;
+  color: #cbd5e1;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.btn-inv-copy:hover {
+  color: #f8fafc;
+  background: #475569;
+}
+
+.btn-inv-close {
+  background: transparent;
+  color: #94a3b8;
+  font-size: 1.35rem;
+  line-height: 1;
+  border: none;
+  cursor: pointer;
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+.btn-inv-close:hover {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.12);
+}
+
+/* Modal Content Scroll Area */
+.invoice-modal-body {
+  padding: 1.25rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+  background: #0f172a;
+}
+
+/* 2. THE CLEAN LUXURY BILL CARD */
+.clean-bill-sheet {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 2.2rem 2.4rem;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.4;
+}
+
+/* Header Row */
+.clean-bill-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 2px solid #0f172a;
+}
+
+.clean-bill-brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.clean-bill-circle-logo {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  background: #000000;
+}
+
+.clean-bill-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.clean-bill-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.clean-bill-tagline {
+  font-size: 0.84rem;
+  color: #64748b;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.clean-bill-contact-line {
+  font-size: 0.78rem;
+  color: #334155;
+  margin-top: 0.4rem;
+  line-height: 1.5;
+}
+
+.clean-bill-contact-line strong {
+  color: #0f172a;
+}
+
+.clean-bill-doc-meta {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
+}
+
+.clean-doc-badge {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.clean-doc-ref {
+  font-family: 'Plus Jakarta Sans', monospace;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #b45309;
+  letter-spacing: 0.04em;
+}
+
+.clean-doc-date {
+  font-size: 0.8rem;
+  color: #475569;
+}
+
+.clean-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 0.25rem;
+}
+
+.clean-status-pill.status-approved {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #059669;
+}
+
+.clean-status-pill.status-pending {
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #f59e0b;
+}
+
+.clean-status-pill.status-inprogress {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #3b82f6;
+}
+
+.clean-status-pill.status-completed {
+  background: #f5f3ff;
+  color: #6d28d9;
+  border: 1px solid #8b5cf6;
+}
+
+.clean-status-pill.status-cancelled {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #ef4444;
+}
+
+/* Client Particulars 4-Box Grid */
+.clean-client-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 0.85rem 1rem;
+  margin: 1.15rem 0;
+}
+
+.clean-grid-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.clean-cell-lbl {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #64748b;
+  letter-spacing: 0.04em;
+}
+
+.clean-cell-val {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.clean-cell-highlight {
+  color: #92400e;
+  font-weight: 800;
+}
+
+/* Deliverables Table */
+.clean-bill-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #cbd5e1;
+  margin-bottom: 1.15rem;
+  font-size: 0.84rem;
+}
+
+.clean-bill-table th {
+  background: #f1f5f9;
+  color: #1e293b;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid #cbd5e1;
+}
+
+.clean-bill-table td {
+  padding: 0.7rem 0.85rem;
+  border: 1px solid #e2e8f0;
+  vertical-align: top;
+  color: #1e293b;
+}
+
+.clean-item-name {
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 0.88rem;
+}
+
+.clean-item-desc {
+  font-size: 0.74rem;
+  color: #64748b;
+  margin-top: 0.15rem;
+}
+
+/* Financial Box & Summary */
+.clean-financial-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.25rem;
+}
+
+.clean-calc-box {
+  width: 100%;
+  max-width: 380px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+.clean-calc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.clean-calc-table td {
+  padding: 0.45rem 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+  color: #475569;
+}
+
+.clean-calc-table td.text-right {
+  text-align: right;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.clean-total-row td {
+  background: #f1f5f9;
+  font-size: 0.94rem;
+  font-weight: 800;
+  color: #0f172a;
+  border-top: 1.5px solid #0f172a;
+  border-bottom: 1.5px solid #0f172a;
+}
+
+.clean-advance-row td {
+  color: #047857;
+  font-weight: 700;
+}
+
+.clean-balance-row td {
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 1.02rem;
+  font-weight: 800;
+  border-top: 1.5px solid #f59e0b;
+}
+
+/* Signature & Owner Sign Row */
+.clean-signature-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 1.25rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.clean-sig-box {
+  width: 220px;
+  text-align: center;
+}
+
+.clean-owner-sig-box {
+  width: 240px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.clean-signature-img {
+  height: 52px;
+  width: auto;
+  max-width: 170px;
+  object-fit: contain;
+  margin-bottom: 4px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.05));
+}
+
+.clean-sig-line {
+  border-top: 1.5px solid #475569;
+  margin-bottom: 0.3rem;
+  width: 100%;
+}
+
+.clean-sig-name {
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.clean-sig-role {
+  font-size: 0.72rem;
+  color: #92400e;
+  font-weight: 600;
+}
+
+.clean-sig-sub {
+  font-size: 0.68rem;
+  color: #64748b;
+}
+
+/* Footer Notes */
+.clean-bill-footer-notes {
+  margin-top: 1rem;
+  padding-top: 0.6rem;
+  border-top: 1px dashed #cbd5e1;
+  font-size: 0.72rem;
+  color: #64748b;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* 3. PRINT STYLESHEET (@media print) */
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+
+  #booking-invoice-modal,
+  #booking-invoice-modal .invoice-modal-container,
+  #booking-invoice-modal .invoice-modal-body,
+  #yazh-official-invoice-card,
+  #yazh-official-invoice-card * {
+    visibility: visible !important;
+  }
+
+  #booking-invoice-modal {
+    position: absolute !important;
+    inset: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #ffffff !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    z-index: 999999 !important;
+  }
+
+  .invoice-modal-backdrop,
+  .invoice-modal-toolbar,
+  .btn-inv-close {
+    display: none !important;
+  }
+
+  .invoice-modal-container {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: #ffffff !important;
+    border-radius: 0 !important;
+  }
+
+  .invoice-modal-body {
+    background: #ffffff !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .clean-bill-sheet {
+    border: none !important;
+    padding: 20px !important;
+    box-shadow: none !important;
+    width: 100% !important;
+  }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 680px) {
+  .invoice-modal {
+    padding: 0.5rem;
+  }
+
+  .clean-bill-sheet {
+    padding: 1.25rem 1rem;
+  }
+
+  .clean-bill-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .clean-bill-doc-meta {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .clean-client-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem;
+  }
+
+  .clean-signature-section {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .btn-invoice-action {
+    flex: 1;
+    justify-content: center;
+    font-size: 0.75rem;
+    padding: 0.4rem 0.5rem;
+  }
+}

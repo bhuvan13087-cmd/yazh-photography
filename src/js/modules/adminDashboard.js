@@ -7,6 +7,7 @@ import { dataStore } from '../utils/dataStore.js';
 import { cloudStorage } from '../utils/cloudStorage.js';
 import { toast } from '../utils/toast.js';
 import { sound } from '../utils/sound.js';
+import confetti from 'canvas-confetti';
 import { PORTFOLIO_ITEMS, PORTFOLIO_CATEGORIES } from '../data/portfolio.js';
 
 export class AdminDashboard {
@@ -377,6 +378,41 @@ export class AdminDashboard {
     if (reviewBadge) reviewBadge.textContent = reviews.length;
   }
 
+  formatDate(dateStr) {
+    if (!dateStr) return 'Date TBD';
+    try {
+      const parts = dateStr.includes('T') ? dateStr.split('T')[0] : dateStr;
+      const [y, m, d] = parts.split('-').map(Number);
+      if (y && m && d) {
+        return new Date(y, m - 1, d).toLocaleDateString('en-IN', {
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric'
+        });
+      }
+      const parsed = new Date(dateStr);
+      if (!isNaN(parsed.getTime())) {
+        return parsed.toLocaleDateString('en-IN', {
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric'
+        });
+      }
+    } catch (e) {}
+    return dateStr;
+  }
+
+  formatPhone(phoneStr) {
+    if (!phoneStr) return 'No phone';
+    const digits = phoneStr.replace(/\D/g, '');
+    if (digits.length === 10) {
+      return `+91 ${digits.slice(0, 5)} ${digits.slice(5)}`;
+    } else if (digits.length === 12 && digits.startsWith('91')) {
+      return `+91 ${digits.slice(2, 7)} ${digits.slice(7)}`;
+    }
+    return phoneStr;
+  }
+
   // ==========================================
   // SECTION 1: OVERVIEW DASHBOARD
   // ==========================================
@@ -404,7 +440,7 @@ export class AdminDashboard {
       if (bookings.length === 0) {
         recentTbody.innerHTML = `
           <tr>
-            <td colspan="6" style="text-align: center; padding: 2.5rem; color: var(--adm-text-muted);">
+            <td colspan="7" style="text-align: center; padding: 2rem; color: var(--adm-text-muted);">
               No booking inquiries on record yet.
             </td>
           </tr>
@@ -412,17 +448,70 @@ export class AdminDashboard {
       } else {
         recentTbody.innerHTML = bookings.slice(0, 5).map(b => {
           const statusClass = this.getStatusBadgeClass(b.status);
+          const isApproved = b.status === 'Approved' || b.status === 'Confirmed';
+          const canApprove = !isApproved && b.status !== 'Completed' && b.status !== 'Cancelled';
+
           return `
             <tr>
-              <td><strong style="color: var(--adm-gold);">${b.id}</strong></td>
-              <td><strong style="color: var(--adm-text-primary);">${b.clientName}</strong><br><small style="color: var(--adm-text-muted);">${b.clientPhone}</small></td>
-              <td><span style="font-weight: 600; color: var(--adm-text-primary);">${b.packageName}</span></td>
-              <td><strong style="color: var(--adm-text-primary);">${b.eventDate || 'Date TBD'}</strong><br><small style="color: var(--adm-text-muted);">${b.location || 'Tamil Nadu'}</small></td>
-              <td><strong style="color: var(--adm-text-primary);">${currency.format(b.totalINR)}</strong><br><small style="color: #059669; font-weight: 600;">Adv: ${currency.format(b.advanceINR)}</small></td>
-              <td><span class="admin-badge ${statusClass}">${b.status || 'New'}</span></td>
+              <td>
+                <strong style="color: var(--adm-gold); font-family: monospace; font-size: 0.85rem;">${b.id}</strong>
+                ${b.approvedAt ? `<div style="color: #059669; font-size: 0.68rem; font-weight: 700;">✓ Approved</div>` : ''}
+              </td>
+              <td>
+                <div style="font-weight: 700; color: #0f172a; font-size: 0.86rem; line-height: 1.2;">${b.clientName}</div>
+                <div style="color: #64748b; font-size: 0.74rem; margin-top: 0.15rem;">📞 ${this.formatPhone(b.clientPhone)}</div>
+              </td>
+              <td>
+                <div style="font-weight: 700; color: #0f172a; font-size: 0.84rem;">${b.packageName}</div>
+              </td>
+              <td>
+                <div style="font-weight: 700; color: #0f172a; font-size: 0.84rem;">${this.formatDate(b.eventDate)}</div>
+                <div style="color: #64748b; font-size: 0.74rem;">📍 ${b.location || 'Tamil Nadu'}</div>
+              </td>
+              <td>
+                <div style="font-weight: 800; color: #0f172a; font-size: 0.88rem;">${currency.format(b.totalINR)}</div>
+                <div style="color: #059669; font-weight: 700; font-size: 0.72rem;">Adv: ${currency.format(b.advanceINR)}</div>
+              </td>
+              <td style="text-align: center;">
+                <span class="admin-badge ${statusClass}">${b.status || 'New'}</span>
+              </td>
+              <td>
+                <div class="admin-table-actions">
+                  ${canApprove ? `
+                    <button type="button" class="btn-tbl-action btn-tbl-approve btn-overview-approve-inquiry" data-id="${b.id}" title="Approve Booking Inquiry">
+                      ✓ Approve
+                    </button>
+                  ` : ''}
+                  <button type="button" class="btn-tbl-action btn-tbl-bill btn-overview-view-bill" data-id="${b.id}" title="View / Print Official Bill">
+                    📄 Bill
+                  </button>
+                </div>
+              </td>
             </tr>
           `;
         }).join('');
+
+        // Bind Overview Approve Buttons
+        recentTbody.querySelectorAll('.btn-overview-approve-inquiry').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const b = bookings.find(item => item.id === btn.dataset.id);
+            if (b) this.openApprovalModal(b);
+          });
+        });
+
+        // Bind Overview Bill Buttons
+        recentTbody.querySelectorAll('.btn-overview-view-bill').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const b = bookings.find(item => item.id === btn.dataset.id);
+            if (b) {
+              if (window.bookingInvoiceManager) {
+                window.bookingInvoiceManager.openInvoice(b);
+              } else {
+                document.dispatchEvent(new CustomEvent('openInvoice', { detail: b }));
+              }
+            }
+          });
+        });
       }
     }
 
@@ -982,14 +1071,16 @@ export class AdminDashboard {
       const cleanPhone = (b.clientPhone || '').replace(/\D/g, '');
       const waLink = `https://wa.me/91${cleanPhone}?text=Hello%20${encodeURIComponent(b.clientName)},%20thank%20you%20for%20contacting%20Yazh%20Photography!`;
       const statusClass = this.getStatusBadgeClass(b.status);
+      const isApproved = b.status === 'Approved' || b.status === 'Confirmed';
+      const canApprove = !isApproved && b.status !== 'Completed' && b.status !== 'Cancelled';
 
       let customHtml = '';
       if (b.customizations && Array.isArray(b.customizations) && b.customizations.length > 0) {
         customHtml = `
-          <div style="margin-top: 0.35rem; font-size: 0.74rem; background: var(--adm-gold-light); padding: 0.35rem 0.55rem; border-radius: 6px; border: 1px solid var(--adm-gold-border);">
-            <span style="color: var(--adm-gold); font-weight: 700;">Add-ons (${currency.format(b.customizationTotal || 0)}):</span>
-            <div style="margin-top: 0.15rem; line-height: 1.4;">
-              ${b.customizations.map(c => `<span style="color: var(--adm-text-secondary);">• ${c.name} (${currency.format(c.price)})</span>`).join('<br>')}
+          <div style="margin-top: 0.25rem; font-size: 0.72rem; background: #fffbeb; padding: 0.25rem 0.45rem; border-radius: 5px; border: 1px solid #fde68a;">
+            <span style="color: #92400e; font-weight: 700;">Add-ons (${currency.format(b.customizationTotal || 0)}):</span>
+            <div style="margin-top: 0.1rem; line-height: 1.35; color: #475569;">
+              ${b.customizations.map(c => `• ${c.name} (${currency.format(c.price)})`).join('<br>')}
             </div>
           </div>
         `;
@@ -997,36 +1088,47 @@ export class AdminDashboard {
 
       return `
         <tr data-id="${b.id}">
-          <td><strong style="color: var(--adm-gold);">${b.id}</strong></td>
           <td>
-            <strong style="color: var(--adm-text-primary); font-size: 0.92rem;">${b.clientName}</strong><br>
-            <small style="color: var(--adm-text-muted);">📞 ${b.clientPhone}</small><br>
-            <small style="color: var(--adm-text-dim);">✉️ ${b.clientEmail || 'No email'}</small>
+            <strong style="color: var(--adm-gold); font-family: monospace; font-size: 0.85rem;">${b.id}</strong>
+            ${b.approvedAt ? `<div style="color: #059669; font-size: 0.68rem; font-weight: 700; margin-top: 0.15rem;">✓ Approved</div>` : ''}
           </td>
           <td>
-            <span style="font-weight: 700; color: var(--adm-text-primary);">${b.packageName}</span>
-            ${b.packagePrice ? `<small style="color: var(--adm-text-muted);"> (${currency.format(b.packagePrice)})</small>` : ''}
+            <div style="font-weight: 700; color: #0f172a; font-size: 0.86rem; line-height: 1.2;">${b.clientName}</div>
+            <div style="color: #64748b; font-size: 0.74rem; margin-top: 0.15rem;">📞 ${this.formatPhone(b.clientPhone)}</div>
+            ${b.clientEmail ? `<div style="color: #94a3b8; font-size: 0.72rem;">✉️ ${b.clientEmail}</div>` : ''}
+          </td>
+          <td>
+            <div style="font-weight: 700; color: #0f172a; font-size: 0.84rem;">${b.packageName}</div>
+            ${b.packagePrice ? `<div style="color: #64748b; font-size: 0.74rem;">Base: ${currency.format(b.packagePrice)}</div>` : ''}
             ${customHtml}
           </td>
           <td>
-            <strong style="color: var(--adm-text-primary);">${b.eventDate || 'Date TBD'}</strong><br>
-            <small style="color: var(--adm-text-muted);">📍 ${b.location || 'Venue TBD'}</small>
+            <div style="font-weight: 700; color: #0f172a; font-size: 0.84rem;">${this.formatDate(b.eventDate)}</div>
+            <div style="color: #64748b; font-size: 0.74rem; margin-top: 0.15rem;">📍 ${b.location || 'Tamil Nadu'}</div>
           </td>
           <td>
-            <strong style="font-size: 0.95rem; color: var(--adm-text-primary);">${currency.format(b.totalINR)}</strong><br>
-            <small style="color: #059669; font-weight: 600;">Advance: ${currency.format(b.advanceINR)}</small><br>
-            <small style="color: #b45309; font-weight: 600;">Due: ${currency.format(b.remainingINR)}</small>
+            <div style="font-weight: 800; color: #0f172a; font-size: 0.88rem;">${currency.format(b.totalINR)}</div>
+            <div style="color: #059669; font-weight: 700; font-size: 0.72rem; margin-top: 0.1rem;">Adv: ${currency.format(b.advanceINR)}</div>
+            <div style="color: #b45309; font-weight: 700; font-size: 0.72rem;">Due: ${currency.format(b.remainingINR)}</div>
           </td>
-          <td>
+          <td style="text-align: center;">
             <span class="admin-badge ${statusClass}">${b.status || 'New'}</span>
           </td>
           <td>
             <div class="admin-table-actions">
+              ${canApprove ? `
+                <button type="button" class="btn-tbl-action btn-tbl-approve btn-approve-inquiry" data-id="${b.id}" title="Review & Approve Inquiry">
+                  ✓ Approve
+                </button>
+              ` : ''}
+              <button type="button" class="btn-tbl-action btn-tbl-bill btn-view-bill" data-id="${b.id}" title="View / Print / Share Official Bill">
+                📄 Bill
+              </button>
               <a href="${waLink}" target="_blank" rel="noopener" class="btn-tbl-action btn-tbl-whatsapp" title="WhatsApp Client">
                 💬 Chat
               </a>
               <button type="button" class="btn-tbl-action btn-change-status" data-id="${b.id}" title="Update Status">
-                <i data-lucide="refresh-cw" style="width: 12px; height: 12px;"></i> Status
+                <i data-lucide="refresh-cw" style="width: 12px; height: 12px;"></i>
               </button>
               <button type="button" class="btn-tbl-action btn-tbl-delete btn-delete-inquiry" data-id="${b.id}" title="Delete Inquiry">
                 <i data-lucide="trash-2" style="width: 12px; height: 12px;"></i>
@@ -1038,6 +1140,30 @@ export class AdminDashboard {
     }).join('');
 
     if (window.lucide) window.lucide.createIcons();
+
+    // Bind Approve Inquiry Buttons
+    tbody.querySelectorAll('.btn-approve-inquiry').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+        const b = bookings.find(item => item.id === id);
+        if (b) this.openApprovalModal(b);
+      });
+    });
+
+    // Bind View Official Bill Buttons
+    tbody.querySelectorAll('.btn-view-bill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+        const b = bookings.find(item => item.id === id);
+        if (b) {
+          if (window.bookingInvoiceManager) {
+            window.bookingInvoiceManager.openInvoice(b);
+          } else {
+            document.dispatchEvent(new CustomEvent('openInvoice', { detail: b }));
+          }
+        }
+      });
+    });
 
     // Bind Status Change
     tbody.querySelectorAll('.btn-change-status').forEach(btn => {
@@ -1566,6 +1692,51 @@ export class AdminDashboard {
       }
     });
 
+    // Handle Approve Inquiry Form Submit
+    document.getElementById('admin-approve-inquiry-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('admin-approve-id')?.value;
+      const totalINR = Number(document.getElementById('admin-approve-total')?.value) || 0;
+      const advanceINR = Number(document.getElementById('admin-approve-advance')?.value) || 0;
+      const discountINR = Number(document.getElementById('admin-approve-discount')?.value) || 0;
+      const remainingINR = Math.max(0, totalINR - advanceINR);
+      const approvalNotes = document.getElementById('admin-approve-notes')?.value.trim() || '';
+
+      if (id) {
+        const approved = await dataStore.approveBooking(id, {
+          totalINR,
+          advanceINR,
+          discountINR,
+          remainingINR,
+          approvalNotes,
+          approvedBy: 'Studio Admin'
+        });
+
+        this.closeSubModal('admin-approve-inquiry-modal');
+        sound.playSuccessChime();
+        confetti({
+          particleCount: 65,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+
+        toast.show({
+          title: 'Booking Approved! ✓',
+          message: `Inquiry ${id} for ${approved?.clientName || 'Client'} has been approved. Official Bill is now live.`,
+          type: 'success',
+          icon: 'check-circle'
+        });
+
+        await this.renderBookings();
+        await this.renderOverview();
+
+        // Prompt to view/print/share the approved bill
+        if (window.bookingInvoiceManager && approved) {
+          window.bookingInvoiceManager.openInvoice(approved);
+        }
+      }
+    });
+
     // Handle Change Password Form Submit
     document.getElementById('admin-password-form')?.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -1733,6 +1904,88 @@ export class AdminDashboard {
     this.openSubModal('admin-review-modal');
   }
 
+  openApprovalModal(inquiry) {
+    const idInput = document.getElementById('admin-approve-id');
+    const clientNameEl = document.getElementById('admin-approve-client-name');
+    const eventDateEl = document.getElementById('admin-approve-event-date');
+    const locationEl = document.getElementById('admin-approve-location');
+    const pkgNameEl = document.getElementById('admin-approve-pkg-name');
+    const pkgPriceEl = document.getElementById('admin-approve-pkg-price');
+    const addonsSummaryEl = document.getElementById('admin-approve-addons-summary');
+    const subtotalDisplayEl = document.getElementById('admin-approve-subtotal-display');
+    const discountInput = document.getElementById('admin-approve-discount');
+    const totalInput = document.getElementById('admin-approve-total');
+    const advanceInput = document.getElementById('admin-approve-advance');
+    const remainingDisplayEl = document.getElementById('admin-approve-remaining-display');
+    const notesInput = document.getElementById('admin-approve-notes');
+
+    if (idInput) idInput.value = inquiry.id;
+    if (clientNameEl) clientNameEl.textContent = inquiry.clientName;
+    if (eventDateEl) eventDateEl.textContent = inquiry.eventDate || 'Date TBD';
+    if (locationEl) locationEl.textContent = inquiry.location || 'Venue TBD';
+    if (pkgNameEl) pkgNameEl.textContent = inquiry.packageName;
+
+    const basePkgPrice = Number(inquiry.packagePrice) || Number(inquiry.totalINR) || 0;
+    const custTotal = Number(inquiry.customizationTotal) || 0;
+    const initialSubtotal = basePkgPrice + custTotal;
+    const initialDiscount = Number(inquiry.discountINR) || 0;
+    const initialTotal = Number(inquiry.totalINR) || (initialSubtotal - initialDiscount);
+    const initialAdvance = Number(inquiry.advanceINR) || 0;
+    const initialRemaining = Math.max(0, initialTotal - initialAdvance);
+
+    if (pkgPriceEl) pkgPriceEl.textContent = currency.format(basePkgPrice);
+
+    if (addonsSummaryEl) {
+      if (inquiry.customizations && Array.isArray(inquiry.customizations) && inquiry.customizations.length > 0) {
+        addonsSummaryEl.style.display = 'block';
+        addonsSummaryEl.innerHTML = `
+          <strong style="color: var(--adm-gold);">Selected Add-ons (${currency.format(custTotal)}):</strong><br>
+          ${inquiry.customizations.map(c => `• ${c.name} (${currency.format(c.price)})`).join('<br>')}
+        `;
+      } else {
+        addonsSummaryEl.style.display = 'none';
+        addonsSummaryEl.innerHTML = '';
+      }
+    }
+
+    if (subtotalDisplayEl) subtotalDisplayEl.textContent = currency.format(initialSubtotal);
+    if (discountInput) discountInput.value = initialDiscount || 0;
+    if (totalInput) totalInput.value = initialTotal;
+    if (advanceInput) advanceInput.value = initialAdvance;
+    if (remainingDisplayEl) remainingDisplayEl.textContent = currency.format(initialRemaining);
+    if (notesInput) notesInput.value = inquiry.approvalNotes || inquiry.notes || '';
+
+    // Live calculation handlers
+    const recalculate = () => {
+      const disc = Number(discountInput?.value) || 0;
+      const calcTotal = Math.max(0, initialSubtotal - disc);
+      if (totalInput) totalInput.value = calcTotal;
+      const adv = Number(advanceInput?.value) || 0;
+      const rem = Math.max(0, calcTotal - adv);
+      if (remainingDisplayEl) remainingDisplayEl.textContent = currency.format(rem);
+    };
+
+    if (discountInput) discountInput.oninput = recalculate;
+    if (advanceInput) {
+      advanceInput.oninput = () => {
+        const curTotal = Number(totalInput?.value) || 0;
+        const adv = Number(advanceInput?.value) || 0;
+        const rem = Math.max(0, curTotal - adv);
+        if (remainingDisplayEl) remainingDisplayEl.textContent = currency.format(rem);
+      };
+    }
+    if (totalInput) {
+      totalInput.oninput = () => {
+        const curTotal = Number(totalInput?.value) || 0;
+        const adv = Number(advanceInput?.value) || 0;
+        const rem = Math.max(0, curTotal - adv);
+        if (remainingDisplayEl) remainingDisplayEl.textContent = currency.format(rem);
+      };
+    }
+
+    this.openSubModal('admin-approve-inquiry-modal');
+  }
+
   openStatusModal(inquiry) {
     const modal = document.getElementById('admin-status-modal');
     const idInput = document.getElementById('admin-status-inquiry-id');
@@ -1860,6 +2113,7 @@ export class AdminDashboard {
 
   getStatusBadgeClass(status) {
     switch (status) {
+      case 'Approved':
       case 'Confirmed': return 'badge-confirmed';
       case 'In Progress': return 'badge-progress';
       case 'Completed': return 'badge-completed';

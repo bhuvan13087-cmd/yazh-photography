@@ -55,6 +55,26 @@ class DataStoreManager {
     this.initPromise = this.loadData();
   }
 
+  sanitizeBookings(bookings) {
+    if (!Array.isArray(bookings)) return [];
+    return bookings.map((b, idx) => {
+      let id = b.id;
+      if (!id || id.length > 9 || !id.startsWith('YZ-') || id === 'YZ-361209' || id === 'YZ-829142') {
+        const seq = Math.max(1, bookings.length - idx);
+        id = `YZ-${String(seq).padStart(6, '0')}`;
+      } else {
+        const numMatch = id.match(/^YZ-(\d+)$/i);
+        if (numMatch) {
+          id = `YZ-${numMatch[1].padStart(6, '0')}`;
+        }
+      }
+      return {
+        ...b,
+        id
+      };
+    });
+  }
+
   loadFromLocalCache() {
     if (typeof localStorage === 'undefined') return;
     try {
@@ -63,7 +83,7 @@ class DataStoreManager {
         const parsed = JSON.parse(cached);
         if (parsed && typeof parsed === 'object') {
           this.data = {
-            bookings: Array.isArray(parsed.bookings) ? parsed.bookings : [],
+            bookings: this.sanitizeBookings(parsed.bookings),
             photos: Array.isArray(parsed.photos) ? parsed.photos : [],
             deletedPhotos: Array.isArray(parsed.deletedPhotos) ? parsed.deletedPhotos : [],
             photoOverrides: parsed.photoOverrides && typeof parsed.photoOverrides === 'object' ? parsed.photoOverrides : {},
@@ -155,7 +175,7 @@ class DataStoreManager {
 
   applyRemoteData(remote) {
     this.data = {
-      bookings: Array.isArray(remote.bookings) ? remote.bookings : [],
+      bookings: this.sanitizeBookings(remote.bookings),
       photos: Array.isArray(remote.photos) ? remote.photos : [],
       deletedPhotos: Array.isArray(remote.deletedPhotos) ? remote.deletedPhotos : [],
       photoOverrides: remote.photoOverrides && typeof remote.photoOverrides === 'object' ? remote.photoOverrides : {},
@@ -287,21 +307,78 @@ class DataStoreManager {
     return this.data.bookings || [];
   }
 
+  async getBookingById(id) {
+    await this.initPromise;
+    if (!id) return null;
+    const cleanId = id.trim().toLowerCase();
+    return (this.data.bookings || []).find(b => (b.id || '').toLowerCase() === cleanId) || null;
+  }
+
+  async getBookingByPhoneOrId(query) {
+    await this.initPromise;
+    if (!query) return null;
+    const cleanQuery = query.trim().toLowerCase().replace(/\s+/g, '');
+    const cleanDigits = query.replace(/\D/g, '');
+
+    return (this.data.bookings || []).find(b => {
+      const matchId = (b.id || '').toLowerCase() === cleanQuery;
+      const bDigits = (b.clientPhone || '').replace(/\D/g, '');
+      const matchPhone = cleanDigits.length >= 6 && (bDigits.includes(cleanDigits) || cleanDigits.includes(bDigits));
+      const matchEmail = (b.clientEmail || '').toLowerCase() === cleanQuery;
+      return matchId || matchPhone || matchEmail;
+    }) || null;
+  }
+
+  generateNextBookingId() {
+    let maxSeq = 0;
+    if (Array.isArray(this.data.bookings)) {
+      this.data.bookings.forEach(b => {
+        if (b && b.id) {
+          const match = b.id.match(/^YZ-(\d+)$/i);
+          if (match) {
+            const num = parseInt(match[1], 10);
+            if (!isNaN(num) && num < 900000 && num > maxSeq) {
+              maxSeq = num;
+            }
+          }
+        }
+      });
+    }
+    const nextSeq = maxSeq > 0 ? maxSeq + 1 : (this.data.bookings && this.data.bookings.length > 0 ? this.data.bookings.length + 1 : 1);
+    return `YZ-${String(nextSeq).padStart(6, '0')}`;
+  }
+
   async addBooking(bookingData) {
     await this.initPromise;
+    const pkgPrice = Number(bookingData.packagePrice) || Number(bookingData.totalINR) || 0;
+    const custTotal = Number(bookingData.customizationTotal) || 0;
+    const totalAmount = Number(bookingData.totalINR) || (pkgPrice + custTotal);
+    const advanceAmount = Number(bookingData.advanceINR) || 0;
+    const remainingAmount = Number(bookingData.remainingINR) >= 0 ? Number(bookingData.remainingINR) : Math.max(0, totalAmount - advanceAmount);
+
+    const bookingId = bookingData.id || this.generateNextBookingId();
+
     const newBooking = {
-      id: bookingData.id || `YZ-${Date.now().toString().slice(-6)}`,
+      ...bookingData,
+      id: bookingId,
       clientName: bookingData.clientName || 'Client Inquiry',
       clientEmail: bookingData.clientEmail || '',
       clientPhone: bookingData.clientPhone || '',
       eventDate: bookingData.eventDate || '',
       location: bookingData.location || 'Venue TBD',
       packageName: bookingData.packageName || 'Standard Package',
-      totalINR: Number(bookingData.totalINR) || 0,
-      advanceINR: Number(bookingData.advanceINR) || 0,
-      remainingINR: Number(bookingData.remainingINR) || Math.max(0, (bookingData.totalINR || 0) - (bookingData.advanceINR || 0)),
+      packagePrice: pkgPrice,
+      customizations: Array.isArray(bookingData.customizations) ? bookingData.customizations : [],
+      customizationTotal: custTotal,
+      totalINR: totalAmount,
+      advanceINR: advanceAmount,
+      remainingINR: remainingAmount,
+      discountINR: Number(bookingData.discountINR) || 0,
       status: bookingData.status || 'New',
       notes: bookingData.notes || '',
+      approvedAt: bookingData.approvedAt || null,
+      approvedBy: bookingData.approvedBy || null,
+      approvalNotes: bookingData.approvalNotes || '',
       createdAt: bookingData.createdAt || new Date().toISOString()
     };
 
@@ -324,6 +401,39 @@ class DataStoreManager {
       await this.syncToCloud();
       safeDispatch('bookingsUpdated', this.data.bookings);
       return this.data.bookings[index];
+    }
+    return null;
+  }
+
+  async approveBooking(id, approvalDetails = {}) {
+    await this.initPromise;
+    const index = this.data.bookings.findIndex(b => b.id === id);
+    if (index >= 0) {
+      const cur = this.data.bookings[index];
+      const advance = approvalDetails.advanceINR !== undefined ? Number(approvalDetails.advanceINR) : Number(cur.advanceINR || 0);
+      const discount = approvalDetails.discountINR !== undefined ? Number(approvalDetails.discountINR) : Number(cur.discountINR || 0);
+      const total = approvalDetails.totalINR !== undefined ? Number(approvalDetails.totalINR) : Number(cur.totalINR || 0);
+      const remaining = Math.max(0, total - advance);
+
+      const approvedRecord = {
+        ...cur,
+        ...approvalDetails,
+        status: 'Approved',
+        advanceINR: advance,
+        discountINR: discount,
+        totalINR: total,
+        remainingINR: remaining,
+        approvedAt: new Date().toISOString(),
+        approvedBy: approvalDetails.approvedBy || 'Studio Admin',
+        approvalNotes: approvalDetails.approvalNotes || cur.approvalNotes || '',
+        updatedAt: new Date().toISOString()
+      };
+
+      this.data.bookings[index] = approvedRecord;
+      await this.syncToCloud();
+      safeDispatch('bookingsUpdated', this.data.bookings);
+      safeDispatch('bookingApproved', approvedRecord);
+      return approvedRecord;
     }
     return null;
   }
