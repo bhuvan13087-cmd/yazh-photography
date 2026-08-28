@@ -1,10 +1,58 @@
 /* ==========================================================================
    YAZH PHOTOGRAPHY — DESIGN TOKENS & COLOR SYSTEM
-   Solid high-contrast luxury studio palette (Dark & Light)
+   Royal White & Gold Combination (Default Public Portal) + Studio Onyx
    ========================================================================== */
 
-:root, [data-theme="dark"] {
-  /* Studio Onyx & Obsidian Theme (Default Public Theme) */
+:root, [data-theme="light"] {
+  /* Royal White & Gold Combination Theme (Default Public Theme) */
+  --bg-primary: #ffffff;
+  --bg-secondary: #fdfbf7;
+  --bg-tertiary: #f6f2e8;
+  --bg-card: #ffffff;
+  --bg-card-hover: #fffdf8;
+  --bg-glass: rgba(255, 255, 255, 0.95);
+  --bg-glass-heavy: rgba(255, 255, 255, 0.98);
+
+  /* Luxury Gold & Studio Accents */
+  --accent-primary: #b38728;
+  --accent-gold: #c59b27;
+  --accent-gold-light: #dfba50;
+  --accent-gold-dark: #996515;
+  --accent-subtle: rgba(197, 155, 39, 0.1);
+
+  /* Typography Colors (High Contrast for Maximum Readability) */
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #525d6f;
+  --text-dim: #7c8798;
+  --text-gold: #b38728;
+
+  /* Borders — Fine Gold Hairlines & Defined Boundaries */
+  --border-subtle: rgba(197, 155, 39, 0.22);
+  --border-glass: rgba(197, 155, 39, 0.38);
+  --border-gold: #c59b27;
+  --border-gold-hover: #996515;
+
+  /* Status Colors */
+  --color-success: #059669;
+  --color-warning: #d97706;
+  --color-error: #dc2626;
+
+  /* Button Themes */
+  --btn-primary-bg: #c59b27;
+  --btn-primary-text: #ffffff;
+  --btn-primary-hover-bg: #a67c1e;
+
+  /* Shadows with Warm Gold Ambience */
+  --shadow-sm: 0 2px 10px rgba(197, 155, 39, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8px 30px rgba(197, 155, 39, 0.12), 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 16px 50px rgba(197, 155, 39, 0.16), 0 4px 14px rgba(0, 0, 0, 0.07);
+  --shadow-gold: 0 4px 20px rgba(197, 155, 39, 0.25);
+  --shadow-gold-hover: 0 8px 35px rgba(197, 155, 39, 0.4);
+}
+
+/* Studio Onyx & Obsidian Theme (Optional Dark Toggle) */
+[data-theme="dark"] {
   --bg-primary: #0a0b10;
   --bg-secondary: #12151e;
   --bg-tertiary: #191c28;
@@ -13,78 +61,36 @@
   --bg-glass: rgba(10, 11, 16, 0.9);
   --bg-glass-heavy: rgba(10, 11, 16, 0.98);
 
-  /* Luxury Gold & Studio Accents */
   --accent-primary: #ffffff;
   --accent-gold: #d4af37;
   --accent-gold-light: #f3e5ab;
+  --accent-gold-dark: #b38728;
   --accent-subtle: rgba(212, 175, 55, 0.12);
 
-  /* Typography Colors (High Contrast) */
   --text-primary: #ffffff;
   --text-secondary: #e2e8f0;
   --text-muted: #94a3b8;
   --text-dim: #64748b;
   --text-gold: #d4af37;
 
-  /* Borders — Crisp 1px Defined Hairlines */
   --border-subtle: rgba(255, 255, 255, 0.14);
   --border-glass: rgba(255, 255, 255, 0.22);
   --border-gold: rgba(212, 175, 55, 0.45);
   --border-gold-hover: rgba(212, 175, 55, 0.9);
 
-  /* Status Colors */
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
 
-  /* Button Themes */
   --btn-primary-bg: #d4af37;
   --btn-primary-text: #000000;
   --btn-primary-hover-bg: #f3e5ab;
 
-  /* Shadows */
   --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.35);
   --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.45);
   --shadow-lg: 0 16px 50px rgba(0, 0, 0, 0.65);
   --shadow-gold: 0 4px 25px rgba(212, 175, 55, 0.25);
   --shadow-gold-hover: 0 8px 35px rgba(212, 175, 55, 0.4);
-}
-
-/* Gallery Alabaster & Warm Amber Light Theme */
-[data-theme="light"] {
-  --bg-primary: #f8fafc;
-  --bg-secondary: #f1f5f9;
-  --bg-tertiary: #e2e8f0;
-  --bg-card: #ffffff;
-  --bg-card-hover: #ffffff;
-  --bg-glass: rgba(248, 250, 252, 0.92);
-  --bg-glass-heavy: rgba(248, 250, 252, 0.98);
-
-  --accent-primary: #0f172a;
-  --accent-gold: #b45309;
-  --accent-gold-light: #d97706;
-  --accent-subtle: rgba(180, 83, 9, 0.08);
-
-  --text-primary: #0f172a;
-  --text-secondary: #334155;
-  --text-muted: #475569;
-  --text-dim: #64748b;
-  --text-gold: #b45309;
-
-  --border-subtle: #cbd5e1;
-  --border-glass: #94a3b8;
-  --border-gold: rgba(180, 83, 9, 0.45);
-  --border-gold-hover: rgba(180, 83, 9, 0.9);
-
-  --btn-primary-bg: #0f172a;
-  --btn-primary-text: #ffffff;
-  --btn-primary-hover-bg: #1e293b;
-
-  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 8px 25px rgba(0, 0, 0, 0.09);
-  --shadow-lg: 0 16px 45px rgba(0, 0, 0, 0.12);
-  --shadow-gold: 0 4px 20px rgba(180, 83, 9, 0.12);
-  --shadow-gold-hover: 0 8px 30px rgba(180, 83, 9, 0.2);
 }
 
 :root {
@@ -104,10 +110,10 @@
   --spacing-4xl: 8.5rem;
 
   /* Radius */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
   --radius-full: 9999px;
 
   /* Transitions */

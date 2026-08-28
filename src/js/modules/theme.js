@@ -1,7 +1,8 @@
-// Minimalist Theme Switcher: Light (Museum White) & Dark (Studio Onyx)
+// Luxury Theme Switcher: White & Gold (Default Public Theme) & Studio Onyx (Dark)
 export class ThemeManager {
   constructor() {
-    this.theme = localStorage.getItem('yazh_theme') || 'dark';
+    const saved = localStorage.getItem('yazh_theme');
+    this.theme = (saved === 'dark' || saved === 'light') ? saved : 'light';
     this.init();
   }
 
