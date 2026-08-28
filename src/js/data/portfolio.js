@@ -133,5 +133,15 @@ export const PORTFOLIO_ITEMS = [
     thumbnail: './assets/engagement-bride-ceremony.jpg',
     aspect: 'wide',
     description: 'Auspicious South Indian engagement ceremony bride portrait adorned in traditional silk saree and intricate jewelry by Yazh Photography.'
+  },
+  {
+    id: 'port-post-01',
+    title: 'Lakeside Post-Wedding Romance',
+    category: 'post-wedding',
+    categoryName: 'Post-Wedding & Outdoor',
+    image: './assets/post-wedding-lakeside-couple.jpg',
+    thumbnail: './assets/post-wedding-lakeside-couple.jpg',
+    aspect: 'tall',
+    description: 'Serene outdoor mountain and lakeside post-wedding couple portrait session by Yazh Photography.'
   }
 ];
