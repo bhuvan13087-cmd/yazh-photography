@@ -423,60 +423,212 @@
   margin-top: 0.15rem;
 }
 
-/* Financial Box & Summary */
-.clean-financial-row {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 1.25rem;
+/* Financial Settlement & Multi-Tier Summary Grid */
+.clean-financial-section {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+  align-items: stretch;
 }
 
-.clean-calc-box {
-  width: 100%;
-  max-width: 380px;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  overflow: hidden;
+.clean-payment-terms-box {
   background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.75rem;
 }
 
-.clean-calc-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.82rem;
+.clean-payment-terms-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.clean-calc-table td {
-  padding: 0.45rem 0.75rem;
-  border-bottom: 1px solid #e2e8f0;
+.clean-terms-icon {
+  font-size: 1.1rem;
+}
+
+.clean-terms-title {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #0f172a;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.clean-terms-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.78rem;
   color: #475569;
+  line-height: 1.45;
 }
 
-.clean-calc-table td.text-right {
-  text-align: right;
+.clean-terms-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+}
+
+.term-bullet {
+  color: #c59b27;
+  font-size: 0.75rem;
+  margin-top: 0.1rem;
+}
+
+.clean-payment-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: #334155;
+  margin-top: 0.25rem;
+}
+
+.clean-payment-status-chip strong {
+  color: #059669;
   font-weight: 700;
-  color: #0f172a;
 }
 
-.clean-total-row td {
-  background: #f1f5f9;
-  font-size: 0.94rem;
+.chip-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+/* Right Side: Multi-Tier Calculation Card */
+.clean-calc-card {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+}
+
+.calc-card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.84rem;
+}
+
+.calc-label {
+  color: #64748b;
+  font-weight: 600;
+}
+
+.calc-value {
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.calc-discount-row {
+  background: #fef2f2;
+}
+
+.discount-value {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.calc-total-row {
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1.5px solid #cbd5e1;
+  padding: 0.65rem 1rem;
+}
+
+.calc-total-row .calc-label {
+  color: #0f172a;
   font-weight: 800;
+  font-size: 0.86rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.calc-total-row .calc-value {
   color: #0f172a;
-  border-top: 1.5px solid #0f172a;
-  border-bottom: 1.5px solid #0f172a;
+  font-weight: 800;
+  font-size: 1.05rem;
 }
 
-.clean-advance-row td {
-  color: #047857;
+.calc-advance-row {
+  background: #f0fdf4;
+  border-bottom: 1.5px solid #bbf7d0;
+}
+
+.calc-advance-row .calc-label {
+  color: #15803d;
   font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
-.clean-balance-row td {
-  background: #fef3c7;
+.status-tick {
+  color: #16a34a;
+  font-weight: 900;
+}
+
+.advance-value {
+  color: #15803d;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.calc-balance-banner {
+  margin-top: auto;
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-top: 2px solid #f59e0b;
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.balance-banner-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.balance-lbl {
+  font-size: 0.85rem;
+  font-weight: 800;
   color: #92400e;
-  font-size: 1.02rem;
-  font-weight: 800;
-  border-top: 1.5px solid #f59e0b;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.balance-sub {
+  font-size: 0.7rem;
+  color: #b45309;
+  font-weight: 600;
+}
+
+.balance-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #78350f;
+  letter-spacing: -0.01em;
 }
 
 /* Signature & Owner Sign Row */

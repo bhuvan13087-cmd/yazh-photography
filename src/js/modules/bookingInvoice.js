@@ -367,7 +367,7 @@ export class BookingInvoiceManager {
     
     if (discountRow && discountEl) {
       if (discount > 0) {
-        discountRow.style.display = 'table-row';
+        discountRow.style.display = 'flex';
         discountEl.textContent = `- ${currency.format(discount)}`;
       } else {
         discountRow.style.display = 'none';
@@ -377,6 +377,13 @@ export class BookingInvoiceManager {
     if (totalEl) totalEl.textContent = currency.format(grandTotal);
     if (advanceEl) advanceEl.textContent = currency.format(advancePaid);
     if (balanceEl) balanceEl.textContent = currency.format(balanceDue);
+
+    const finStatusEl = document.getElementById('inv-financial-status');
+    if (finStatusEl) {
+      finStatusEl.textContent = (status === 'Approved' || status === 'Confirmed')
+        ? 'Approved & Reserved'
+        : (status === 'Completed' ? 'Fully Settled & Delivered' : `${status} Inquiry`);
+    }
 
     // 5. Studio Circle Logo & Owner Signature Injection
     const logoImg = document.getElementById('inv-circle-logo-img');

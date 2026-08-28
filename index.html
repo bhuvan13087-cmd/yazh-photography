@@ -895,32 +895,57 @@
             </tbody>
           </table>
 
-          <!-- FINANCIAL SUMMARY BLOCK -->
-          <div class="clean-financial-row">
-            <div class="clean-calc-box">
-              <table class="clean-calc-table">
-                <tr>
-                  <td>Subtotal Amount:</td>
-                  <td class="text-right" id="inv-calc-subtotal">₹60,000</td>
-                </tr>
-                <tr id="inv-calc-discount-row" style="display: none;">
-                  <td>Special Studio Discount:</td>
-                  <td class="text-right" style="color: #dc2626;" id="inv-calc-discount">- ₹0</td>
-                </tr>
-                <tr class="clean-total-row">
-                  <td><strong>Grand Total Quotation:</strong></td>
-                  <td class="text-right"><strong id="inv-calc-total">₹60,000</strong></td>
-                </tr>
-                <tr class="clean-advance-row">
-                  <td>Advance / Token Received:</td>
-                  <td class="text-right" id="inv-calc-advance">₹15,000</td>
-                </tr>
-                <tr class="clean-balance-row">
-                  <td><strong>Balance Due on Event Day:</strong></td>
-                  <td class="text-right"><strong id="inv-calc-balance">₹45,000</strong></td>
-                </tr>
-              </table>
+          <!-- MODERN FINANCIAL BREAKDOWN & PAYMENT SUMMARY -->
+          <div class="clean-financial-section">
+            
+            <!-- Left Side: Official Payment Terms & Bank Info -->
+            <div class="clean-payment-terms-box">
+              <div class="clean-payment-terms-header">
+                <span class="clean-terms-icon">💳</span>
+                <span class="clean-terms-title">Payment Terms &amp; Settlement Schedule</span>
+              </div>
+              <ul class="clean-terms-list">
+                <li><span class="term-bullet">✦</span> <span>Advance / Token received locks your booking and reserved date.</span></li>
+                <li><span class="term-bullet">✦</span> <span>Remaining balance is payable on the event date at the venue.</span></li>
+                <li><span class="term-bullet">✦</span> <span>Payment Modes: UPI / GPay / PhonePe / Bank Transfer / Cash.</span></li>
+              </ul>
+              <div class="clean-payment-status-chip">
+                <span class="chip-dot"></span>
+                <span>Reservation Status: <strong id="inv-financial-status">Approved &amp; Reserved</strong></span>
+              </div>
             </div>
+
+            <!-- Right Side: Luxury Multi-Tier Breakdown Card -->
+            <div class="clean-calc-card">
+              <div class="calc-card-row">
+                <span class="calc-label">Package &amp; Add-ons Subtotal</span>
+                <span class="calc-value" id="inv-calc-subtotal">₹60,000</span>
+              </div>
+              <div class="calc-card-row calc-discount-row" id="inv-calc-discount-row" style="display: none;">
+                <span class="calc-label">Studio Promotional Benefit</span>
+                <span class="calc-value discount-value" id="inv-calc-discount">- ₹0</span>
+              </div>
+              <div class="calc-card-row calc-total-row">
+                <span class="calc-label">Total Quotation Value</span>
+                <span class="calc-value" id="inv-calc-total">₹60,000</span>
+              </div>
+              <div class="calc-card-row calc-advance-row">
+                <span class="calc-label">
+                  <span class="status-tick">✓</span> Advance / Token Received
+                </span>
+                <span class="calc-value advance-value" id="inv-calc-advance">₹5,000</span>
+              </div>
+              <div class="calc-card-banner calc-balance-banner">
+                <div class="balance-banner-left">
+                  <span class="balance-lbl">Balance Due on Event Day</span>
+                  <span class="balance-sub">Payable at event completion</span>
+                </div>
+                <div class="balance-banner-right">
+                  <span class="balance-val" id="inv-calc-balance">₹55,000</span>
+                </div>
+              </div>
+            </div>
+
           </div>
 
           <!-- SIGNATURES & OWNER SIGN SECTION -->
