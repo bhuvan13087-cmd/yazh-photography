@@ -123,5 +123,15 @@ export const PORTFOLIO_ITEMS = [
     thumbnail: './assets/album-36x12-couple-no-longer-just-mine.jpg',
     aspect: 'tall',
     description: '"No longer just mine or yours now always ours" romantic couple portrait story in signature 36x12 album layout by Yazh Photography.'
+  },
+  {
+    id: 'port-eng-01',
+    title: 'Graceful Engagement Bride Portrait',
+    category: 'engagement',
+    categoryName: 'Engagement Ceremony',
+    image: './assets/engagement-bride-ceremony.jpg',
+    thumbnail: './assets/engagement-bride-ceremony.jpg',
+    aspect: 'wide',
+    description: 'Auspicious South Indian engagement ceremony bride portrait adorned in traditional silk saree and intricate jewelry by Yazh Photography.'
   }
 ];
