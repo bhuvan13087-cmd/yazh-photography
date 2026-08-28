@@ -660,9 +660,22 @@
 
   <!-- A. LIGHTBOX MODAL -->
   <div class="lightbox-modal" id="portfolio-lightbox-modal">
-    <div class="lightbox-inner">
+    <div class="lightbox-backdrop modal-backdrop"></div>
+    <div class="lightbox-inner" id="lightbox-inner">
+      <div class="lightbox-top-toolbar">
+        <span class="lightbox-counter-badge" id="lightbox-counter">1 / 10</span>
+        <div class="lightbox-toolbar-actions">
+          <button type="button" class="lightbox-tool-btn" id="lightbox-expand-btn" title="Toggle Fullscreen Theater View">
+            <i data-lucide="maximize-2" style="width: 16px; height: 16px;"></i>
+          </button>
+          <button type="button" class="lightbox-tool-btn modal-close" title="Close Preview">
+            <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+          </button>
+        </div>
+      </div>
+
       <button type="button" class="lightbox-nav-btn lightbox-prev" id="lightbox-prev-btn" aria-label="Previous Photo">
-        <i data-lucide="chevron-left" style="width: 18px; height: 18px;"></i>
+        <i data-lucide="chevron-left" style="width: 20px; height: 20px;"></i>
       </button>
 
       <div class="lightbox-view-area">
@@ -670,23 +683,25 @@
       </div>
 
       <button type="button" class="lightbox-nav-btn lightbox-next" id="lightbox-next-btn" aria-label="Next Photo">
-        <i data-lucide="chevron-right" style="width: 18px; height: 18px;"></i>
+        <i data-lucide="chevron-right" style="width: 20px; height: 20px;"></i>
       </button>
 
       <aside class="lightbox-sidebar">
         <div>
           <div class="lightbox-sidebar-header">
-            <button type="button" class="modal-close" style="float: right;">&times;</button>
+            <button type="button" class="modal-close lightbox-sidebar-close" title="Close">&times;</button>
+            <span class="lightbox-cat-tag" id="lightbox-location">Category</span>
             <h3 class="lightbox-title" id="lightbox-title">Title</h3>
-            <div class="lightbox-location" id="lightbox-location">Category</div>
           </div>
 
           <p class="lightbox-story-text" id="lightbox-story"></p>
         </div>
 
-        <button type="button" class="btn btn-primary" id="lightbox-order-print-btn" style="width: 100%;">
-          Inquire About Wedding Packages
-        </button>
+        <div class="lightbox-sidebar-footer">
+          <button type="button" class="btn btn-primary" id="lightbox-order-print-btn" style="width: 100%;">
+            Inquire About This Album / Shoot
+          </button>
+        </div>
       </aside>
     </div>
   </div>

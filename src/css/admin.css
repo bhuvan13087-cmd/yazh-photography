@@ -1540,20 +1540,24 @@
 .admin-photo-thumb-box {
   position: relative;
   width: 100%;
-  height: 190px;
+  height: 210px;
   overflow: hidden;
-  background: #f1f5f9;
+  background: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .admin-photo-thumb {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   transition: transform 0.35s ease;
 }
 
 .admin-photo-card:hover .admin-photo-thumb {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .admin-photo-pill-category {

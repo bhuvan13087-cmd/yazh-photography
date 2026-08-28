@@ -106,11 +106,12 @@ export class PortfolioViewer {
 
     grid.innerHTML = filtered.map((item, index) => {
       const isLiked = this.likedItems.has(item.id);
+      const isAlbum = item.category === 'frames-albums' || (item.categoryName || '').toLowerCase().includes('album') || (item.categoryName || '').toLowerCase().includes('frame');
 
       return `
-        <div class="portfolio-item-card" data-id="${item.id}" data-index="${index}">
-          <div class="portfolio-item-inner">
-            <img src="${item.thumbnail}" alt="${item.title}" loading="lazy" class="portfolio-img" />
+        <div class="portfolio-item-card ${isAlbum ? 'is-album-card' : ''}" data-id="${item.id}" data-index="${index}">
+          <div class="portfolio-item-inner ${isAlbum ? 'album-inner' : ''}">
+            <img src="${item.thumbnail || item.image}" alt="${item.title}" loading="lazy" class="portfolio-img ${isAlbum ? 'album-img' : ''}" />
             <div class="portfolio-overlay">
               <div class="portfolio-top-bar">
                 <span class="portfolio-cat-badge">${item.categoryName || 'Wedding'}</span>
@@ -183,18 +184,37 @@ export class PortfolioViewer {
     const modal = document.getElementById('portfolio-lightbox-modal');
     if (!modal) return;
 
-    modal.querySelectorAll('.modal-close, .modal-backdrop').forEach(el => {
+    modal.querySelectorAll('.modal-close, .modal-backdrop, .lightbox-backdrop').forEach(el => {
       el.addEventListener('click', () => this.closeLightbox());
     });
 
-    document.getElementById('lightbox-prev-btn')?.addEventListener('click', () => this.navigateLightbox(-1));
-    document.getElementById('lightbox-next-btn')?.addEventListener('click', () => this.navigateLightbox(1));
+    document.getElementById('lightbox-prev-btn')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.navigateLightbox(-1);
+    });
+
+    document.getElementById('lightbox-next-btn')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.navigateLightbox(1);
+    });
+
+    // Theater expand toggle
+    document.getElementById('lightbox-expand-btn')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const inner = document.getElementById('lightbox-inner');
+      inner?.classList.toggle('theater-mode');
+      if (window.lucide) window.lucide.createIcons();
+    });
 
     window.addEventListener('keydown', (e) => {
       if (!modal.classList.contains('active')) return;
       if (e.key === 'Escape') this.closeLightbox();
       if (e.key === 'ArrowLeft') this.navigateLightbox(-1);
       if (e.key === 'ArrowRight') this.navigateLightbox(1);
+      if (e.key === 'f' || e.key === 'F') {
+        const inner = document.getElementById('lightbox-inner');
+        inner?.classList.toggle('theater-mode');
+      }
     });
 
     document.getElementById('lightbox-order-print-btn')?.addEventListener('click', () => {
@@ -213,6 +233,7 @@ export class PortfolioViewer {
     modal?.classList.add('active');
     document.body.style.overflow = 'hidden';
     sound.playShutter();
+    if (window.lucide) window.lucide.createIcons();
   }
 
   closeLightbox() {
@@ -232,17 +253,18 @@ export class PortfolioViewer {
 
     const img = document.getElementById('lightbox-main-img');
     const title = document.getElementById('lightbox-title');
-    const cat = document.getElementById('lightbox-category');
-    const desc = document.getElementById('lightbox-desc');
+    const cat = document.getElementById('lightbox-location') || document.getElementById('lightbox-category');
+    const desc = document.getElementById('lightbox-story') || document.getElementById('lightbox-desc');
     const count = document.getElementById('lightbox-counter');
 
     if (img) {
-      img.src = item.image;
+      img.src = item.image || item.url || item.thumbnail;
       img.alt = item.title;
     }
     if (title) title.textContent = item.title;
     if (cat) cat.textContent = item.categoryName || item.category;
     if (desc) desc.textContent = item.description || '';
     if (count) count.textContent = `${this.currentIndex + 1} / ${this.items.length}`;
+    if (window.lucide) window.lucide.createIcons();
   }
 }
