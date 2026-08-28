@@ -877,48 +877,48 @@
             </div>
           </div>
 
-          <!-- 4. SELECTED PACKAGE & DELIVERABLES -->
-          <table class="clean-bill-table">
-            <thead>
-              <tr>
-                <th style="width: 72%;">SELECTED PACKAGE &amp; DELIVERABLES</th>
-                <th style="width: 28%; text-align: right;">AMOUNT (₹)</th>
-              </tr>
-            </thead>
-            <tbody id="inv-items-tbody">
-              <tr>
-                <td>
-                  <div class="clean-item-name">📸 Standard Wedding Photography Package</div>
-                  <div class="clean-item-desc">Full Day Professional Coverage • Master Retouched Photos</div>
-                </td>
-                <td style="text-align: right; font-weight: 800; color: #0f172a;">₹60,000</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <!-- 5. FINANCIAL BREAKDOWN SUMMARY -->
-          <div class="clean-calc-card">
-            <div class="calc-card-row">
-              <span class="calc-label">Subtotal Quotation</span>
-              <span class="calc-value" id="inv-calc-subtotal">₹60,000</span>
-            </div>
-            <div class="calc-card-row calc-discount-row" id="inv-calc-discount-row" style="display: none;">
-              <span class="calc-label">Special Discount</span>
-              <span class="calc-value discount-value" id="inv-calc-discount">- ₹0</span>
-            </div>
-            <div class="calc-card-row calc-advance-row">
-              <span class="calc-label"><span class="status-tick">✓</span> Advance / Token Received</span>
-              <span class="calc-value advance-value" id="inv-calc-advance">₹5,000</span>
-            </div>
-            <div class="calc-card-banner calc-balance-banner">
-              <div class="balance-banner-left">
-                <span class="balance-lbl">Balance Due on Event Day</span>
-                <span class="balance-sub">Payable at event completion</span>
-              </div>
-              <div class="balance-banner-right">
-                <span class="balance-val" id="inv-calc-balance">₹55,000</span>
-              </div>
-            </div>
+          <!-- 4. FORMAL ITEMIZED SERVICES & FINANCIAL LEDGER -->
+          <div class="clean-bill-ledger-wrap">
+            <table class="clean-bill-table">
+              <thead>
+                <tr>
+                  <th style="width: 72%;">SELECTED PACKAGE &amp; DELIVERABLES</th>
+                  <th style="width: 28%; text-align: right;">AMOUNT (₹)</th>
+                </tr>
+              </thead>
+              <tbody id="inv-items-tbody">
+                <tr>
+                  <td>
+                    <div class="clean-item-name">📸 Standard Wedding Photography Package</div>
+                    <div class="clean-item-desc">Full Day Professional Coverage • High-Res Master Retouched Photos</div>
+                  </td>
+                  <td class="text-right-val">₹60,000</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr class="ledger-subtotal-row">
+                  <td class="ledger-label">Subtotal Quotation</td>
+                  <td class="ledger-val" id="inv-calc-subtotal">₹60,000</td>
+                </tr>
+                <tr class="ledger-discount-row" id="inv-calc-discount-row" style="display: none;">
+                  <td class="ledger-label">Special Studio Discount</td>
+                  <td class="ledger-val discount-val" id="inv-calc-discount">- ₹0</td>
+                </tr>
+                <tr class="ledger-advance-row">
+                  <td class="ledger-label">
+                    <span class="status-tick">✓</span> Advance / Token Received
+                  </td>
+                  <td class="ledger-val advance-val" id="inv-calc-advance">₹5,000</td>
+                </tr>
+                <tr class="ledger-balance-row">
+                  <td class="ledger-label">
+                    <div class="balance-title">Balance Due on Event Day</div>
+                    <div class="balance-subtitle">Payable at event completion</div>
+                  </td>
+                  <td class="ledger-val balance-amount" id="inv-calc-balance">₹55,000</td>
+                </tr>
+              </tfoot>
+            </table>
           </div>
 
           <!-- 6. OFFICIAL PAYMENT WARNING NOTE -->

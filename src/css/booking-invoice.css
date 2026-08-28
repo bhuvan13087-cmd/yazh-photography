@@ -443,57 +443,116 @@
   line-height: 1.25;
 }
 
-/* 5. Financial Summary Card */
-.clean-calc-card {
-  background: #ffffff;
+/* 4. Formal Itemized Ledger Table & Financial Settlement */
+.clean-bill-ledger-wrap {
+  width: 100%;
   border: 1.5px solid #cbd5e1;
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
-  display: flex;
-  flex-direction: column;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
-.calc-card-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.45rem 0.75rem;
-  border-bottom: 1px solid #f1f5f9;
+.clean-bill-table {
+  width: 100%;
+  border-collapse: collapse;
   font-size: 0.78rem;
 }
 
-.calc-label {
-  color: #64748b;
-  font-weight: 600;
+.clean-bill-table th {
+  background: #f1f5f9;
+  color: #1e293b;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1.5px solid #cbd5e1;
 }
 
-.calc-value {
+.clean-bill-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+  color: #1e293b;
+}
+
+.text-right-val {
+  text-align: right;
+  font-weight: 800;
   color: #0f172a;
+  font-size: 0.88rem;
+}
+
+.clean-item-name {
   font-weight: 700;
-  font-size: 0.84rem;
+  color: #0f172a;
+  font-size: 0.82rem;
+  line-height: 1.25;
 }
 
-.calc-discount-row {
+.clean-item-desc {
+  font-size: 0.68rem;
+  color: #64748b;
+  margin-top: 0.1rem;
+  line-height: 1.25;
+}
+
+/* Formal Table Footer Calculations (Distinct Color Coded Rows) */
+.clean-bill-table tfoot tr {
+  border-top: 1px solid #e2e8f0;
+}
+
+.ledger-subtotal-row td {
+  background: #f8fafc;
+  padding: 0.45rem 0.75rem;
+}
+
+.ledger-subtotal-row .ledger-label {
+  font-weight: 700;
+  color: #475569;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.ledger-subtotal-row .ledger-val {
+  text-align: right;
+  font-weight: 800;
+  color: #0f172a;
+  font-size: 0.88rem;
+}
+
+.ledger-discount-row td {
   background: #fef2f2;
+  padding: 0.4rem 0.75rem;
 }
 
-.discount-value {
+.ledger-discount-row .ledger-label {
   color: #dc2626;
   font-weight: 700;
+  font-size: 0.76rem;
 }
 
-.calc-advance-row {
+.ledger-discount-row .discount-val {
+  text-align: right;
+  color: #dc2626;
+  font-weight: 800;
+  font-size: 0.86rem;
+}
+
+.ledger-advance-row td {
   background: #f0fdf4;
-  border-bottom: 1px solid #bbf7d0;
+  border-top: 1px solid #bbf7d0;
+  padding: 0.45rem 0.75rem;
 }
 
-.calc-advance-row .calc-label {
+.ledger-advance-row .ledger-label {
   color: #15803d;
   font-weight: 700;
+  font-size: 0.78rem;
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.3rem;
 }
 
 .status-tick {
@@ -501,43 +560,37 @@
   font-weight: 900;
 }
 
-.advance-value {
+.ledger-advance-row .advance-val {
+  text-align: right;
   color: #15803d;
   font-weight: 800;
-  font-size: 0.86rem;
+  font-size: 0.92rem;
 }
 
-.calc-balance-banner {
+.ledger-balance-row td {
   background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-  border-top: 1.5px solid #f59e0b;
-  padding: 0.55rem 0.75rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  border-top: 2px solid #f59e0b;
+  padding: 0.65rem 0.75rem;
 }
 
-.balance-banner-left {
-  display: flex;
-  flex-direction: column;
-}
-
-.balance-lbl {
-  font-size: 0.76rem;
-  font-weight: 800;
+.balance-title {
+  font-size: 0.82rem;
+  font-weight: 900;
   color: #92400e;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
 }
 
-.balance-sub {
-  font-size: 0.62rem;
+.balance-subtitle {
+  font-size: 0.64rem;
   color: #b45309;
   font-weight: 600;
 }
 
-.balance-val {
+.balance-amount {
+  text-align: right;
   font-family: 'Playfair Display', serif;
-  font-size: 1.18rem;
+  font-size: 1.25rem;
   font-weight: 900;
   color: #78350f;
   letter-spacing: -0.01em;
