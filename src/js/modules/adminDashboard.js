@@ -192,7 +192,7 @@ export class AdminDashboard {
     const modal = document.getElementById('admin-dashboard-modal');
     modal?.querySelectorAll('.modal-close, .modal-backdrop').forEach(el => {
       el.addEventListener('click', (e) => {
-        if (e.target === el) this.close();
+        if (e.target === el || el.contains(e.target)) this.close();
       });
     });
 

@@ -699,40 +699,58 @@
     <div class="modal-container admin-desktop-shell">
       
       <!-- 1. AUTHENTICATION LOCK SCREEN VIEW -->
-      <div id="admin-auth-view" style="width: 100%; display: flex; align-items: center; justify-content: center; padding: 2rem;">
-        <div class="admin-auth-container" style="max-width: 440px; width: 100%;">
+      <div id="admin-auth-view" class="admin-auth-view-wrapper">
+        <button type="button" class="modal-close admin-auth-close-btn" title="Close Admin Portal" aria-label="Close">
+          <i data-lucide="x" style="width: 18px; height: 18px; pointer-events: none;"></i>
+        </button>
+
+        <div class="admin-auth-container">
+          <div class="admin-auth-top-accent"></div>
+          
           <div class="admin-auth-icon">
-            <i data-lucide="shield-check" style="width: 32px; height: 32px;"></i>
+            <i data-lucide="shield-check" style="width: 28px; height: 28px;"></i>
           </div>
+
+          <span class="admin-auth-badge">Executive Operations Hub</span>
           <h3 class="admin-auth-title">Studio Admin Authentication</h3>
           <p class="admin-auth-desc">
             Enter your official studio email and password to access the executive photography dashboard and operations hub.
           </p>
 
-          <form id="admin-auth-form">
-            <div class="form-group" style="text-align: left; margin-bottom: 0.85rem;">
-              <label class="form-label" for="admin-auth-email">Studio Email *</label>
-              <input type="email" id="admin-auth-email" class="form-input" value="YazhPhotographypvp@gmail.com" placeholder="YazhPhotographypvp@gmail.com" required autocomplete="username" />
+          <form id="admin-auth-form" class="admin-auth-form">
+            <div class="form-group">
+              <label class="form-label" for="admin-auth-email">
+                <span>Studio Email <span class="required-star">*</span></span>
+              </label>
+              <div class="admin-input-icon-wrap">
+                <i data-lucide="mail" class="admin-input-icon"></i>
+                <input type="email" id="admin-auth-email" class="admin-auth-input" value="YazhPhotographypvp@gmail.com" placeholder="YazhPhotographypvp@gmail.com" required autocomplete="username" />
+              </div>
             </div>
 
-            <div class="form-group" style="text-align: left; margin-bottom: 1.25rem;">
-              <label class="form-label" for="admin-auth-passcode">Admin Password *</label>
-              <div class="admin-password-group" style="margin-bottom: 0;">
-                <input type="password" id="admin-auth-passcode" class="admin-password-input" placeholder="Enter Password" required autocomplete="current-password" />
-                <button type="button" class="btn-toggle-pwd" id="admin-toggle-pwd-visibility" title="Show/Hide Password">
-                  <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
+            <div class="form-group">
+              <label class="form-label" for="admin-auth-passcode">
+                <span>Admin Password <span class="required-star">*</span></span>
+              </label>
+              <div class="admin-password-group">
+                <i data-lucide="key-round" class="admin-input-icon"></i>
+                <input type="password" id="admin-auth-passcode" class="admin-auth-input admin-password-input" placeholder="Enter Password" required autocomplete="current-password" />
+                <button type="button" class="btn-toggle-pwd" id="admin-toggle-pwd-visibility" title="Show/Hide Password" aria-label="Toggle Password Visibility">
+                  <i data-lucide="eye" style="width: 16px; height: 16px; pointer-events: none;"></i>
                 </button>
               </div>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
-              Authenticate & Unlock Studio
+            <button type="submit" class="btn-admin-auth-submit" id="admin-auth-submit-btn">
+              <i data-lucide="lock-open" style="width: 16px; height: 16px;"></i>
+              <span>Authenticate & Unlock Studio</span>
             </button>
           </form>
 
-          <p class="admin-default-hint">
-            <i data-lucide="lock" style="width: 12px; height: 12px; vertical-align: middle;"></i> Confidential Studio Administration Portal
-          </p>
+          <div class="admin-default-hint">
+            <i data-lucide="shield" style="width: 12px; height: 12px;"></i>
+            <span>Confidential Studio Administration Portal</span>
+          </div>
         </div>
       </div>
 
